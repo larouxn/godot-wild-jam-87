@@ -1,0 +1,10 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Tooling
+.direnv/
+.pre-commit-config.yaml
+
+# Build artifacts
+exports/
