@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bpm7kbn4oyb1w"]
+
+[ext_resource type="Script" uid="uid://gfgeyqxng50f" path="res://InputManager/input_manager.gd" id="1_2uw1g"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_2uw1g"]
+
+[node name="InputManager" type="Node3D"]
+script = ExtResource("1_2uw1g")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_2uw1g")
