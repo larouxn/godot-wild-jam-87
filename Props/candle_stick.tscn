@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://ci4amo7sxrtg8"]
+
+[ext_resource type="PackedScene" uid="uid://cdl4w2ltctnik" path="res://Models/CandleStick.gltf" id="1_22onm"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_638ya"]
+height = 0.12082672
+radius = 0.0859375
+
+[node name="CandleStick" type="StaticBody3D"]
+
+[node name="CandleStick2" parent="." instance=ExtResource("1_22onm")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.061481476, 0)
+shape = SubResource("CylinderShape3D_638ya")

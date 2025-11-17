@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cgijrb0gl6egt"]
+
+[ext_resource type="PackedScene" uid="uid://c8axhq75yxecm" path="res://Models/Corner_Interior_Big.gltf" id="1_7mm7l"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0wt1j"]
+size = Vector3(0.34417725, 3.0125732, 0.34277344)
+
+[node name="CornerInteriorBig" type="StaticBody3D"]
+
+[node name="Corner_Interior_Big2" parent="." instance=ExtResource("1_7mm7l")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.15396118, 1.5010376, -0.14794922)
+shape = SubResource("BoxShape3D_0wt1j")

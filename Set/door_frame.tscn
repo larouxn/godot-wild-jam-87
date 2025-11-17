@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://btxybo0ufm2lv"]
+
+[ext_resource type="PackedScene" uid="uid://c0rcq7t7nf2mt" path="res://Models/DoorFrame_Flat_WoodDark.gltf" id="1_3dxfp"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_thyo5"]
+size = Vector3(0.16113281, 2.3134766, 0.33764648)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j1do5"]
+size = Vector3(1.5872192, 0.14672852, 0.37799072)
+
+[node name="DoorFrame" type="StaticBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6371982, 1.1446817, -0.04626465)
+shape = SubResource("BoxShape3D_thyo5")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6366569, 1.1731566, -0.046435833)
+shape = SubResource("BoxShape3D_thyo5")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.003692627, 2.2540329, -0.049761295)
+shape = SubResource("BoxShape3D_j1do5")
+
+[node name="DoorFrame_Flat_WoodDark2" parent="." instance=ExtResource("1_3dxfp")]

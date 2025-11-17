@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://b7ie0h5c0qa4o"]
+
+[ext_resource type="PackedScene" uid="uid://cjqt5dq6lr2j6" path="res://Models/Wall_Plaster_Door_Flat.gltf" id="1_k50ya"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_83wxw"]
+size = Vector3(0.3125, 3.11162, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_msbq1"]
+size = Vector3(1.3653564, 0.93652344, 1)
+
+[node name="WallWithDoorHole" type="StaticBody3D"]
+
+[node name="Wall_Plaster_Door_Flat2" parent="." instance=ExtResource("1_k50ya")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.5671926, -0.8454032, 1.560319, 0)
+shape = SubResource("BoxShape3D_83wxw")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.5671926, 0.82411134, 1.5505795, 0)
+shape = SubResource("BoxShape3D_83wxw")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.5671926, -0.016784668, 2.6486518, 0)
+shape = SubResource("BoxShape3D_msbq1")

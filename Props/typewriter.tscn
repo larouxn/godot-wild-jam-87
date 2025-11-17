@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dxscn68lii64q"]
+
+[ext_resource type="PackedScene" uid="uid://bq07m5e5n1oed" path="res://Models/typewriter-black.fbx" id="1_di5n5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hl8g6"]
+size = Vector3(0.49273682, 0.30288315, 0.5263672)
+
+[node name="Typewriter" type="StaticBody3D"]
+
+[node name="typewriter-black" parent="." instance=ExtResource("1_di5n5")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0008239746, 0.15621758, -0.044433594)
+shape = SubResource("BoxShape3D_hl8g6")

@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://ol1wfjtta0rd"]
+
+[ext_resource type="PackedScene" uid="uid://4o8mph7r53tg" path="res://Models/Workbench_Drawers.gltf" id="1_xn7hh"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7xyre"]
+size = Vector3(0.45306396, 0.2532959, 0.2915039)
+
+[node name="TableDrawers" type="StaticBody3D"]
+
+[node name="Workbench_Drawers_2" parent="." instance=ExtResource("1_xn7hh")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.51846313, 1.0038152, -0.35424805)
+shape = SubResource("BoxShape3D_7xyre")

@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cknfue1vkxsw4"]
+
+[ext_resource type="PackedScene" uid="uid://d1l14rrncob8u" path="res://Models/Wall_Plaster_Straight.gltf" id="2_51exa"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0ije0"]
+size = Vector3(0.6164551, 1, 0.1171875)
+
+[node name="StaticBody3D" type="StaticBody3D"]
+
+[node name="Wall_Plaster_Straight2" parent="." instance=ExtResource("2_51exa")]
+transform = Transform3D(-1, 8.940697e-08, -5.3290705e-15, 8.940697e-08, 1, -8.742277e-08, 0, -8.742278e-08, -1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(3.3, 0, 0, 0, 3.3, 0, 0, 0, 3.3, 0.0028198361, 1.5618684, 0.120564006)
+shape = SubResource("BoxShape3D_0ije0")

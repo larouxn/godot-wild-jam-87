@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://bfftqpddf2u41"]
+
+[ext_resource type="PackedScene" uid="uid://d2p1junc1qhuq" path="res://Models/Nightstand_Shelf.gltf" id="1_0nfj4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4s0bi"]
+size = Vector3(0.04510498, 1.2109375, 0.39624023)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f6tlw"]
+size = Vector3(0.6484375, 0.13964844, 0.3633423)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7xps1"]
+size = Vector3(0.5196457, 0.03894043, 0.3168335)
+
+[node name="NightStand" type="StaticBody3D"]
+
+[node name="Nightstand_Shelf2" parent="." instance=ExtResource("1_0nfj4")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.996378, 0.08503435, 0, -0.08503435, 0.996378, 0, 0, 0, 1, -0.2584471, 0.60791546, 0.0025634766)
+shape = SubResource("BoxShape3D_4s0bi")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.99656266, -0.08284297, 0, 0.08284297, 0.99656266, 0, 0, 0, 1, 0.26253092, 0.60791546, 0.0025634766)
+shape = SubResource("BoxShape3D_4s0bi")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0009765625, 1.1465403, 0.007904053)
+shape = SubResource("BoxShape3D_f6tlw")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0033569336, 0.91388804, 0.0030919313)
+shape = SubResource("BoxShape3D_7xps1")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.015548706, 0.67925054, 0.0030919313)
+shape = SubResource("BoxShape3D_7xps1")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.015117645, 0.43687564, 0.0030919313)
+shape = SubResource("BoxShape3D_7xps1")
