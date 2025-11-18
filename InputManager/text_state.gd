@@ -33,7 +33,11 @@ func append_character(chr: String) -> void:
 	if input_index >= len(text):
 		return
 
-	if chr != text[input_index] && mistake_index == -1:
+	var chr_matches := chr == text[input_index]
+	if chr == " " and text[input_index] == "\n":
+		chr_matches = true
+
+	if !chr_matches && mistake_index == -1:
 		mistake_index = input_index
 
 	input_index += 1
