@@ -12,7 +12,7 @@ enum InputState {
 
 # The main text required to win the game.
 var main_text: TextState
-
+var word_generator: WordGenerator = WordGenerator.new()
 # Side texts that can be typed to complete optional objectives (e.g. lighting a
 # candle or casting a spell from the spellbook).
 var side_texts: Array[TextState] = []
