@@ -1,6 +1,7 @@
 extends Node3D
 
 var main_text := TextState.new()
+var word_generator := WordGenerator.new()
 var active_text := main_text
 var texts: Array[TextState] = []
 var text_candidates: Array[TextState] = []
@@ -21,6 +22,8 @@ func _ready() -> void:
 		+ "\nporta pellentesque dui. Vestibulum ante ipsum primis in faucibus orci luctus"
 		+ "\net ultrices posuere cubilia curae;"
 	)
+	var sentence = word_generator.get_sentence_array(10)
+	main_text.text = word_generator.join_token_array_to_string(sentence)
 
 	var candle_text := TextState.new()
 	candle_text.text = "<light candle"
