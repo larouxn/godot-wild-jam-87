@@ -1,5 +1,7 @@
 class_name InputManager extends Node3D
 
+signal key_pressed
+
 # The current state of the input manager.
 enum InputState {
 	# Routing keyboard input into the main text
@@ -11,8 +13,9 @@ enum InputState {
 }
 
 # The main text required to win the game.
-var main_text: TextState
-var word_generator: WordGenerator = WordGenerator.new()
+var main_text: TextState:
+	set = set_main_text
+
 # Side texts that can be typed to complete optional objectives (e.g. lighting a
 # candle or casting a spell from the spellbook).
 var side_texts: Array[TextState] = []
@@ -35,46 +38,76 @@ var active_text: Array[TextState] = []:
 # the prefix is cleared.
 var selection_prefix := ""
 
-@onready var label := $Label as RichTextLabel
+
+# Set the main text. If it was previously unset, also set it as the active text.
+func set_main_text(new_main_text: TextState) -> void:
+	var prev_main_text := main_text
+	main_text = new_main_text
+	if prev_main_text == null:
+		set_active_text(new_main_text)
 
 
-func _ready() -> void:
-	main_text = TextState.new(
-		(
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent aliquet volutpat"
-			+ "\nscelerisque. Curabitur sodales nibh ipsum, dapibus aliquet enim tincidunt non."
-			+ "\nPraesent et placerat nisi. Donec volutpat ut mauris a semper. Cras lorem erat,"
-			+ "\nfermentum nec porttitor a, maximus sit amet mauris. Suspendisse potenti. Nunc"
-			+ "\nac faucibus erat. Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-			+ "\nAenean ex ex, eleifend a ligula vel, suscipit tempus libero. Proin tristique"
-			+ "\nmagna cursus, porttitor ipsum tempus, lacinia leo. Cras eu lacus volutpat,"
-			+ "\ngravida tellus sed, pretium tellus. Sed ipsum arcu, sollicitudin in tortor in,"
-			+ "\nporta pellentesque dui. Vestibulum ante ipsum primis in faucibus orci luctus"
-			+ "\net ultrices posuere cubilia curae;"
-		)
-	)
-	var paragraph: Array = word_generator.get_paragraph_array(50)
-	main_text.text = word_generator.join_paragraph_to_string(paragraph)
-
-	set_active_text(main_text)
-
-	var candle_text := TextState.new("<light candle")
-	var spell1_text := TextState.new("@Bhippopotomonstrosesquippedaliophobia")
-	var spell2_text := TextState.new(
-		(
-			'@B\'hold, thus denoted! Word stops--variety, yes!--and yet "meaning" lacks. '
-			+ "Cease; punctuate (as you will); stop? & yet more!"
-		)
-	)
-	var spell3_text := TextState.new("@To ALSO Capitalize the Words Or Else")
-	var spell4_text := TextState.new("@B'held")
-
-	side_texts.append_array([candle_text, spell1_text, spell2_text, spell3_text, spell4_text])
+# Add a side-text to the array of side-texts. The input state will be recalculated
+# to accommodate the new side-text.
+func register_side_text(side_text: TextState) -> void:
 	for text in side_texts:
-		text.mistyped.connect(func(id: int) -> void: print("mistake on: " + str(id)))
-		text.finished.connect(func(id: int) -> void: print("finished: " + str(id)))
+		assert(text.id != side_text.id, "Cannot register side-text with non-unique id")
 
-	render_ui()
+	side_text.reset()
+	side_texts.append(side_text)
+
+	if get_input_state() != InputState.MAIN_TEXT:
+		recalculate_input_state()
+
+
+# Remove a side text from the array of side-texts. The input state will be
+# recalculated to accommodate the removed side-text.
+func unregister_side_text(id: int) -> void:
+	side_texts = side_texts.filter(func(text: TextState) -> bool: return text.id != id)
+
+	var input_state := get_input_state()
+	if input_state == InputState.SIDE_TEXT and active_text[0].id == id:
+		# If we're removing the active side-text, switch to MAIN_TEXT state.
+		set_active_text(main_text)
+	elif input_state == InputState.SELECTION:
+		# If we're in the selection process, recalculate the side-text state.
+		recalculate_input_state()
+
+
+# Update the input state after a side-text has been added or removed.
+func recalculate_input_state() -> void:
+	var input_state := get_input_state()
+
+	var prefix := selection_prefix
+	if input_state == InputState.MAIN_TEXT:
+		# If we are in MAIN_TEXT state, it doesn't matter if we added or removed side-
+		# texts. We don't need to fix anything.
+		return
+
+	if input_state == InputState.SIDE_TEXT:
+		prefix = active_text[0].get_typed_string()
+		# If the side-text is mistyped, it can't be considered a candidate for its own
+		# prefix. This means that if a newly-added side-text did match, it would be the
+		# only match and snatch focus from the current side-text. This behavior seems
+		# like it would be unexpected, so we skip matching on new entries if the current
+		# side-text is mistyped.
+		if active_text[0].is_mistyped():
+			return
+
+	# Sync all candidates up with the current prefix. This catches up newly-added
+	# side-texts.
+	var candidates := get_text_candidates_matching_prefix(prefix)
+	for candidate in candidates:
+		candidate.set_prefix(prefix)
+
+	var num_candidates := len(candidates)
+	if num_candidates > 1:
+		selection_prefix = prefix
+		unset_active_text()
+	elif num_candidates == 1:
+		set_active_text(candidates[0])
+	elif num_candidates == 0:
+		set_active_text(main_text)
 
 
 func handle_key(key: String) -> void:
@@ -85,7 +118,7 @@ func handle_key(key: String) -> void:
 	else:
 		route_char(key)
 
-	render_ui()
+	key_pressed.emit()
 
 
 func set_active_text(new_active_text: TextState) -> void:
@@ -199,13 +232,14 @@ func backspace() -> void:
 			# selection state.
 			var typed := active_text[0].get_typed_string()
 			var candidates := get_text_candidates_matching_prefix(typed)
-			if len(candidates) > 1 and active_text[0] in candidates:
+			# Only go into SELECTION mode if the active text is not mistyped.
+			if len(candidates) > 1 and !active_text[0].is_mistyped():
 				unset_active_text()
 				selection_prefix = typed
 				for candidate in candidates:
 					candidate.set_prefix(typed)
 	else:
-		# If we are not in SELECTION or SIDE_TEXT, then we have to be in the MAIN_STATE
+		# If we are not in SELECTION or SIDE_TEXT, then we have to be in the MAIN_TEXT
 		# state. Just backspace the active text.
 		active_text[0].backspace()
 
@@ -246,32 +280,6 @@ func route_char(key: String) -> void:
 	# the SELECTION state, which is handled above.
 	if !active_text.is_empty():
 		active_text[0].append_character(key)
-
-
-func render_ui() -> void:
-	label.text = (
-		selection_prefix
-		+ "\n\n"
-		+ render_text_state(main_text)
-		+ "\n\n"
-		+ render_text_state(side_texts[0])
-		+ "\n"
-		+ render_text_state(side_texts[1])
-		+ "\n"
-		+ render_text_state(side_texts[2])
-		+ "\n"
-		+ render_text_state(side_texts[3])
-		+ "\n"
-		+ render_text_state(side_texts[4])
-	)
-
-
-func render_text_state(ts: TextState) -> String:
-	var split := ts.parts()
-
-	return (
-		"[color=green]" + split[0] + "[/color][color=red][u]" + split[1] + "[/u][/color]" + split[2]
-	)
 
 
 func _unhandled_input(event: InputEvent) -> void:

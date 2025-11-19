@@ -80,6 +80,10 @@ func is_reset() -> bool:
 	return input_index == 0 and mistake_index == -1 and typed_since_mistake == ""
 
 
+func is_mistyped() -> bool:
+	return mistake_index != -1
+
+
 func parts() -> PackedStringArray:
 	var good := ""
 	var mistake := ""
