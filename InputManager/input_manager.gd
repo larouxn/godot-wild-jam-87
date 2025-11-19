@@ -53,8 +53,8 @@ func _ready() -> void:
 			+ "\net ultrices posuere cubilia curae;"
 		)
 	)
-	var sentence = word_generator.get_sentence_array(10)
-	main_text.text = word_generator.join_token_array_to_string(sentence)
+	var paragraph: Array = word_generator.get_paragraph_array(10)
+	main_text.text = word_generator.join_paragraph_to_string(paragraph)
 
 	set_active_text(main_text)
 
