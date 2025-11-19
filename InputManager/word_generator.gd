@@ -388,7 +388,7 @@ func join_sentence_to_string(token_array: Array) -> String:
 
 func join_paragraph_to_string(token_array: Array) -> String:
 	var paragraph: String = ""
-	for sentence in token_array:
+	for sentence: Array in token_array:
 		var sentence_string: String = "".join(sentence)
 		paragraph += sentence_string
 		paragraph += " "

@@ -53,7 +53,7 @@ func _ready() -> void:
 			+ "\net ultrices posuere cubilia curae;"
 		)
 	)
-	var paragraph: Array = word_generator.get_paragraph_array(10)
+	var paragraph: Array = word_generator.get_paragraph_array(50)
 	main_text.text = word_generator.join_paragraph_to_string(paragraph)
 
 	set_active_text(main_text)
