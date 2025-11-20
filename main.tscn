@@ -76,16 +76,8 @@ transform = Transform3D(-1.5, 0, 2.2649371e-07, 0, 1.5, 0, -2.2649371e-07, 0, -1
 [node name="TableDrawers" parent="Props/Table" instance=ExtResource("3_w48qg")]
 transform = Transform3D(1, 0, -1.4210855e-14, 0, 1, 0, 1.4210855e-14, 0, 1, 0, 0, 0)
 
-[node name="CandleShort" parent="Props/Table" instance=ExtResource("6_vivmo")]
-transform = Transform3D(-0.8557347, 0, -0.51741487, 0, 1, 0, 0.51741487, 0, -0.8557347, -0.52975684, 0.89068925, -0.34796798)
-
-[node name="OmniLight3D" type="OmniLight3D" parent="Props/Table/CandleShort"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13754594, 0)
-light_color = Color(1, 0.78999996, 0.64, 1)
-light_energy = 0.5
-
 [node name="CandleTall" parent="Props/Table" instance=ExtResource("7_2cqfq")]
-transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, -0.66666675, 0.88346285, -0.41363895)
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, -0.57155985, 0.88346285, 0.17029244)
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Props/Table/CandleTall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.24868852, 0)
@@ -96,7 +88,7 @@ light_energy = 0.5
 transform = Transform3D(1, 0, -4.2632564e-14, 0, 1, 0, 4.2632564e-14, 0, 1, 0, 0.8863606, 0.17754018)
 
 [node name="Book" parent="Props/Table" instance=ExtResource("7_1u8w0")]
-transform = Transform3D(0.9504778, 0, 0.31079265, 0, 1, 0, -0.31079265, 0, 0.9504778, -0.5423314, 0.9413661, 0.1406275)
+transform = Transform3D(0.8324187, 0, -0.55414724, 0, 1, 0, 0.55414724, 0, 0.8324187, 0.6968763, 0.92069995, 0.16492212)
 
 [node name="Bed" parent="Props" instance=ExtResource("4_vivmo")]
 transform = Transform3D(1.5, 0, 3.576279e-07, 0, 1.5, 0, -3.576279e-07, 0, 1.5, -4, 0, -4.6083555)
