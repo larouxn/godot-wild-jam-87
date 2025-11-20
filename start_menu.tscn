@@ -1,0 +1,92 @@
+[gd_scene load_steps=4 format=3 uid="uid://dy7lqufy3iwjt"]
+
+[ext_resource type="Script" uid="uid://g54886uediyr" path="res://start_menu.gd" id="1_ia0g5"]
+[ext_resource type="PackedScene" uid="uid://bpm7kbn4oyb1w" path="res://InputManager/input_manager.tscn" id="2_x7exu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vpdu5"]
+bg_color = Color(0, 0.6, 0.6, 1)
+
+[node name="StartMenu" type="Node3D"]
+script = ExtResource("1_ia0g5")
+
+[node name="InputManager" parent="." instance=ExtResource("2_x7exu")]
+visible = false
+
+[node name="StartGameText" type="RichTextLabel" parent="."]
+visible = false
+anchors_preset = -1
+anchor_left = 0.39800003
+anchor_top = 0.27
+anchor_right = 0.611
+anchor_bottom = 0.398
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_vpdu5")
+bbcode_enabled = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionsText" type="RichTextLabel" parent="."]
+visible = false
+anchors_preset = -1
+anchor_left = 0.13000001
+anchor_top = 0.5
+anchor_right = 0.36800003
+anchor_bottom = 0.60200006
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_vpdu5")
+bbcode_enabled = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CreditsText" type="RichTextLabel" parent="."]
+visible = false
+anchors_preset = -1
+anchor_left = 0.64000005
+anchor_top = 0.5
+anchor_right = 0.85
+anchor_bottom = 0.60200006
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_vpdu5")
+bbcode_enabled = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="QuitText" type="RichTextLabel" parent="."]
+visible = false
+anchors_preset = -1
+anchor_left = 0.39800003
+anchor_top = 0.71000004
+anchor_right = 0.611
+anchor_bottom = 0.83500004
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_vpdu5")
+bbcode_enabled = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OpenMenuText" type="RichTextLabel" parent="."]
+anchors_preset = -1
+anchor_left = 0.39800003
+anchor_top = 0.5
+anchor_right = 0.611
+anchor_bottom = 0.60200006
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/normal = SubResource("StyleBoxFlat_vpdu5")
+bbcode_enabled = true
+horizontal_alignment = 1
+vertical_alignment = 1
