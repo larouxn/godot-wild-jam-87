@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://dm3ra1iniucmx"]
+[gd_scene load_steps=47 format=3 uid="uid://dm3ra1iniucmx"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://Addons/ProtoController/proto_controller.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://7n0c1ali4re7" path="res://main.gd" id="1_ok6jj"]
@@ -6,13 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://cs5hnafroh83a" path="res://UI/player_ui.tscn" id="2_b1qrp"]
 [ext_resource type="AudioStream" uid="uid://csdauqiue5wef" path="res://Sound/Music/its_coming_final.wav" id="2_come4"]
 [ext_resource type="PackedScene" uid="uid://bwtnomfwynpi5" path="res://Props/table.tscn" id="2_ycdy4"]
-[ext_resource type="PackedScene" uid="uid://cqv5bwibkp7fy" path="res://UI/ControlView3D/control_view_3d.tscn" id="3_facbu"]
 [ext_resource type="PackedScene" uid="uid://cknfue1vkxsw4" path="res://Set/wall_tile.tscn" id="3_h2yge"]
 [ext_resource type="PackedScene" uid="uid://cnpmv3o2hddcg" path="res://Set/wall_floor_board.tscn" id="3_kek77"]
 [ext_resource type="PackedScene" uid="uid://ol1wfjtta0rd" path="res://Props/table_drawers.tscn" id="3_w48qg"]
 [ext_resource type="PackedScene" uid="uid://b7ie0h5c0qa4o" path="res://Set/wall_with_door_hole.tscn" id="4_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://dfmdfwg5aij2v" path="res://Set/wall_with_window_hole.tscn" id="4_272bh"]
-[ext_resource type="PackedScene" uid="uid://blfginyn8bta8" path="res://UI/CursorText/cursor_text.tscn" id="4_b1qrp"]
 [ext_resource type="PackedScene" uid="uid://dnd3cgc7odquu" path="res://Props/bed.tscn" id="4_vivmo"]
 [ext_resource type="PackedScene" uid="uid://cov6gyptri7u1" path="res://Props/bookshelf.tscn" id="5_2cqfq"]
 [ext_resource type="PackedScene" uid="uid://dbxes83ct2mbg" path="res://Set/window.tscn" id="5_5vw27"]
@@ -22,6 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://bneasx1rjcpkt" path="res://Props/candle_short.tscn" id="6_vivmo"]
 [ext_resource type="PackedScene" uid="uid://c7jai0gpn7h48" path="res://Props/book.tscn" id="7_1u8w0"]
 [ext_resource type="PackedScene" uid="uid://qliltvxtxt56" path="res://Props/candle_tall.tscn" id="7_2cqfq"]
+[ext_resource type="PackedScene" uid="uid://dwinauedtnyin" path="res://UI/MainTextContainer/main_text_container.tscn" id="7_h8e4i"]
 [ext_resource type="PackedScene" uid="uid://xyh8vnhin7aq" path="res://Props/chair.tscn" id="8_2cqfq"]
 [ext_resource type="PackedScene" uid="uid://bm4df37p8ivm5" path="res://Props/Spellbook/spellbook.tscn" id="9_facbu"]
 [ext_resource type="PackedScene" uid="uid://d2d5fknjr7wmk" path="res://Props/book_group_medium_1.tscn" id="9_getpj"]
@@ -38,7 +37,7 @@
 [ext_resource type="Theme" uid="uid://bv7g70yg6r2oc" path="res://Menus/start_menu.tres" id="28_qsp4k"]
 [ext_resource type="Script" uid="uid://booac3vwmbcoy" path="res://pause_menu.gd" id="29_kq58d"]
 [ext_resource type="Script" uid="uid://gfgeyqxng50f" path="res://InputManager/input_manager.gd" id="30_kq58d"]
-[ext_resource type="PackedScene" uid="uid://de66ji1hm08gh" path="res://Props/hands.tscn" id="35_0rl1p"]
+[ext_resource type="PackedScene" path="res://Props/hands.tscn" id="35_0rl1p"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7dm0k"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -97,8 +96,8 @@ _data = {
 &"look_typewriter": SubResource("Animation_come4")
 }
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ok6jj"]
-bg_color = Color(0.29411766, 0.29411766, 0.29411766, 0.7647059)
+[sub_resource type="ViewportTexture" id="ViewportTexture_4lmeg"]
+viewport_path = NodePath("SubViewport")
 
 [node name="Main" type="Node3D" node_paths=PackedStringArray("input_manager")]
 script = ExtResource("1_ok6jj")
@@ -135,36 +134,14 @@ libraries = {
 &"": SubResource("AnimationLibrary_come4")
 }
 
-[node name="MainText" parent="." instance=ExtResource("3_facbu")]
-transform = Transform3D(-0.08, 2.1095456e-09, -1.0178585e-08, -2.6218188e-09, 0.07170777, 0.035468213, 1.0058819e-08, 0.035468213, -0.07170777, -2.078, 2.042, 1.1810045)
-
-[node name="CenterContainer" type="CenterContainer" parent="MainText"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Panel" type="Panel" parent="MainText/CenterContainer"]
-custom_minimum_size = Vector2(1300, 400)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_ok6jj")
-
-[node name="CursorText" parent="MainText/CenterContainer" node_paths=PackedStringArray("input_manager") instance=ExtResource("4_b1qrp")]
-custom_minimum_size = Vector2(1250, 320)
-layout_mode = 2
-text = "This is the text
-This is the text
-This is the text
-This is the text
-This is the text
-This is the text
-This is the text"
-input_manager = NodePath("../../../InputManager")
+[node name="MainTextContainer" parent="." node_paths=PackedStringArray("input_manager") instance=ExtResource("7_h8e4i")]
+transform = Transform3D(-0.1, 4.371139e-09, -7.5710345e-09, 0, 0.08660254, 0.05, 8.742278e-09, 0.05, -0.08660254, -2.078, 2.042, 1.181)
+texture = SubResource("ViewportTexture_4lmeg")
+input_manager = NodePath("../InputManager")
 
 [node name="Spellbook" parent="." node_paths=PackedStringArray("main_text_ui", "input_manager") instance=ExtResource("9_facbu")]
 transform = Transform3D(-1.2479308, 0, 0.8322666, 0, 1.4999998, 0, -0.8322666, 0, -1.2479308, -3.1553118, 1.3815, 1.0354745)
-main_text_ui = NodePath("../MainText/CenterContainer/CursorText")
+main_text_ui = NodePath("../MainTextContainer")
 input_manager = NodePath("../InputManager")
 
 [node name="Props" type="Node3D" parent="."]

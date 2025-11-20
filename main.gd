@@ -9,7 +9,7 @@ var main_text := TextState.new()
 var looking_at_book := false
 var health: float
 
-@onready var main_text_container := $"MainText" as ControlView3D
+@onready var main_text_container := $MainTextContainer as MainTextContainer
 @onready var animation_player := $AnimationPlayer as AnimationPlayer
 @onready var player_ui := $PlayerUI as Control
 @onready var health_bar := $PlayerUI/ProgressBar as ProgressBar
@@ -44,7 +44,7 @@ func _ready() -> void:
 
 
 func init_nodes() -> void:
-	cursor_text = main_text_container.get_control_node("CenterContainer/CursorText")
+	cursor_text = main_text_container.cursor_text
 
 	var paragraph: PackedStringArray = []
 	for sentence: Array in WordGenerator.new().get_paragraph_array(10):
