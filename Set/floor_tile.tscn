@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2vypfu6gurry"]
+
+[ext_resource type="PackedScene" uid="uid://dfp5bcknl0aws" path="res://Models/Floor_WoodDark.gltf" id="1_u3y6w"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0ije0"]
+size = Vector3(1, 0.01184082, 1)
+
+[node name="StaticBody3D" type="StaticBody3D"]
+
+[node name="Floor_WoodDark2" parent="." instance=ExtResource("1_u3y6w")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, -0.01184082, 0)
+shape = SubResource("BoxShape3D_0ije0")

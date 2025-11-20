@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://cov6gyptri7u1"]
+
+[ext_resource type="PackedScene" uid="uid://rbiw4m7dn5jg" path="res://Models/Bookcase_2.gltf" id="1_m6wix"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o7oy3"]
+size = Vector3(1.1576233, 0.786499, 0.3831787)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dsjco"]
+size = Vector3(0.07470703, 2.363617, 0.40612793)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_62t0t"]
+size = Vector3(1.3994141, 0.15612793, 0.41189575)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_m6wix"]
+size = Vector3(1.1730957, 0.06829834, 0.3133545)
+
+[node name="Bookshelf" type="StaticBody3D"]
+
+[node name="Bookcase_22" parent="." instance=ExtResource("1_m6wix")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.004135132, 0.38313508, 0.014831543)
+shape = SubResource("BoxShape3D_o7oy3")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.62293303, 1.1689911, 0.017581731)
+shape = SubResource("BoxShape3D_dsjco")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.62777305, 1.1698558, 0.035163462)
+shape = SubResource("BoxShape3D_dsjco")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0053710938, 2.439917, 0.002609253)
+shape = SubResource("BoxShape3D_62t0t")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.009643555, 1.1203897, 0.0015258789)
+shape = SubResource("BoxShape3D_m6wix")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.01928711, 1.501102, 0.0030517578)
+shape = SubResource("BoxShape3D_m6wix")
+
+[node name="CollisionShape3D7" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.01928711, 1.8853827, 0.0030517578)
+shape = SubResource("BoxShape3D_m6wix")

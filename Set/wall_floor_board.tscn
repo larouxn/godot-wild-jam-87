@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cnpmv3o2hddcg"]
+
+[ext_resource type="PackedScene" uid="uid://dcajy002xlxxj" path="res://Models/Wall_BottomCover.gltf" id="1_lr5ch"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2tpnd"]
+size = Vector3(2.0014954, 0.23667908, 0.4411621)
+
+[node name="WallFloorBoard" type="StaticBody3D"]
+
+[node name="Wall_BottomCover2" parent="." instance=ExtResource("1_lr5ch")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0031280518, -0.0011062622, -0.10021973)
+shape = SubResource("BoxShape3D_2tpnd")

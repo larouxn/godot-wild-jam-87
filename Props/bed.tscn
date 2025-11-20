@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://dnd3cgc7odquu"]
+
+[ext_resource type="PackedScene" uid="uid://yscj1g47ddr1" path="res://Models/Bed_Twin2.gltf" id="1_852jp"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_31urs"]
+size = Vector3(1.5312805, 0.5155029, 2.0231247)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_emjva"]
+size = Vector3(1.5275879, 0.75927734, 0.171875)
+
+[node name="Bed" type="StaticBody3D"]
+
+[node name="Bed_Twin22" parent="." instance=ExtResource("1_852jp")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0012359619, 0.26312256, -0.0047798157)
+shape = SubResource("BoxShape3D_31urs")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0052490234, 0.33877543, 1.0997524)
+shape = SubResource("BoxShape3D_emjva")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0052490234, 0.3795469, -1.1253345)
+shape = SubResource("BoxShape3D_emjva")

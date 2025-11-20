@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dlsaits5x5dei"]
+
+[ext_resource type="PackedScene" uid="uid://hly7cupld8n8" path="res://Models/BookGroup_Small_1.gltf" id="1_0va7k"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_odmwp"]
+size = Vector3(0.26748657, 0.29608154, 0.22253418)
+
+[node name="BookGroupSmall1" type="StaticBody3D"]
+
+[node name="BookGroup_Small_12" parent="." instance=ExtResource("1_0va7k")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.018630981, 0.15176392, -0.009338379)
+shape = SubResource("BoxShape3D_odmwp")

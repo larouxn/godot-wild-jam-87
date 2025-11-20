@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dbxes83ct2mbg"]
+
+[ext_resource type="PackedScene" uid="uid://bfb5stbmesi7b" path="res://Models/Window_Wide_Flat1.gltf" id="1_gguuc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b3xuk"]
+size = Vector3(1.6214905, 1.5522461, 0.6899414)
+
+[node name="Window" type="StaticBody3D"]
+
+[node name="Window_Wide_Flat12" parent="." instance=ExtResource("1_gguuc")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0031585693, 1.723877, 0.06616211)
+shape = SubResource("BoxShape3D_b3xuk")
