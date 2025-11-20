@@ -2,6 +2,20 @@ class_name InputManager extends Node3D
 
 signal key_pressed
 
+# Emitted with the new InputState whenever the InputState changes.
+signal input_state_changed(input_state: InputState)
+
+# Fires when the active text(s) change. This could occur when transitioning to
+# a single active text (MAIN_TEXT, SIDE_TEXT) or when updating the prefix during
+# side-text selection.
+#
+# The argument is a list of TextStates which are currently receiving input.
+#
+# NOTE: This fires every time the prefix changes during side-text selection,
+#       regardless of whether or not the set of TextStates currently receiving
+#       input has changed.
+signal active_texts_changed(text: Array[TextState])
+
 # The current state of the input manager.
 enum InputState {
 	# Routing keyboard input into the main text
@@ -104,10 +118,23 @@ func recalculate_input_state() -> void:
 	if num_candidates > 1:
 		selection_prefix = prefix
 		unset_active_text()
+		if input_state != InputState.SELECTION:
+			input_state_changed.emit(InputState.SELECTION)
+		active_texts_changed.emit(candidates)
 	elif num_candidates == 1:
 		set_active_text(candidates[0])
 	elif num_candidates == 0:
 		set_active_text(main_text)
+
+
+# Return whether or not the given TextState is currently receiving input.
+func is_text_active(text: TextState) -> bool:
+	var input_state := get_input_state()
+
+	if input_state == InputState.SELECTION:
+		return text in get_text_candidates_matching_prefix(selection_prefix)
+
+	return text == active_text[0]
 
 
 func handle_key(key: String) -> void:
@@ -122,15 +149,29 @@ func handle_key(key: String) -> void:
 
 
 func set_active_text(new_active_text: TextState) -> void:
+	var prev_active_text := active_text
+
 	active_text = [new_active_text]
 	selection_prefix = ""
 	for text in side_texts:
 		if text.id != new_active_text.id:
 			text.reset()
 
+	if active_text != prev_active_text:
+		if new_active_text == main_text:
+			input_state_changed.emit(InputState.MAIN_TEXT)
+		else:
+			input_state_changed.emit(InputState.SIDE_TEXT)
+
+	active_texts_changed.emit(active_text)
+
 
 func unset_active_text() -> void:
+	# NOTE: This implies that the input state has changed to SELECTION, but we are
+	#       emitting that event where the other selection logic is happening, not
+	#       here.
 	active_text = []
+	active_texts_changed.emit(active_text)
 
 
 func get_text_candidates_matching_prefix(prefix: String) -> Array[TextState]:
@@ -214,8 +255,10 @@ func backspace() -> void:
 			# Otherwise, it is possible backspacing the selection prefix caused other
 			# side-texts to become viable options. Iterate through candidates and sync
 			# them with the selection prefix.
-			for candidate in get_text_candidates_matching_prefix(selection_prefix):
+			var candidates := get_text_candidates_matching_prefix(selection_prefix)
+			for candidate in candidates:
 				candidate.set_prefix(selection_prefix)
+			active_texts_changed.emit(candidates)
 	elif input_state == InputState.SIDE_TEXT:
 		# If we are already in an active side-text, backspace that side text. Since
 		# backspacing shortens the prefix, it is possible to go back into selection.
@@ -238,6 +281,8 @@ func backspace() -> void:
 				selection_prefix = typed
 				for candidate in candidates:
 					candidate.set_prefix(typed)
+				input_state_changed.emit(InputState.SELECTION)
+				active_texts_changed.emit(candidates)
 	else:
 		# If we are not in SELECTION or SIDE_TEXT, then we have to be in the MAIN_TEXT
 		# state. Just backspace the active text.
@@ -267,6 +312,9 @@ func route_char(key: String) -> void:
 					text.append_character(key)
 				else:
 					text.reset()
+			if input_state != InputState.SELECTION:
+				input_state_changed.emit(InputState.SELECTION)
+			active_texts_changed.emit(text_candidates)
 		# If we only have one candidate, we have a unique match. Set this side-text as active.
 		elif candidate_count == 1:
 			set_active_text(text_candidates[0])
