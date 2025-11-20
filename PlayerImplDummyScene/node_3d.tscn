@@ -1,0 +1,115 @@
+[gd_scene load_steps=10 format=3 uid="uid://4w2e3hjhfxyv"]
+
+[ext_resource type="PackedScene" uid="uid://blfginyn8bta8" path="res://UI/CursorText/cursor_text.tscn" id="1_dnmpm"]
+[ext_resource type="PackedScene" uid="uid://bwtnomfwynpi5" path="res://Props/table.tscn" id="2_28ilu"]
+[ext_resource type="PackedScene" uid="uid://dxscn68lii64q" path="res://Props/typewriter.tscn" id="3_qmith"]
+[ext_resource type="Shader" uid="uid://bjm0x5rhqju25" path="res://UI/MainTextContainer/text_fade.gdshader" id="4_28ilu"]
+[ext_resource type="PackedScene" uid="uid://qliltvxtxt56" path="res://Props/candle_tall.tscn" id="4_h6127"]
+[ext_resource type="Script" uid="uid://crbpw7dx4gpks" path="res://UI/MainTextContainer/main_text_container.gd" id="4_qmith"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_o5cxu"]
+viewport_path = NodePath("MainTextContainer/SubViewport")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_28ilu"]
+bg_color = Color(0.1148968, 0.11489681, 0.11489674, 0.7019608)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qmith"]
+shader = ExtResource("4_28ilu")
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Table" parent="." instance=ExtResource("2_28ilu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.3781979)
+
+[node name="Typewriter" parent="Table" instance=ExtResource("3_qmith")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88258445, 0.17703605)
+
+[node name="CandleTall" parent="Table" instance=ExtResource("4_h6127")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.81539345, 0.8887459, 0.18174505)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3379381, 1.5745399)
+
+[node name="MainTextContainer" type="Sprite3D" parent="."]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 1.4784081, 0.7929399)
+texture = SubResource("ViewportTexture_o5cxu")
+script = ExtResource("4_qmith")
+
+[node name="SubViewport" type="SubViewport" parent="MainTextContainer"]
+transparent_bg = true
+size = Vector2i(1920, 1080)
+
+[node name="CenterContainer" type="CenterContainer" parent="MainTextContainer/SubViewport"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="Panel" parent="MainTextContainer/SubViewport/CenterContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(1400, 300)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_28ilu")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="MainTextContainer/SubViewport"]
+material = SubResource("ShaderMaterial_qmith")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="MainTextContainer/SubViewport/SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="CenterContainer" type="CenterContainer" parent="MainTextContainer/SubViewport/SubViewportContainer/SubViewport"]
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -30.0
+offset_bottom = 815.0
+grow_horizontal = 2
+
+[node name="TextOffset" type="MarginContainer" parent="MainTextContainer/SubViewport/SubViewportContainer/SubViewport/CenterContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_top = 0
+
+[node name="CursorText" parent="MainTextContainer/SubViewport/SubViewportContainer/SubViewport/CenterContainer/TextOffset" instance=ExtResource("1_dnmpm")]
+unique_name_in_owner = true
+clip_contents = true
+custom_minimum_size = Vector2(1300, 0)
+layout_mode = 2
+text = "Lorem ipsum dolor sit amet, consectetur
+adipiscing elit. Etiam viverra ipsum 
+vitae justo efficitur dictum. 
+Duis vestibulum laoreet 
+aliquam. Duis scelerisque malesuada 
+lacinia. Aenean sed pellentesque 
+lacus. Mauris vitae maximus lectus, 
+at luctus velit. Pellentesque turpis 
+risus, blandit tempus dolor quis, 
+gravida dignissim metus. Orci varius 
+natoque penatibus et magnis dis 
+parturient montes, nascetur ridiculus 
+mus. Pellentesque quis orci nisi. 
+Aliquam erat volutpat.
+
+Nam finibus at tellus ac semper. 
+Mauris pharetra mollis felis, vitae 
+laoreet nisi lobortis nec. Donec 
+congue, erat sit amet auctor gravida, 
+diam urna dictum libero, ac 
+bibendum sapien mi ut mauris. Nulla 
+viverra ligula cursus ante scelerisque 
+pharetra. Suspendisse lacinia in risus 
+in accumsan. Aliquam porttitor justo 
+id feugiat varius. Pellentesque 
+scelerisque tristique dapibus. 
+Praesent sit amet ullamcorper nisi, id 
+convallis elit. "

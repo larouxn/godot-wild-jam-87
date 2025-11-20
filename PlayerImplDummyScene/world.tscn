@@ -1,0 +1,128 @@
+[gd_scene load_steps=14 format=3 uid="uid://v3wwd22rqrwo"]
+
+[ext_resource type="PackedScene" uid="uid://bpm7kbn4oyb1w" path="res://InputManager/input_manager.tscn" id="1_7hkb7"]
+[ext_resource type="PackedScene" uid="uid://bwtnomfwynpi5" path="res://Props/table.tscn" id="1_vp0se"]
+[ext_resource type="PackedScene" uid="uid://dxscn68lii64q" path="res://Props/typewriter.tscn" id="2_1g5j2"]
+[ext_resource type="PackedScene" uid="uid://qliltvxtxt56" path="res://Props/candle_tall.tscn" id="3_ivlv2"]
+[ext_resource type="PackedScene" uid="uid://bm4df37p8ivm5" path="res://Props/Spellbook/spellbook.tscn" id="5_gmr51"]
+[ext_resource type="Script" uid="uid://bdrruvd1jchww" path="res://PlayerImplDummyScene/player.gd" id="6_rsgq7"]
+[ext_resource type="PackedScene" uid="uid://dwinauedtnyin" path="res://UI/MainTextContainer/main_text_container.tscn" id="9_olvty"]
+
+[sub_resource type="Animation" id="Animation_gmr51"]
+length = 0.001
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, -0.023441851, 1.2924932, 0.7696304)
+
+[sub_resource type="Animation" id="Animation_341wk"]
+resource_name = "look_book"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -0.5]
+}
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, -0.023441851, 1.2924932, 0.7696304, 0.25, 1, 0.5, 1.292, 0.7)
+
+[sub_resource type="Animation" id="Animation_0tmwt"]
+resource_name = "look_typewriter"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.5, 0.0]
+}
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0.5, 1.292, 0.7, 0.25, 1, -0.023441851, 1.2924932, 0.7696304)
+
+[sub_resource type="Animation" id="Animation_rsgq7"]
+resource_name = "sway"
+length = 6.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 3, 4, 6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, -0.5, -0.5, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_olvty"]
+_data = {
+&"RESET": SubResource("Animation_gmr51"),
+&"look_book": SubResource("Animation_341wk"),
+&"look_typewriter": SubResource("Animation_0tmwt"),
+&"sway": SubResource("Animation_rsgq7")
+}
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_olvty"]
+viewport_path = NodePath("SubViewport")
+
+[node name="World" type="Node3D"]
+
+[node name="InputManager" parent="." instance=ExtResource("1_7hkb7")]
+
+[node name="Table" parent="." instance=ExtResource("1_vp0se")]
+
+[node name="Typewriter" parent="Table" instance=ExtResource("2_1g5j2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88258445, 0.17703605)
+
+[node name="CandleTall" parent="Table" instance=ExtResource("3_ivlv2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.81539345, 0.8887459, 0.18174505)
+
+[node name="Spellbook" parent="Table" node_paths=PackedStringArray("main_text_ui", "input_manager") instance=ExtResource("5_gmr51")]
+transform = Transform3D(0.8660252, 0, -0.49999988, 0, 0.9999999, 0, 0.49999988, 0, 0.8660252, 0.7293593, 0.917344, 0.24805233)
+main_text_ui = NodePath("../../MainTextContainer")
+input_manager = NodePath("../../InputManager")
+
+[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("input_manager")]
+transform = Transform3D(1, 0, 0, 0, 0.8899106, 0.4561353, 0, -0.4561353, 0.8899106, -0.023441851, 1.2924932, 0.7696304)
+script = ExtResource("6_rsgq7")
+input_manager = NodePath("../InputManager")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.9999998, 0, 0, 0, 0.9999999, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+libraries = {
+&"": SubResource("AnimationLibrary_olvty")
+}
+
+[node name="MainTextContainer" parent="." node_paths=PackedStringArray("input_manager") instance=ExtResource("9_olvty")]
+transform = Transform3D(0.05, 0, 0, 0, 0.04330127, 0.025, 0, -0.025, 0.04330127, 0, 1.1793518, 0.332)
+texture = SubResource("ViewportTexture_olvty")
+input_manager = NodePath("../InputManager")
