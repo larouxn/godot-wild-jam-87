@@ -1,11 +1,17 @@
-[gd_scene load_steps=7 format=3 uid="uid://blfginyn8bta8"]
+[gd_scene load_steps=9 format=3 uid="uid://blfginyn8bta8"]
 
 [ext_resource type="Script" uid="uid://dlwv4vrx74uw" path="res://UI/CursorText/cursor_text.gd" id="1_tatki"]
+[ext_resource type="Shader" uid="uid://c35b3ag04sfgx" path="res://UI/CursorText/cursor_text.gdshader" id="2_4hqcv"]
 [ext_resource type="FontFile" uid="uid://dr8ltua3y13rg" path="res://Fonts/CMU-Typewriter-Text/cmunbtl.otf" id="2_iok3q"]
 [ext_resource type="FontFile" uid="uid://cyadepqyog8cm" path="res://Fonts/CMU-Typewriter-Text/cmuntb.otf" id="3_4hqcv"]
 [ext_resource type="FontFile" uid="uid://b0u5d82xvhc3t" path="res://Fonts/CMU-Typewriter-Text/cmuntx.otf" id="4_v42hh"]
 [ext_resource type="FontFile" uid="uid://lqt4hgti71uw" path="res://Fonts/CMU-Typewriter-Text/cmunit.otf" id="5_udsty"]
 [ext_resource type="FontFile" uid="uid://cej5bucwns7l6" path="res://Fonts/CMU-Typewriter-Text/cmuntt.otf" id="6_6g4np"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v42hh"]
+resource_local_to_scene = true
+shader = ExtResource("2_4hqcv")
+shader_parameter/enabled = false
 
 [node name="CursorText" type="MarginContainer"]
 anchors_preset = 15
@@ -14,8 +20,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_tatki")
-text = ""
-
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -24,6 +28,7 @@ theme_override_constants/margin_top = 7
 theme_override_constants/margin_right = 43
 
 [node name="Text" type="RichTextLabel" parent="MarginContainer"]
+material = SubResource("ShaderMaterial_v42hh")
 layout_mode = 2
 theme_override_constants/line_separation = 3
 theme_override_constants/paragraph_separation = 3

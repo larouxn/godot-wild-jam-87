@@ -227,6 +227,10 @@ func link_text_state(text_state: TextState, words: PackedStringArray) -> void:
 	# Re-render the UI whenever the TextState text changes.
 	linked_text_state.updated.connect(render_linked_text)
 
+	linked_text_state.lock_changed.connect(
+		func(id: int, _locked: bool) -> void: render_linked_text(id)
+	)
+
 	# When the set of texts receiving input changes, check if our linked TextState
 	# is receiving input. If so, show the cursor; if not, hide it.
 	input_manager.active_texts_changed.connect(
@@ -271,5 +275,8 @@ func render_linked_text(_id: int) -> void:
 	var mistake := "[color=#ff0000][u]" + parts[1] + "[/u][/color]"
 	var untyped := "[color=#999999]" + parts[2] + "[/color]"
 	text = good + mistake + untyped
+	text_label.material.set_shader_parameter(
+		"enabled", linked_text_state.is_locked() and linked_text_state.is_mistyped()
+	)
 
 	set_cursor_position_from_lines(linked_text_state.input_index, linked_text_state_lines)

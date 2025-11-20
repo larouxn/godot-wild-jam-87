@@ -57,8 +57,21 @@ var selection_prefix := ""
 func set_main_text(new_main_text: TextState) -> void:
 	var prev_main_text := main_text
 	main_text = new_main_text
+	main_text.lock_changed.connect(handle_text_lock)
 	if prev_main_text == null:
 		set_active_text(new_main_text)
+	else:
+		prev_main_text.lock_changed.disconnect(handle_text_lock)
+
+
+# Callback for the lock_changed signal to sync up text that was locked and has
+# just been unlocked.
+func handle_text_lock(id: int, locked: bool) -> void:
+	if !locked:
+		for text in side_texts:
+			if text.id == id:
+				text.reset()
+		recalculate_input_state()
 
 
 # Add a side-text to the array of side-texts. The input state will be recalculated
@@ -68,6 +81,7 @@ func register_side_text(side_text: TextState) -> void:
 		assert(text.id != side_text.id, "Cannot register side-text with non-unique id")
 
 	side_text.reset()
+	side_text.lock_changed.connect(handle_text_lock)
 	side_texts.append(side_text)
 
 	if get_input_state() != InputState.MAIN_TEXT:
@@ -77,6 +91,9 @@ func register_side_text(side_text: TextState) -> void:
 # Remove a side text from the array of side-texts. The input state will be
 # recalculated to accommodate the removed side-text.
 func unregister_side_text(id: int) -> void:
+	for text in side_texts:
+		if text.id == id:
+			text.lock_changed.disconnect(handle_text_lock)
 	side_texts = side_texts.filter(func(text: TextState) -> bool: return text.id != id)
 
 	var input_state := get_input_state()
@@ -88,7 +105,7 @@ func unregister_side_text(id: int) -> void:
 		recalculate_input_state()
 
 
-# Update the input state after a side-text has been added or removed.
+# Update the input state after a side-text has been added, removed, or unlocked.
 func recalculate_input_state() -> void:
 	var input_state := get_input_state()
 
@@ -176,7 +193,8 @@ func unset_active_text() -> void:
 
 func get_text_candidates_matching_prefix(prefix: String) -> Array[TextState]:
 	return side_texts.filter(
-		func(candidate: TextState) -> bool: return candidate.begins_with(prefix)
+		func(candidate: TextState) -> bool:
+			return candidate.begins_with(prefix) and !candidate.is_locked()
 	)
 
 
@@ -191,7 +209,7 @@ func is_input_state_main_text() -> bool:
 	var prefix_is_empty := selection_prefix.is_empty()
 	var side_texts_are_reset := true
 	for text in side_texts:
-		side_texts_are_reset = side_texts_are_reset and text.is_reset()
+		side_texts_are_reset = side_texts_are_reset and (text.is_reset() or text.is_locked())
 
 	return active_is_main and prefix_is_empty and side_texts_are_reset
 
@@ -206,7 +224,9 @@ func is_input_state_side_text() -> bool:
 	var other_side_texts_are_reset := true
 	for text in side_texts:
 		if text.id != active_text[0].id:
-			other_side_texts_are_reset = other_side_texts_are_reset and text.is_reset()
+			other_side_texts_are_reset = (
+				other_side_texts_are_reset and (text.is_reset() or text.is_locked())
+			)
 
 	return active_isnt_main and prefix_is_empty and other_side_texts_are_reset
 

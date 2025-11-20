@@ -4,6 +4,7 @@ signal updated(id: int)
 signal newline(id: int)
 signal finished(id: int)
 signal mistyped(id: int)
+signal lock_changed(id: int, is_locked: bool)
 
 static var instance_counter := 0
 
@@ -12,6 +13,12 @@ var text := ""
 var input_index := 0
 var mistake_index := -1
 var typed_since_mistake := ""
+var locked := false:
+	set(new_locked):
+		var prev_locked := locked
+		locked = new_locked
+		if prev_locked != locked:
+			lock_changed.emit(id, locked)
 
 
 func _init(in_text: String = "") -> void:
@@ -26,6 +33,9 @@ func begins_with(prefix: String) -> bool:
 
 
 func set_prefix(prefix: String) -> void:
+	if locked:
+		return
+
 	reset()
 	for chr in prefix:
 		append_character(chr)
@@ -33,6 +43,9 @@ func set_prefix(prefix: String) -> void:
 
 func append_character(chr: String) -> void:
 	if input_index >= len(text):
+		return
+
+	if locked:
 		return
 
 	var chr_matches := chr == text[input_index]
@@ -63,6 +76,9 @@ func backspace() -> void:
 	if input_index < 1:
 		return
 
+	if locked:
+		return
+
 	input_index -= 1
 
 	if input_index <= mistake_index:
@@ -81,7 +97,27 @@ func get_typed_string() -> String:
 	return text.substr(0, mistake_index) + typed_since_mistake
 
 
+func reset_and_lock() -> void:
+	reset()
+	lock()
+
+
+func lock() -> void:
+	locked = true
+
+
+func unlock() -> void:
+	locked = false
+
+
+func is_locked() -> bool:
+	return locked
+
+
 func reset() -> void:
+	if locked:
+		return
+
 	input_index = 0
 	mistake_index = -1
 	typed_since_mistake = ""
