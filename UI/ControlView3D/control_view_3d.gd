@@ -22,21 +22,21 @@ func _ready() -> void:
 	child_exiting_tree.connect(_on_child_exiting)
 
 
-# If a child node is added and it is a Control node, sync the viewport.
+## If a child node is added and it is a Control node, sync the viewport.
 func _on_child_added(node: Node) -> void:
 	if node is Control:
 		sync_viewport()
 
 
-# If a child node is removed and it is a Control node, sync the viewport.
+## If a child node is removed and it is a Control node, sync the viewport.
 func _on_child_exiting(node: Node) -> void:
 	if node is Control:
 		# Call deferred so the exiting node will have exited the tree before syncing.
 		sync_viewport.call_deferred()
 
 
-# Move a child node from the ControlView3D into the viewport. Behaves differently
-# depending on whether it's running in the editor or not.
+## Move a child node from the ControlView3D into the viewport. Behaves differently
+## depending on whether it's running in the editor or not.
 func move_child_to_viewport(node: Control) -> void:
 	if Engine.is_editor_hint():
 		# Duplicate the node if we are running as an editor tool since we want the
@@ -48,15 +48,15 @@ func move_child_to_viewport(node: Control) -> void:
 		viewport.add_child(node)
 
 
-# Remove all children from the viewport.
+## Remove all children from the viewport.
 func clear_viewport() -> void:
 	for child in viewport.get_children():
 		viewport.remove_child(child)
 		child.queue_free()
 
 
-# Sync the viewport by clearing its children and moving our children that are
-# Control nodes into the viewport.
+## Sync the viewport by clearing its children and moving our children that are
+## Control nodes into the viewport.
 func sync_viewport() -> void:
 	clear_viewport()
 
@@ -65,7 +65,7 @@ func sync_viewport() -> void:
 			move_child_to_viewport(child)
 
 
-# Show in-editor warnings for misconfigurations.
+## Show in-editor warnings for misconfigurations.
 func _get_configuration_warnings() -> PackedStringArray:
 	var warnings := []
 

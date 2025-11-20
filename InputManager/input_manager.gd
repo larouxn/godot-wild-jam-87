@@ -1,59 +1,60 @@
 class_name InputManager extends Node3D
 
+## Emitted any time a key is handled by the InputManager.
 signal key_pressed
 
-# Emitted with the new InputState whenever the InputState changes.
+## Emitted with the new InputState whenever the InputState changes.
 signal input_state_changed(input_state: InputState)
 
-# Fires when the active text(s) change. This could occur when transitioning to
-# a single active text (MAIN_TEXT, SIDE_TEXT) or when updating the prefix during
-# side-text selection.
-#
-# The argument is a list of TextStates which are currently receiving input.
-#
-# NOTE: This fires every time the prefix changes during side-text selection,
-#       regardless of whether or not the set of TextStates currently receiving
-#       input has changed.
+## Fires when the active text(s) change. This could occur when transitioning to
+## a single active text (MAIN_TEXT, SIDE_TEXT) or when updating the prefix during
+## side-text selection.
+##
+## The argument is a list of TextStates which are currently receiving input.
+##
+## NOTE: This fires every time the prefix changes during side-text selection,
+##       regardless of whether or not the set of TextStates currently receiving
+##       input has changed.
 signal active_texts_changed(text: Array[TextState])
 
-# The current state of the input manager.
+## The current state of the input manager.
 enum InputState {
-	# Routing keyboard input into the main text
+	## Routing keyboard input into the main text
 	MAIN_TEXT,
-	# Routing keyboard input into multiple side-texts while narrowing down a match
+	## Routing keyboard input into multiple side-texts while narrowing down a match
 	SELECTION,
-	# Routing keyboard input into the side-text that is the current active text
+	## Routing keyboard input into the side-text that is the current active text
 	SIDE_TEXT
 }
 
-# The main text required to win the game.
+## The main text required to win the game.
 var main_text: TextState:
 	set = set_main_text
 
-# Side texts that can be typed to complete optional objectives (e.g. lighting a
-# candle or casting a spell from the spellbook).
+## Side texts that can be typed to complete optional objectives (e.g. lighting a
+## candle or casting a spell from the spellbook).
 var side_texts: Array[TextState] = []
 
-# The text that is focused and currently receiving input (assuming we are not in
-# the process of narrowing down side-texts, in which case, multiple side-texts
-# may receive input at once until one is chosen as the active text).
-#
-# It is represented as an array to allow for "no active text" (e.g. during side-text
-# selection), but it should only ever have 0 or 1 element.
-#
-# This always starts with the main text.
+## The text that is focused and currently receiving input (assuming we are not in
+## the process of narrowing down side-texts, in which case, multiple side-texts
+## may receive input at once until one is chosen as the active text).
+##
+## It is represented as an array to allow for "no active text" (e.g. during side-text
+## selection), but it should only ever have 0 or 1 element.
+##
+## This always starts with the main text.
 var active_text: Array[TextState] = []:
 	set(new_active_text):
 		assert(len(new_active_text) <= 1, "active_text should only ever have 0 or 1 element")
 		active_text = new_active_text
 
-# When we begin matching a side-text, we store the characters typed here until only
-# one side-text matches this prefix, at which point it becomes the active text and
-# the prefix is cleared.
+## When we begin matching a side-text, we store the characters typed here until only
+## one side-text matches this prefix, at which point it becomes the active text and
+## the prefix is cleared.
 var selection_prefix := ""
 
 
-# Set the main text. If it was previously unset, also set it as the active text.
+## Set the main text. If it was previously unset, also set it as the active text.
 func set_main_text(new_main_text: TextState) -> void:
 	var prev_main_text := main_text
 	main_text = new_main_text
@@ -64,8 +65,8 @@ func set_main_text(new_main_text: TextState) -> void:
 		prev_main_text.lock_changed.disconnect(handle_text_lock)
 
 
-# Callback for the lock_changed signal to sync up text that was locked and has
-# just been unlocked.
+## Callback for the lock_changed signal to sync up text that was locked and has
+## just been unlocked.
 func handle_text_lock(id: int, locked: bool) -> void:
 	if !locked:
 		for text in side_texts:
@@ -74,8 +75,8 @@ func handle_text_lock(id: int, locked: bool) -> void:
 		recalculate_input_state()
 
 
-# Add a side-text to the array of side-texts. The input state will be recalculated
-# to accommodate the new side-text.
+## Add a side-text to the array of side-texts. The input state will be recalculated
+## to accommodate the new side-text.
 func register_side_text(side_text: TextState) -> void:
 	for text in side_texts:
 		assert(text.id != side_text.id, "Cannot register side-text with non-unique id")
@@ -88,8 +89,8 @@ func register_side_text(side_text: TextState) -> void:
 		recalculate_input_state()
 
 
-# Remove a side text from the array of side-texts. The input state will be
-# recalculated to accommodate the removed side-text.
+## Remove a side text from the array of side-texts. The input state will be
+## recalculated to accommodate the removed side-text.
 func unregister_side_text(id: int) -> void:
 	for text in side_texts:
 		if text.id == id:
@@ -105,7 +106,7 @@ func unregister_side_text(id: int) -> void:
 		recalculate_input_state()
 
 
-# Update the input state after a side-text has been added, removed, or unlocked.
+## Update the input state after a side-text has been added, removed, or unlocked.
 func recalculate_input_state() -> void:
 	var input_state := get_input_state()
 
@@ -144,7 +145,7 @@ func recalculate_input_state() -> void:
 		set_active_text(main_text)
 
 
-# Return whether or not the given TextState is currently receiving input.
+## Return whether or not the given TextState is currently receiving input.
 func is_text_active(text: TextState) -> bool:
 	var input_state := get_input_state()
 
@@ -154,17 +155,9 @@ func is_text_active(text: TextState) -> bool:
 	return text == active_text[0]
 
 
-func handle_key(key: String) -> void:
-	if key == "backspace":
-		backspace()
-	elif key == "tab" or key == "escape":
-		set_active_text(main_text)
-	else:
-		route_char(key)
-
-	key_pressed.emit()
-
-
+## Set the active text. This resets progress on all side-texts other than the
+## active text, unless the side-text is locked. It also clears the selection
+## prefix.
 func set_active_text(new_active_text: TextState) -> void:
 	var prev_active_text := active_text
 
@@ -183,6 +176,7 @@ func set_active_text(new_active_text: TextState) -> void:
 	active_texts_changed.emit(active_text)
 
 
+## Unsets the active text. This implies we are entering SELECTION mode.
 func unset_active_text() -> void:
 	# NOTE: This implies that the input state has changed to SELECTION, but we are
 	#       emitting that event where the other selection logic is happening, not
@@ -191,6 +185,8 @@ func unset_active_text() -> void:
 	active_texts_changed.emit(active_text)
 
 
+## Returns a list of side-texts that begin with the given prefix and are not
+## locked.
 func get_text_candidates_matching_prefix(prefix: String) -> Array[TextState]:
 	return side_texts.filter(
 		func(candidate: TextState) -> bool:
@@ -198,12 +194,12 @@ func get_text_candidates_matching_prefix(prefix: String) -> Array[TextState]:
 	)
 
 
-# Return whether the input manager is in the SELECTION state
+## Return whether the input manager is in the SELECTION state
 func is_input_state_selection() -> bool:
 	return active_text.is_empty() and !selection_prefix.is_empty()
 
 
-# Return whether the input manager is in the MAIN_TEXT state
+## Return whether the input manager is in the MAIN_TEXT state
 func is_input_state_main_text() -> bool:
 	var active_is_main := !active_text.is_empty() and active_text[0].id == main_text.id
 	var prefix_is_empty := selection_prefix.is_empty()
@@ -214,7 +210,7 @@ func is_input_state_main_text() -> bool:
 	return active_is_main and prefix_is_empty and side_texts_are_reset
 
 
-# Return whether the input manager is in the SIDE_TEXT state
+## Return whether the input manager is in the SIDE_TEXT state
 func is_input_state_side_text() -> bool:
 	if active_text.is_empty():
 		return false
@@ -231,12 +227,12 @@ func is_input_state_side_text() -> bool:
 	return active_isnt_main and prefix_is_empty and other_side_texts_are_reset
 
 
-# Return the current state the input manager is in.
-#
-# It is possible that it is not in any known state (due to stateful variables
-# being set wrong or getting out of sync due to a bug). If this happens, this
-# function will call `assert` to throw us into a debugger. In a production build,
-# the game would just exit.
+## Return the current state the input manager is in.
+##
+## It is possible that it is not in any known state (due to stateful variables
+## being set wrong or getting out of sync due to a bug). If this happens, this
+## function will call `assert` to throw us into a debugger. In a production build,
+## the game would just exit.
 func get_input_state() -> InputState:
 	if is_input_state_selection():
 		return InputState.SELECTION
@@ -254,14 +250,14 @@ func get_input_state() -> InputState:
 	return InputState.MAIN_TEXT
 
 
-# Handle the backspace keypress.
-#
-# Aside from just removing the last typed character of a text, this can
-# transition us from:
-#
-#   - SELECTION -> MAIN_TEXT
-#   - SIDE_TEXT -> SELECTION
-#   - SIDE_TEXT -> MAIN_TEXT
+## Handle the backspace keypress.
+##
+## Aside from just removing the last typed character of a text, this can
+## transition us from:
+##
+##   - SELECTION -> MAIN_TEXT
+##   - SIDE_TEXT -> SELECTION
+##   - SIDE_TEXT -> MAIN_TEXT
 func backspace() -> void:
 	var input_state := get_input_state()
 
@@ -309,8 +305,8 @@ func backspace() -> void:
 		active_text[0].backspace()
 
 
-# Takes a character and routes it to the correct text, possible switching the
-# active text.
+## Takes a character and routes it to the correct text, possible switching the
+## active text.
 func route_char(key: String) -> void:
 	var input_state := get_input_state()
 
@@ -375,3 +371,14 @@ func _unhandled_input(event: InputEvent) -> void:
 				handle_key(key)
 		else:
 			handle_key(key)
+
+
+func handle_key(key: String) -> void:
+	if key == "backspace":
+		backspace()
+	elif key == "tab" or key == "escape":
+		set_active_text(main_text)
+	else:
+		route_char(key)
+
+	key_pressed.emit()
