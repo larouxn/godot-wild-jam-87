@@ -1,0 +1,275 @@
+@tool
+
+class_name CursorText extends MarginContainer
+
+const CURSOR_TEXT := "[pulse freq=5.0 color=#ffffff40 ease=-5.0][b]|[/b][/pulse]"
+
+@export_group("CursorText")
+
+## The raw text of the label. If you've linked a TextState to this CursorText, you
+## probably don't want to set this directly. Instead, use set_text_lines or
+## set_text_words.
+@export_multiline var text := "":
+	set(new_text):
+		text = new_text
+		if text_label != null:
+			text_label.text = new_text
+
+## The position of the cursor respresented as xy-coordinates. x is the column the
+## cursor is on, and y is the row.
+@export var cursor_position := Vector2i(0, 0):
+	set(new_cursor_position):
+		cursor_position = new_cursor_position
+		update_cursor()
+
+## The font size. This will get propagated to all variants of the font (regular,
+## bold, italic, etc.). The cursor's bold font variant will bigger, with a size
+## of font_size + 10. The bold font is what the cursor is intended to be drawn
+## with.
+##
+## If you change the font size, you may also need to adjust the cursor offset to
+## look right.
+@export var font_size := 45:
+	set(new_font_size):
+		font_size = new_font_size
+		update_font_size()
+
+## The offset of the cursor from the text represented as xy-coordinates. x is the
+## cursor's offset from the left of the text and y is the offset from the top.
+##
+## This is set to a reasonable default but may need to be adjusted when changing
+## the font size.
+@export var cursor_offset := Vector2i(-14, -7):
+	set(new_cursor_offset):
+		cursor_offset = new_cursor_offset
+		update_cursor_offset()
+
+@export_group("InputManager Link")
+
+## The InputManager used in this scene. This must be set if you are using the
+## link_text_state functions.
+@export var input_manager: InputManager
+
+## The text state linked to this UI element.
+var linked_text_state: TextState
+
+## The text of the linked_text_state represented as an array of lines.
+var linked_text_state_lines: PackedStringArray
+
+@onready var cursor := $Cursor as RichTextLabel
+@onready var text_label := $MarginContainer/Text as RichTextLabel
+@onready var text_margin := $MarginContainer as MarginContainer
+
+
+func _ready() -> void:
+	update_cursor()
+	update_font_size()
+	update_cursor_offset()
+
+
+func update_cursor() -> void:
+	if cursor == null:
+		return
+
+	cursor.text = "\n".repeat(cursor_position.y)
+	cursor.text += " ".repeat(cursor_position.x) + CURSOR_TEXT
+
+
+func update_font_size() -> void:
+	if cursor == null or text_label == null:
+		return
+
+	var size_keys: PackedStringArray = ["normal", "bold", "bold_italics", "italics", "mono"]
+
+	for key in size_keys:
+		text_label.set("theme_override_font_sizes/" + key + "_font_size", font_size)
+
+	cursor.set("theme_override_font_sizes/normal_font_size", font_size)
+	cursor.set("theme_override_font_sizes/bold_font_size", font_size + 10)
+
+	# Leave some room at the end of the text for the cursor to hang over.
+	text_margin.set("theme_override_constants/margin_right", get_cursor_size().x * 1.5)
+
+
+func update_cursor_offset() -> void:
+	if text_margin == null:
+		return
+
+	# We invert the offset parameters because this is really offsetting the text,
+	# not the cursor.
+	text_margin.set("theme_override_constants/margin_left", -1 * cursor_offset.x)
+	text_margin.set("theme_override_constants/margin_top", -1 * cursor_offset.y)
+
+
+## Calculate the number of characters that will fit on a single line of this
+## CursorText. This takes the size of this CursorText as well as the font size
+## into account.
+func get_characters_per_line() -> int:
+	var font: Font = text_label.get("theme_override_fonts/normal_font")
+	var fsize: int = text_label.get("theme_override_font_sizes/normal_font_size")
+	var char_width := font.get_string_size(" ", HORIZONTAL_ALIGNMENT_LEFT, -1, fsize).x
+
+	var margin_left: int = text_margin.get("theme_override_constants/margin_left")
+	var margin_right: int = text_margin.get("theme_override_constants/margin_right")
+	var container_width := text_margin.size.x - margin_left - margin_right
+
+	return floor(container_width / char_width)
+
+
+## Get the size of the cursor. This is different from the size of other characters
+## since the cursor is using a bigger font.
+func get_cursor_size() -> Vector2:
+	var font: Font = cursor.get("theme_override_fonts/bold_font")
+	var fsize: int = cursor.get("theme_override_font_sizes/bold_font_size")
+	return font.get_string_size("|", HORIZONTAL_ALIGNMENT_LEFT, -1, fsize)
+
+
+## Convert an array of words into an array of lines based on the measured number
+## of characters that will fit on a line inside this CursorText.
+##
+## Note that character counting around spaces is a little sloppy. A line will
+## never be longer than what would fit, but may wrap earlier than necessary if
+## spaces were counted towards the text length but trimmed from the final line.
+func words_to_lines(words: PackedStringArray) -> PackedStringArray:
+	var line_length := get_characters_per_line()
+
+	var result := []
+	var current := ""
+	for word in words:
+		if len(word) >= line_length:
+			if !current.strip_edges().is_empty():
+				result.append(current.strip_edges())
+			result.append(word.strip_edges())
+			current = ""
+		elif len(word) + len(current) > line_length:
+			result.append(current.strip_edges())
+			current = word
+		else:
+			current += word
+	result.append(current.strip_edges())
+
+	return result
+
+
+## Given an index into the text and the lines of the text as an array, return the
+## position of the cursor as xy-coordinates suitable for cursor_position.
+func cursor_position_from_lines(index: int, lines: PackedStringArray) -> Vector2i:
+	var current_line := 0
+	var cumulative_length := 0
+	for line in lines:
+		var line_len := len(line)
+		if index <= line_len + cumulative_length:
+			break
+		else:
+			cumulative_length += line_len + 1
+			current_line += 1
+
+	return Vector2i(index - cumulative_length, current_line)
+
+
+## The same as cursor_position_from_lines, but sets the cursor_position instead of
+## returning the coordinates.
+func set_cursor_position_from_lines(index: int, lines: PackedStringArray) -> void:
+	cursor_position = cursor_position_from_lines(index, lines)
+
+
+## Set the text of this CursorText to the given array of lines joined with a
+## newline character.
+##
+## If linked to a TextState, also update the TextState's text.
+func set_text_lines(new_text_lines: PackedStringArray) -> void:
+	if linked_text_state != null:
+		linked_text_state.text = "\n".join(new_text_lines)
+		linked_text_state_lines = new_text_lines
+		render_linked_text(linked_text_state.id)
+	else:
+		text_label.text = "\n".join(new_text_lines)
+
+
+## Set the text of this CursorText to the given array of words. This is just a
+## shortcut for set_text_lines(words_to_lines(words)).
+##
+## If linked to a TextState, also update the TextState's text.
+func set_text_words(words: PackedStringArray) -> void:
+	set_text_lines(words_to_lines(words))
+
+
+## Show the cursor.
+func show_cursor() -> void:
+	cursor.show()
+
+
+## Hide the cursor.
+func hide_cursor() -> void:
+	cursor.hide()
+
+
+## Toggle the visibility of the cursor.
+func toggle_cursor() -> void:
+	cursor.visible = !cursor.visible
+
+
+## Link a TextState to this CursorText. This will set the text of the TextState
+## to the array of words passed in and wire up signals to update this UI component
+## whenever the TextState text or the set of texts receiving input changes.
+func link_text_state(text_state: TextState, words: PackedStringArray) -> void:
+	assert(input_manager != null, "InputManager must be attached to link a text state")
+	assert(
+		input_manager.main_text == text_state or text_state in input_manager.side_texts,
+		"TextState must be managed by the attached InputManager"
+	)
+	# I just don't want to implement it right now...
+	assert(linked_text_state == null, "linked_text_state cannot be reassigned")
+
+	linked_text_state = text_state
+	set_text_words(words)
+
+	# Re-render the UI whenever the TextState text changes.
+	linked_text_state.updated.connect(render_linked_text)
+
+	# When the set of texts receiving input changes, check if our linked TextState
+	# is receiving input. If so, show the cursor; if not, hide it.
+	input_manager.active_texts_changed.connect(
+		func(active_texts: Array[TextState]) -> void:
+			cursor.visible = linked_text_state in active_texts
+	)
+
+	# Check if the text we are linking is currently receiving input. If not, hide
+	# the cursor.
+	if !input_manager.is_text_active(linked_text_state):
+		cursor.visible = false
+
+
+## Like link_text_state but also creates the TextState and registers it with the
+## InputManager automatically. The text of TextState is initialized with the array
+## of words passed in.
+##
+## By default, the TextState is registered as a side-text. To register it as the
+## main text instead, set the is_main_text parameter to true.
+##
+## Returns the newly created TextState.
+func create_and_link_text_state(words: PackedStringArray, is_main_text: bool = false) -> TextState:
+	assert(input_manager != null, "InputManager must be attached to link a text state")
+
+	var text_state := TextState.new()
+
+	if is_main_text:
+		input_manager.set_main_text(text_state)
+	else:
+		input_manager.register_side_text(text_state)
+
+	link_text_state(text_state, words)
+
+	return text_state
+
+
+## Render the linked TextState to the screen by writing to the RichTextLabel and
+## moving the cursor to the right position.
+func render_linked_text(_id: int) -> void:
+	var parts := linked_text_state.parts()
+	var good := "[color=#00ff00]" + parts[0] + "[/color]"
+	var mistake := "[color=#ff0000][u]" + parts[1] + "[/u][/color]"
+	var untyped := "[color=#999999]" + parts[2] + "[/color]"
+	text = good + mistake + untyped
+
+	set_cursor_position_from_lines(linked_text_state.input_index, linked_text_state_lines)

@@ -1,5 +1,7 @@
 class_name TextState
 
+signal updated(id: int)
+signal newline(id: int)
 signal finished(id: int)
 signal mistyped(id: int)
 
@@ -12,7 +14,7 @@ var mistake_index := -1
 var typed_since_mistake := ""
 
 
-func _init(in_text: String) -> void:
+func _init(in_text: String = "") -> void:
 	id = instance_counter
 	instance_counter += 1
 
@@ -44,6 +46,13 @@ func append_character(chr: String) -> void:
 
 	if mistake_index != -1:
 		typed_since_mistake += chr
+
+	updated.emit(id)
+
+	if chr_matches and text[input_index - 1] == "\n":
+		newline.emit(id)
+
+	if mistake_index != -1:
 		mistyped.emit(id)
 
 	if mistake_index == -1 && input_index >= len(text):
@@ -62,6 +71,8 @@ func backspace() -> void:
 	if !typed_since_mistake.is_empty():
 		typed_since_mistake = typed_since_mistake.left(-1)
 
+	updated.emit(id)
+
 
 func get_typed_string() -> String:
 	if mistake_index == -1:
@@ -74,6 +85,7 @@ func reset() -> void:
 	input_index = 0
 	mistake_index = -1
 	typed_since_mistake = ""
+	updated.emit(id)
 
 
 func is_reset() -> bool:
