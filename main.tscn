@@ -79,11 +79,6 @@ transform = Transform3D(1, 0, -1.4210855e-14, 0, 1, 0, 1.4210855e-14, 0, 1, 0, 0
 [node name="CandleTall" parent="Props/Table" instance=ExtResource("7_2cqfq")]
 transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, -0.57155985, 0.88346285, 0.17029244)
 
-[node name="OmniLight3D" type="OmniLight3D" parent="Props/Table/CandleTall"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.24868852, 0)
-light_color = Color(1, 0.78999996, 0.64, 1)
-light_energy = 0.5
-
 [node name="Typewriter" parent="Props/Table" instance=ExtResource("6_82xsv")]
 transform = Transform3D(1, 0, -4.2632564e-14, 0, 1, 0, 4.2632564e-14, 0, 1, 0, 0.8863606, 0.17754018)
 
@@ -96,29 +91,17 @@ transform = Transform3D(1.5, 0, 3.576279e-07, 0, 1.5, 0, -3.576279e-07, 0, 1.5, 
 [node name="CandleShort2" parent="Props/Bed" instance=ExtResource("6_vivmo")]
 transform = Transform3D(-0.87241966, 0.067016214, -0.4841428, 0.07491742, 0.9971856, 0.0030325565, 0.48298323, -0.03362506, -0.8749844, -0.6890149, 0.75081193, -1.1719096)
 
-[node name="OmniLight3D" type="OmniLight3D" parent="Props/Bed/CandleShort2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13754594, 0)
-light_color = Color(1, 0.78999996, 0.64, 1)
-light_energy = 0.5
-
 [node name="Bookshelf" parent="Props" instance=ExtResource("5_2cqfq")]
 transform = Transform3D(-1.5, 0, -1.3113416e-07, 0, 1.5, 0, 1.3113416e-07, 0, -1.5, 3.5281887, 0, 6)
 
 [node name="CandleShort2" parent="Props/Bookshelf" instance=ExtResource("6_vivmo")]
 transform = Transform3D(0.020226909, 0, -0.99979556, 0, 1.0000002, 0, 0.99979556, 0, 0.020226909, -0.2759006, 1.1547004, 0.07230258)
 
-[node name="OmniLight3D" type="OmniLight3D" parent="Props/Bookshelf/CandleShort2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13754594, 0)
-light_color = Color(1, 0.78999996, 0.64, 1)
-light_energy = 0.5
-
 [node name="CandleShort3" parent="Props/Bookshelf" instance=ExtResource("6_vivmo")]
 transform = Transform3D(-0.67191464, 0, 0.740629, 0, 1.0000005, 0, -0.740629, 0, -0.67191464, 0.23314738, 1.5354838, 0.07230258)
 
-[node name="OmniLight3D" type="OmniLight3D" parent="Props/Bookshelf/CandleShort3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13754594, 0)
-light_color = Color(1, 0.78999996, 0.64, 1)
-light_energy = 0.5
+[node name="CandleShort4" parent="Props/Bookshelf" instance=ExtResource("6_vivmo")]
+transform = Transform3D(-0.25701484, 0, -0.96640795, 0, 1.0000007, 0, 0.96640795, 0, -0.25701484, -0.22918248, 1.9226393, 0.07229996)
 
 [node name="BookGroupMedium1" parent="Props/Bookshelf" instance=ExtResource("9_getpj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7845375, 0.03971672)
@@ -144,18 +127,8 @@ transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -1.7473997, 0, -6.12726
 [node name="CandleShort2" parent="Props/NightStand" instance=ExtResource("6_vivmo")]
 transform = Transform3D(0.020226909, 0, -0.9997956, 0, 1.0000002, 0, 0.9997956, 0, 0.020226909, -0.14855194, 1.2133737, -0.010570526)
 
-[node name="OmniLight3D" type="OmniLight3D" parent="Props/NightStand/CandleShort2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13754594, 0)
-light_color = Color(1, 0.78999996, 0.64, 1)
-light_energy = 0.5
-
 [node name="CandleTall" parent="Props/NightStand" instance=ExtResource("7_2cqfq")]
 transform = Transform3D(-1, 0, -1.5099582e-07, 0, 1, 0, 1.5099582e-07, 0, -1, -0.0028321743, 1.2093297, -0.030585766)
-
-[node name="OmniLight3D" type="OmniLight3D" parent="Props/NightStand/CandleTall"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.24868852, 0)
-light_color = Color(1, 0.78999996, 0.64, 1)
-light_energy = 0.5
 
 [node name="BookStack1" parent="Props/NightStand" instance=ExtResource("11_d13ii")]
 transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 0.45227927, 0)
@@ -167,62 +140,27 @@ transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, -0.1
 transform = Transform3D(-6.556708e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.556708e-08, 5.7578278, 2.007988, 0)
 
 [node name="CandleShort2" parent="Props/Shelf" instance=ExtResource("6_vivmo")]
-transform = Transform3D(0.020226909, 0, -0.9997956, 0, 1.0000002, 0, 0.9997956, 0, 0.020226909, -0.41980663, 0.11430156, 0.24722862)
-
-[node name="OmniLight3D" type="OmniLight3D" parent="Props/Shelf/CandleShort2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13754594, 0)
-light_color = Color(1, 0.78999996, 0.64, 1)
-light_energy = 0.5
+transform = Transform3D(-0.634879, 0, -0.7726118, 0, 1.0000002, 0, 0.7726118, 0, -0.634879, -0.41980663, 0.11430156, 0.24722862)
 
 [node name="CandleTall" parent="Props/Shelf" instance=ExtResource("7_2cqfq")]
 transform = Transform3D(-1, 0, -1.5099582e-07, 0, 1, 0, 1.5099582e-07, 0, -1, -0.21957478, 0.110257626, 0.22721362)
 
-[node name="OmniLight3D" type="OmniLight3D" parent="Props/Shelf/CandleTall"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.24868852, 0)
-light_color = Color(1, 0.78999996, 0.64, 1)
-light_energy = 0.5
-
 [node name="Mirror" type="Node3D" parent="Props"]
 
 [node name="CandleShort2" parent="Props/Mirror" instance=ExtResource("6_vivmo")]
-transform = Transform3D(-0.37421829, 0, -0.9273408, 0, 1.0000002, 0, 0.9273408, 0, -0.37421829, -0.61688644, 0.12733448, 5.3922753)
-
-[node name="OmniLight3D" type="OmniLight3D" parent="Props/Mirror/CandleShort2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13754594, 0)
-light_color = Color(1, 0.78999996, 0.64, 1)
-light_energy = 0.5
+transform = Transform3D(0.45106453, 0, 0.89249134, 0, 1.0000001, 0, -0.89249134, 0, 0.45106453, -0.61688644, 0.013010442, 5.3922753)
 
 [node name="CandleTall" parent="Props/Mirror" instance=ExtResource("7_2cqfq")]
-transform = Transform3D(-0.9195818, 0, 0.3928988, 0, 1, 0, -0.3928988, 0, -0.9195818, -0.42489308, 0.12329054, 5.452541)
-
-[node name="OmniLight3D" type="OmniLight3D" parent="Props/Mirror/CandleTall"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.24868852, 0)
-light_color = Color(1, 0.78999996, 0.64, 1)
-light_energy = 0.5
+transform = Transform3D(-0.9195818, 0, 0.3928988, 0, 1, 0, -0.3928988, 0, -0.9195818, -0.42489308, 0.0089665055, 5.452541)
 
 [node name="CandleShort3" parent="Props/Mirror" instance=ExtResource("6_vivmo")]
-transform = Transform3D(-0.250566, 0, 0.9680997, 0, 1.0000002, 0, -0.9680997, 0, -0.250566, -3.532022, 0.250625, 5.2711005)
-
-[node name="OmniLight3D" type="OmniLight3D" parent="Props/Mirror/CandleShort3"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13754594, 0)
-light_color = Color(1, 0.78999996, 0.64, 1)
-light_energy = 0.5
+transform = Transform3D(0.23675331, 0, 0.97157, 0, 1.0000002, 0, -0.97157, 0, 0.23675331, -3.6538606, 0.007298231, 5.59468)
 
 [node name="CandleTall2" parent="Props/Mirror" instance=ExtResource("7_2cqfq")]
-transform = Transform3D(0.9729699, 0, 0.23093337, 0, 1, 0, -0.23093337, 0, 0.9729699, -3.7736921, 0.24658108, 5.3368144)
-
-[node name="OmniLight3D" type="OmniLight3D" parent="Props/Mirror/CandleTall2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.24868852, 0)
-light_color = Color(1, 0.78999996, 0.64, 1)
-light_energy = 0.5
+transform = Transform3D(-0.83047926, 0, -0.5570501, 0, 1, 0, 0.5570501, 0, -0.83047926, -3.8145485, 0.013103247, 5.987206)
 
 [node name="CandleShort4" parent="Props/Mirror" instance=ExtResource("6_vivmo")]
-transform = Transform3D(-0.250566, 0, 0.9680997, 0, 1.0000002, 0, -0.9680997, 0, -0.250566, -3.832418, 0.250625, 5.1532407)
-
-[node name="OmniLight3D" type="OmniLight3D" parent="Props/Mirror/CandleShort4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13754594, 0)
-light_color = Color(1, 0.78999996, 0.64, 1)
-light_energy = 0.5
+transform = Transform3D(0.801515, 0, -0.597975, 0, 1.0000002, 0, 0.597975, 0, 0.801515, -3.9542565, 0.007298231, 5.47682)
 
 [node name="MirrorFrame" parent="Props/Mirror" instance=ExtResource("17_a6jrf")]
 transform = Transform3D(1.2308066, 0, 0, 0, 0.20028314, 1.7456013, 0, -1.135862, 0.3077967, -2.1505723, 1.7622366, 6.376333)
@@ -234,20 +172,10 @@ size = Vector2(2, 3)
 [node name="AboveDoor" type="Node3D" parent="Props"]
 
 [node name="CandleShort2" parent="Props/AboveDoor" instance=ExtResource("6_vivmo")]
-transform = Transform3D(0.025283704, 0, -1.2497443, 0, 1.25, 0, 1.2497443, 0, 0.025283704, 3.7370152, 3.5413136, -6.584533)
-
-[node name="OmniLight3D" type="OmniLight3D" parent="Props/AboveDoor/CandleShort2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.13754594, 0)
-light_color = Color(1, 0.78999996, 0.64, 1)
-light_energy = 0.5
+transform = Transform3D(-1.1076938, 0, -0.57923603, 0, 1.25, 0, 0.57923603, 0, -1.1076938, 3.7370152, 3.5413136, -6.584533)
 
 [node name="CandleTall" parent="Props/AboveDoor" instance=ExtResource("7_2cqfq")]
-transform = Transform3D(-1.25, 0, -1.8874475e-07, 0, 1.25, 0, 1.8874475e-07, 0, -1.25, 4.384975, 3.535248, -6.6145563)
-
-[node name="OmniLight3D" type="OmniLight3D" parent="Props/AboveDoor/CandleTall"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.24868852, 0)
-light_color = Color(1, 0.78999996, 0.64, 1)
-light_energy = 0.5
+transform = Transform3D(-1.25, 0, -1.8874475e-07, 0, 1.25, 0, 1.8874475e-07, 0, -1.25, 4.384975, 3.535248, -6.5779443)
 
 [node name="Set" type="Node3D" parent="."]
 metadata/_edit_lock_ = true
