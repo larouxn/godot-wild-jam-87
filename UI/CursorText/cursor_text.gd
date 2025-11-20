@@ -212,7 +212,11 @@ func toggle_cursor() -> void:
 ## Link a TextState to this CursorText. This will set the text of the TextState
 ## to the array of words passed in and wire up signals to update this UI component
 ## whenever the TextState text or the set of texts receiving input changes.
-func link_text_state(text_state: TextState, words: PackedStringArray) -> void:
+##
+## To treat the array of words as an array of lines instead, pass words_is_lines = true.
+func link_text_state(
+	text_state: TextState, words: PackedStringArray, words_is_lines: bool = false
+) -> void:
 	assert(input_manager != null, "InputManager must be attached to link a text state")
 	assert(
 		input_manager.main_text == text_state or text_state in input_manager.side_texts,
@@ -222,7 +226,10 @@ func link_text_state(text_state: TextState, words: PackedStringArray) -> void:
 	assert(linked_text_state == null, "linked_text_state cannot be reassigned")
 
 	linked_text_state = text_state
-	set_text_words(words)
+	if words_is_lines:
+		set_text_lines(words)
+	else:
+		set_text_words(words)
 
 	# Re-render the UI whenever the TextState text changes.
 	linked_text_state.updated.connect(render_linked_text)
@@ -248,11 +255,15 @@ func link_text_state(text_state: TextState, words: PackedStringArray) -> void:
 ## InputManager automatically. The text of TextState is initialized with the array
 ## of words passed in.
 ##
+## To treat the array of words as an array of lines instead, pass words_is_lines = true.
+##
 ## By default, the TextState is registered as a side-text. To register it as the
 ## main text instead, set the is_main_text parameter to true.
 ##
 ## Returns the newly created TextState.
-func create_and_link_text_state(words: PackedStringArray, is_main_text: bool = false) -> TextState:
+func create_and_link_text_state(
+	words: PackedStringArray, is_main_text: bool = false, words_is_lines: bool = false
+) -> TextState:
 	assert(input_manager != null, "InputManager must be attached to link a text state")
 
 	var text_state := TextState.new()
@@ -262,9 +273,20 @@ func create_and_link_text_state(words: PackedStringArray, is_main_text: bool = f
 	else:
 		input_manager.register_side_text(text_state)
 
-	link_text_state(text_state, words)
+	link_text_state(text_state, words, words_is_lines)
 
 	return text_state
+
+
+## Like create_and_link_text_state but expects a single line of text as input. It
+## will create a TextState that expects the given line followed by a newline to
+## trigger the finished signal.
+##
+## It is a shortcut for calling: create_and_link_text_state([line, ""], false, true)
+##
+## Can register as the main text by passing is_main_text = true.
+func create_and_link_one_line_text_state(line: String, is_main_text: bool = false) -> TextState:
+	return create_and_link_text_state([line, ""], is_main_text, true)
 
 
 ## Render the linked TextState to the screen by writing to the RichTextLabel and
