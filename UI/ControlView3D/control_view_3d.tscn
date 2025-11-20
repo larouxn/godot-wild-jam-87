@@ -6,7 +6,6 @@
 viewport_path = NodePath("Sprite3D/SubViewport")
 
 [node name="ControlView3D" type="Node3D"]
-transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
 script = ExtResource("1_7rla8")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
@@ -14,4 +13,3 @@ texture = SubResource("ViewportTexture_uorvt")
 
 [node name="SubViewport" type="SubViewport" parent="Sprite3D"]
 transparent_bg = true
-render_target_update_mode = 4

@@ -1,7 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://qliltvxtxt56"]
+[gd_scene load_steps=19 format=3 uid="uid://qliltvxtxt56"]
 
 [ext_resource type="PackedScene" uid="uid://bdt7wy0vjckfn" path="res://Models/Candle_2.gltf" id="1_1n2ok"]
+[ext_resource type="Script" uid="uid://cgyonmagt1ioh" path="res://Props/candle.gd" id="1_ygcyg"]
 [ext_resource type="Texture2D" uid="uid://dw3ne585l0r6p" path="res://Models/blob.png" id="2_qdrud"]
+[ext_resource type="Animation" uid="uid://bqaxdsj8rl1kw" path="res://Animations/extinguish.res" id="4_u0533"]
+[ext_resource type="Animation" uid="uid://cgtwccrdpm2ls" path="res://Animations/ignite.res" id="5_mao8x"]
+[ext_resource type="Animation" uid="uid://ypb1376y3wab" path="res://Animations/flicker.res" id="6_mao8x"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_qdrud"]
 height = 0.23608398
@@ -42,7 +46,7 @@ turbulence_enabled = true
 transparency = 1
 shading_mode = 0
 vertex_color_use_as_albedo = true
-albedo_color = Color(1, 1, 1, 0.19607843)
+albedo_color = Color(1, 1, 1, 0.39215687)
 albedo_texture = ExtResource("2_qdrud")
 billboard_mode = 3
 particles_anim_h_frames = 1
@@ -53,7 +57,31 @@ particles_anim_loop = false
 material = SubResource("StandardMaterial3D_rs5rh")
 size = Vector2(0.05, 0.1)
 
+[sub_resource type="Animation" id="Animation_om8tw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OmniLight3D:light_energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.75]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uaool"]
+_data = {
+&"RESET": SubResource("Animation_om8tw"),
+&"extinguish": ExtResource("4_u0533"),
+&"flicker": ExtResource("6_mao8x"),
+&"ignite": ExtResource("5_mao8x")
+}
+
 [node name="CandleTall" type="StaticBody3D"]
+script = ExtResource("1_ygcyg")
 
 [node name="Candle_22" parent="." instance=ExtResource("1_1n2ok")]
 
@@ -62,17 +90,23 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12072754, 0)
 shape = SubResource("CylinderShape3D_qdrud")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.26182297, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.26376247, 0)
 light_color = Color(1, 0.78999996, 0.64, 1)
 light_energy = 0.75
 shadow_enabled = true
 shadow_opacity = 0.8
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25923517, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2540406, 0)
 amount = 3
 lifetime = 0.5
 speed_scale = 0.5
 randomness = 0.8
 process_material = SubResource("ParticleProcessMaterial_mao8x")
 draw_pass_1 = SubResource("QuadMesh_og1vw")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_uaool")
+}
+speed_scale = 0.5
