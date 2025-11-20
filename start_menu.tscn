@@ -1,10 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://dy7lqufy3iwjt"]
+[gd_scene load_steps=6 format=3 uid="uid://dy7lqufy3iwjt"]
 
 [ext_resource type="Script" uid="uid://g54886uediyr" path="res://start_menu.gd" id="1_ia0g5"]
 [ext_resource type="PackedScene" uid="uid://bpm7kbn4oyb1w" path="res://InputManager/input_manager.tscn" id="2_x7exu"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vpdu5"]
-bg_color = Color(0, 0.6, 0.6, 1)
+[ext_resource type="Theme" uid="uid://bv7g70yg6r2oc" path="res://start_menu.tres" id="3_vpdu5"]
+[ext_resource type="AudioStream" uid="uid://dl4puu5rfh8y8" path="res://Sound/match-lighting-candle-81020.mp3" id="4_v2mkm"]
+[ext_resource type="AudioStream" uid="uid://cmh8jdy5tdfb3" path="res://Sound/WriteAtSea.wav" id="5_ctwoq"]
 
 [node name="StartMenu" type="Node3D"]
 script = ExtResource("1_ia0g5")
@@ -12,35 +12,57 @@ script = ExtResource("1_ia0g5")
 [node name="InputManager" parent="." instance=ExtResource("2_x7exu")]
 visible = false
 
-[node name="StartGameText" type="RichTextLabel" parent="."]
-visible = false
+[node name="OpenMenuText" type="RichTextLabel" parent="."]
 anchors_preset = -1
 anchor_left = 0.39800003
-anchor_top = 0.27
+anchor_top = 0.5
 anchor_right = 0.611
-anchor_bottom = 0.398
+anchor_bottom = 0.60200006
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_styles/normal = SubResource("StyleBoxFlat_vpdu5")
+theme = ExtResource("3_vpdu5")
 bbcode_enabled = true
+text = "Type to Open"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MatchSoundPlayer" type="AudioStreamPlayer" parent="OpenMenuText"]
+stream = ExtResource("4_v2mkm")
+bus = &"MatchSound"
+
+[node name="StartGameText" type="RichTextLabel" parent="."]
+visible = false
+anchors_preset = -1
+anchor_left = 0.31500003
+anchor_top = 0.27
+anchor_right = 0.703
+anchor_bottom = 0.39800003
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme = ExtResource("3_vpdu5")
+bbcode_enabled = true
+text = "Sign the Contract"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="OptionsText" type="RichTextLabel" parent="."]
 visible = false
 anchors_preset = -1
-anchor_left = 0.13000001
+anchor_left = 0.086
 anchor_top = 0.5
-anchor_right = 0.36800003
+anchor_right = 0.40800002
 anchor_bottom = 0.60200006
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_styles/normal = SubResource("StyleBoxFlat_vpdu5")
+theme = ExtResource("3_vpdu5")
 bbcode_enabled = true
+text = "Negotiate Terms"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -49,14 +71,15 @@ visible = false
 anchors_preset = -1
 anchor_left = 0.64000005
 anchor_top = 0.5
-anchor_right = 0.85
+anchor_right = 0.90800005
 anchor_bottom = 0.60200006
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_styles/normal = SubResource("StyleBoxFlat_vpdu5")
+theme = ExtResource("3_vpdu5")
 bbcode_enabled = true
+text = "Meet the Authors"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -71,22 +94,15 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_styles/normal = SubResource("StyleBoxFlat_vpdu5")
+theme = ExtResource("3_vpdu5")
 bbcode_enabled = true
+text = "Run Away"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="OpenMenuText" type="RichTextLabel" parent="."]
-anchors_preset = -1
-anchor_left = 0.39800003
-anchor_top = 0.5
-anchor_right = 0.611
-anchor_bottom = 0.60200006
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-theme_override_styles/normal = SubResource("StyleBoxFlat_vpdu5")
-bbcode_enabled = true
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="BackgroundMusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_ctwoq")
+bus = &"BackgroundMusic"
+
+[node name="TypewriterSoundPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"TypewriterSounds"
