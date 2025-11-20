@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cqv5bwibkp7fy"]
+
+[ext_resource type="Script" uid="uid://clfmbq7pn4cuf" path="res://UI/ControlView3D/control_view_3d.gd" id="1_7rla8"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_uorvt"]
+viewport_path = NodePath("Sprite3D/SubViewport")
+
+[node name="ControlView3D" type="Node3D"]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
+script = ExtResource("1_7rla8")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+texture = SubResource("ViewportTexture_uorvt")
+
+[node name="SubViewport" type="SubViewport" parent="Sprite3D"]
+transparent_bg = true
+render_target_update_mode = 4
