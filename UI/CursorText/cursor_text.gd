@@ -2,6 +2,8 @@
 
 class_name CursorText extends MarginContainer
 
+signal cursor_position_changed(new_cursor_position: Vector2i)
+
 const CURSOR_TEXT := "[pulse freq=5.0 color=#ffffff40 ease=-5.0][b]|[/b][/pulse]"
 
 @export_group("CursorText")
@@ -19,7 +21,10 @@ const CURSOR_TEXT := "[pulse freq=5.0 color=#ffffff40 ease=-5.0][b]|[/b][/pulse]
 ## cursor is on, and y is the row.
 @export var cursor_position := Vector2i(0, 0):
 	set(new_cursor_position):
+		var prev_cursor_position := cursor_position
 		cursor_position = new_cursor_position
+		if new_cursor_position != prev_cursor_position:
+			cursor_position_changed.emit(new_cursor_position)
 		update_cursor()
 
 ## The font size. This will get propagated to all variants of the font (regular,
@@ -68,6 +73,7 @@ func _ready() -> void:
 	update_cursor()
 	update_font_size()
 	update_cursor_offset()
+	text_label.text = text
 
 
 func update_cursor() -> void:
@@ -125,6 +131,11 @@ func get_cursor_size() -> Vector2:
 	var font: Font = cursor.get("theme_override_fonts/bold_font")
 	var fsize: int = cursor.get("theme_override_font_sizes/bold_font_size")
 	return font.get_string_size("|", HORIZONTAL_ALIGNMENT_LEFT, -1, fsize)
+
+
+## Get the line height of the text label.
+func get_line_height() -> int:
+	return text_label.get_line_height(0)
 
 
 ## Convert an array of words into an array of lines based on the measured number
@@ -376,7 +387,7 @@ func render_linked_text(_id: int) -> void:
 
 	var good := "[color=#00ff00]" + parts[0] + "[/color]"
 	var mistake := "[color=#ff0000][u]" + parts[1] + "[/u][/color]"
-	var untyped := "[color=#999999]" + parts[2] + "[/color]"
+	var untyped := "[color=#cccccc]" + parts[2] + "[/color]"
 	text = good + mistake + untyped
 	text_label.material.set_shader_parameter(
 		"enabled", linked_text_state.is_locked() and linked_text_state.is_mistyped()

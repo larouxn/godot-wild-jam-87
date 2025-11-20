@@ -1,0 +1,82 @@
+[gd_scene load_steps=11 format=3 uid="uid://dwinauedtnyin"]
+
+[ext_resource type="Script" uid="uid://crbpw7dx4gpks" path="res://UI/MainTextContainer/main_text_container.gd" id="1_15agi"]
+[ext_resource type="Shader" uid="uid://fhtlb2i8vr65" path="res://UI/MainTextContainer/bg_noise.gdshader" id="2_sc8u2"]
+[ext_resource type="Shader" uid="uid://bjm0x5rhqju25" path="res://UI/MainTextContainer/text_fade.gdshader" id="3_my4dj"]
+[ext_resource type="PackedScene" uid="uid://blfginyn8bta8" path="res://UI/CursorText/cursor_text.tscn" id="4_u0pdh"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_0tmwt"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_341wk"]
+frequency = 0.1787
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0tmwt"]
+noise = SubResource("FastNoiseLite_341wk")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8dt6d"]
+shader = ExtResource("2_sc8u2")
+shader_parameter/noise = SubResource("NoiseTexture2D_0tmwt")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8dt6d"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ctoxd"]
+shader = ExtResource("3_my4dj")
+
+[node name="MainTextContainer" type="Sprite3D"]
+texture = SubResource("ViewportTexture_0tmwt")
+script = ExtResource("1_15agi")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+size = Vector2i(1920, 1080)
+
+[node name="CenterContainer" type="CenterContainer" parent="SubViewport"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="Panel" parent="SubViewport/CenterContainer"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_8dt6d")
+custom_minimum_size = Vector2(1400, 70)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8dt6d")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="SubViewport"]
+material = SubResource("ShaderMaterial_ctoxd")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="SubViewport/SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="CenterContainer" type="CenterContainer" parent="SubViewport/SubViewportContainer/SubViewport"]
+anchors_preset = -1
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -30.0
+offset_bottom = 815.0
+grow_horizontal = 2
+
+[node name="TextOffset" type="MarginContainer" parent="SubViewport/SubViewportContainer/SubViewport/CenterContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_top = 0
+
+[node name="CursorText" parent="SubViewport/SubViewportContainer/SubViewport/CenterContainer/TextOffset" instance=ExtResource("4_u0pdh")]
+unique_name_in_owner = true
+clip_contents = true
+custom_minimum_size = Vector2(1300, 2000)
+layout_mode = 2

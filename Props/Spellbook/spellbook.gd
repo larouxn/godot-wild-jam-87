@@ -2,7 +2,7 @@ class_name Spellbook extends Node3D
 
 signal spell_failed
 
-@export var main_text_ui: CursorText
+@export var main_text_ui: MainTextContainer
 @export var input_manager: InputManager
 
 var spells: Dictionary[String, TextState] = {}
@@ -163,8 +163,8 @@ func _on_remove_capital_letters_mistyped() -> void:
 ## The function should return the new set of remaining words.
 func modify_remaining_words(f: Callable) -> void:
 	# Get current text and position from main text.
-	var words := main_text_ui.linked_text_state_words
-	var pos := main_text_ui.get_word_indices()
+	var words := main_text_ui.cursor_text.linked_text_state_words
+	var pos := main_text_ui.cursor_text.get_word_indices()
 	var word_ix := pos[0]
 	var char_ix := pos[1]
 
@@ -197,4 +197,4 @@ func modify_remaining_words(f: Callable) -> void:
 		ix += 1
 
 	# Update the main text with the modified version
-	main_text_ui.set_text_words(result)
+	main_text_ui.cursor_text.set_text_words(result)
