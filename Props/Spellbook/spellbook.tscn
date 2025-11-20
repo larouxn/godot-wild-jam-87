@@ -1,0 +1,179 @@
+[gd_scene load_steps=13 format=3 uid="uid://bm4df37p8ivm5"]
+
+[ext_resource type="Script" uid="uid://dgahvf7c7f6id" path="res://Props/Spellbook/spellbook.gd" id="1_uvwxg"]
+[ext_resource type="PackedScene" uid="uid://dlm3u8wku4j0q" path="res://Models/Book_7.gltf" id="2_6727g"]
+[ext_resource type="PackedScene" uid="uid://cqv5bwibkp7fy" path="res://UI/ControlView3D/control_view_3d.tscn" id="3_p2tj0"]
+[ext_resource type="FontFile" uid="uid://dr8ltua3y13rg" path="res://Fonts/CMU-Typewriter-Text/cmunbtl.otf" id="4_02ccg"]
+[ext_resource type="FontFile" uid="uid://cyadepqyog8cm" path="res://Fonts/CMU-Typewriter-Text/cmuntb.otf" id="5_elhdm"]
+[ext_resource type="FontFile" uid="uid://lqt4hgti71uw" path="res://Fonts/CMU-Typewriter-Text/cmunit.otf" id="6_ugvng"]
+[ext_resource type="PackedScene" uid="uid://m7b2w6hmau5x" path="res://Props/Spellbook/spell_text.tscn" id="7_rrm8l"]
+
+[sub_resource type="Animation" id="Animation_osn3b"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Book:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Book:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ctoxd"]
+resource_name = "fall"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Book:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.5, 0.55, 0.9),
+"transitions": PackedFloat32Array(0.25, 0.25, 2.5, 3, 0.6),
+"update": 0,
+"values": [Vector3(0, 0.21, 0), Vector3(0, 0.21, 0), Vector3(0, 0.3, 0), Vector3(0, 0.3, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Book:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.5),
+"transitions": PackedFloat32Array(0.25, 0.5, 1),
+"update": 0,
+"values": [Vector3(1.0471976, 0, 0), Vector3(1.0471976, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_5uuap"]
+resource_name = "hover"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Book:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(-2, -2),
+"update": 0,
+"values": [Vector3(0, 0.18, 0), Vector3(0, 0.21, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_8dt6d"]
+resource_name = "rise"
+length = 2.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Book:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7, 2.7),
+"transitions": PackedFloat32Array(0.4, -2, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.21, 0), Vector3(0, 0.17972279, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Book:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(0.4, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(1.0471976, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ruyqj"]
+_data = {
+&"RESET": SubResource("Animation_osn3b"),
+&"fall": SubResource("Animation_ctoxd"),
+&"hover": SubResource("Animation_5uuap"),
+&"rise": SubResource("Animation_8dt6d")
+}
+
+[node name="Spellbook" type="Node3D"]
+transform = Transform3D(0.99999976, 0, 0, 0, 0.9999999, 0, 0, 0, 0.99999976, 0, 0, 0)
+script = ExtResource("1_uvwxg")
+
+[node name="Book" parent="." instance=ExtResource("2_6727g")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Book"]
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_ruyqj")
+}
+
+[node name="ControlView3D" parent="." instance=ExtResource("3_p2tj0")]
+transform = Transform3D(0.05, 0, 0, 0, 0.04330127, 0.025, 0, -0.025, 0.04330127, 0.075, 0.118, 0.192)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ControlView3D"]
+custom_minimum_size = Vector2(1300, 1080)
+anchors_preset = -1
+anchor_left = 0.16100001
+anchor_right = 0.83900005
+anchor_bottom = 1.0
+offset_left = 0.87997437
+offset_right = -0.88012695
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 22
+
+[node name="Title" type="RichTextLabel" parent="ControlView3D/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/line_separation = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/normal_font = ExtResource("4_02ccg")
+theme_override_fonts/bold_font = ExtResource("5_elhdm")
+theme_override_fonts/italics_font = ExtResource("6_ugvng")
+theme_override_font_sizes/normal_font_size = 40
+theme_override_font_sizes/bold_font_size = 60
+theme_override_font_sizes/italics_font_size = 30
+bbcode_enabled = true
+text = "[b][u]SPELLS:[/u][/b]"
+fit_content = true
+
+[node name="ShortenWords" parent="ControlView3D/VBoxContainer" instance=ExtResource("7_rrm8l")]
+layout_mode = 2
+text = "@hippopotomonstrosesquipedaliophobia"
+description = "shorten words"
+on_finish = "_on_shorten_words_finished"
+on_typo = "_on_shorten_words_mistyped"
+
+[node name="NoPunctuation" parent="ControlView3D/VBoxContainer" instance=ExtResource("7_rrm8l")]
+layout_mode = 2
+text = "@state { text = filter (not . symbol) $ state ^. #text) }"
+description = "remove punctuation"
+on_finish = "_on_remove_punctuation_finished"
+on_typo = "_on_remove_punctuation_mistyped"
+
+[node name="NoCaps" parent="ControlView3D/VBoxContainer" instance=ExtResource("7_rrm8l")]
+layout_mode = 2
+text = "@gO AwAy cApItAL LEttErs nO OnE LIkEs yOU"
+description = "remove capital letters"
+on_finish = "_on_remove_capital_letters_finished"
+on_typo = "_on_remove_capital_letters_mistyped"

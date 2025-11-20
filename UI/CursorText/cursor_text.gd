@@ -56,6 +56,9 @@ var linked_text_state: TextState
 ## The text of the linked_text_state represented as an array of lines.
 var linked_text_state_lines: PackedStringArray
 
+## The text of the linked_text_state represented as an array of words.
+var linked_text_state_words: PackedStringArray
+
 @onready var cursor := $Cursor as RichTextLabel
 @onready var text_label := $MarginContainer/Text as RichTextLabel
 @onready var text_margin := $MarginContainer as MarginContainer
@@ -127,26 +130,47 @@ func get_cursor_size() -> Vector2:
 ## Convert an array of words into an array of lines based on the measured number
 ## of characters that will fit on a line inside this CursorText.
 ##
+## This is just a wrapper around words_to_lines_of_words that joins the nested
+## arrays into strings.
+func words_to_lines(words: PackedStringArray) -> PackedStringArray:
+	return words_to_lines_of_words(words).map(
+		func(word_line: PackedStringArray) -> String: return "".join(word_line)
+	)
+
+
+## Convert an array of words into an array of arrays of words, where each nested
+## array corresponds to a visual line in the UI. The lines are based on the
+## measured number of characters that will fit on a line inside this CursorText.
+##
 ## Note that character counting around spaces is a little sloppy. A line will
 ## never be longer than what would fit, but may wrap earlier than necessary if
 ## spaces were counted towards the text length but trimmed from the final line.
-func words_to_lines(words: PackedStringArray) -> PackedStringArray:
+func words_to_lines_of_words(words: PackedStringArray) -> Array[PackedStringArray]:
 	var line_length := get_characters_per_line()
 
-	var result := []
-	var current := ""
+	var result: Array[PackedStringArray] = []
+	var current: PackedStringArray = []
 	for word in words:
+		var current_str := "".join(current)
 		if len(word) >= line_length:
-			if !current.strip_edges().is_empty():
-				result.append(current.strip_edges())
-			result.append(word.strip_edges())
-			current = ""
-		elif len(word) + len(current) > line_length:
-			result.append(current.strip_edges())
-			current = word
+			if !current_str.strip_edges().is_empty():
+				current[0] = current[0].strip_edges(true, false)
+				current[-1] = current[-1].strip_edges(false, true)
+				result.append(current)
+			result.append([word.strip_edges()])
+			current = []
+		elif len(word) + len(current_str) > line_length:
+			current[0] = current[0].strip_edges(true, false)
+			current[-1] = current[-1].strip_edges(false, true)
+			result.append(current)
+			current = [word]
 		else:
-			current += word
-	result.append(current.strip_edges())
+			current.append(word)
+
+	if !current.is_empty():
+		current[0] = current[0].strip_edges(true, false)
+		current[-1] = current[-1].strip_edges(false, true)
+		result.append(current)
 
 	return result
 
@@ -177,21 +201,36 @@ func set_cursor_position_from_lines(index: int, lines: PackedStringArray) -> voi
 ## newline character.
 ##
 ## If linked to a TextState, also update the TextState's text.
-func set_text_lines(new_text_lines: PackedStringArray) -> void:
+##
+## Note that, unless keep_words is true, this clears linked_text_state_words
+## since there is no easy way to deduce the inteded words (as the text
+## generator output them) from entire lines.
+func set_text_lines(new_text_lines: PackedStringArray, keep_words: bool = false) -> void:
 	if linked_text_state != null:
 		linked_text_state.text = "\n".join(new_text_lines)
 		linked_text_state_lines = new_text_lines
+		if !keep_words:
+			linked_text_state_words = []
 		render_linked_text(linked_text_state.id)
 	else:
 		text_label.text = "\n".join(new_text_lines)
 
 
-## Set the text of this CursorText to the given array of words. This is just a
-## shortcut for set_text_lines(words_to_lines(words)).
+## Set the text of this CursorText to the given array of words. Unlike set_text_lines,
+## this will also properly set linked_text_state_words.
 ##
 ## If linked to a TextState, also update the TextState's text.
 func set_text_words(words: PackedStringArray) -> void:
-	set_text_lines(words_to_lines(words))
+	if linked_text_state != null:
+		linked_text_state_words = []
+		for line in words_to_lines_of_words(words):
+			linked_text_state_words.append_array(line)
+			linked_text_state_words.append("\n")
+		if !linked_text_state_words.is_empty():
+			# Remove trialing newline
+			linked_text_state_words.remove_at(linked_text_state_words.size() - 1)
+
+	set_text_lines(words_to_lines(words), true)
 
 
 ## Show the cursor.
@@ -207,6 +246,33 @@ func hide_cursor() -> void:
 ## Toggle the visibility of the cursor.
 func toggle_cursor() -> void:
 	cursor.visible = !cursor.visible
+
+
+## Return the position of the current word in linked_text_state_words as a two-element array.
+##
+##   - 0: The index of the current word in linked_text_state_words
+##   - 1: The index within the current word
+func get_word_indices(index: int = -1) -> Array[int]:
+	assert(
+		!linked_text_state_words.is_empty(), "Cannot call get_word_indices where there are no words"
+	)
+	assert(
+		index != -1 or linked_text_state != null,
+		"You must either pass an index or have a linked TextState"
+	)
+
+	if index == -1:
+		index = linked_text_state.input_index
+
+	var ix := 0
+	var cumulative_length := 0
+	for word in linked_text_state_words:
+		if len(word) + cumulative_length > index:
+			return [ix, index - cumulative_length]
+		cumulative_length += len(word)
+		ix += 1
+
+	return [-1, -1]
 
 
 ## Link a TextState to this CursorText. This will set the text of the TextState

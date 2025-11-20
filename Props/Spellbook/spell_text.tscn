@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://m7b2w6hmau5x"]
+
+[ext_resource type="PackedScene" uid="uid://blfginyn8bta8" path="res://UI/CursorText/cursor_text.tscn" id="1_kncsx"]
+[ext_resource type="Script" uid="uid://dej5b8271tk14" path="res://Props/Spellbook/spell_text.gd" id="1_ms347"]
+[ext_resource type="FontFile" uid="uid://dr8ltua3y13rg" path="res://Fonts/CMU-Typewriter-Text/cmunbtl.otf" id="2_ms347"]
+[ext_resource type="FontFile" uid="uid://cyadepqyog8cm" path="res://Fonts/CMU-Typewriter-Text/cmuntb.otf" id="3_70468"]
+[ext_resource type="FontFile" uid="uid://lqt4hgti71uw" path="res://Fonts/CMU-Typewriter-Text/cmunit.otf" id="4_4bm7k"]
+
+[node name="SpellText" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = -4
+script = ExtResource("1_ms347")
+
+[node name="CursorText" parent="." instance=ExtResource("1_kncsx")]
+layout_mode = 2
+font_size = 40
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 35
+
+[node name="SpellDesc" type="RichTextLabel" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/line_separation = 0
+theme_override_constants/outline_size = 4
+theme_override_fonts/normal_font = ExtResource("2_ms347")
+theme_override_fonts/bold_font = ExtResource("3_70468")
+theme_override_fonts/italics_font = ExtResource("4_4bm7k")
+theme_override_font_sizes/normal_font_size = 40
+theme_override_font_sizes/italics_font_size = 30
+bbcode_enabled = true
+fit_content = true
