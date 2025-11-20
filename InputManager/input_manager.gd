@@ -17,6 +17,11 @@ signal input_state_changed(input_state: InputState)
 ##       input has changed.
 signal active_texts_changed(text: Array[TextState])
 
+## Emitted when a character is entered during SELECTION that doesn't match any
+## side-text. The parameter is the array of side-text candidates that were
+## available before the mistake.
+signal selection_mistyped(candidates: Array[TextState])
+
 ## The current state of the input manager.
 enum InputState {
 	## Routing keyboard input into the main text
@@ -334,11 +339,16 @@ func route_char(key: String) -> void:
 		# If we only have one candidate, we have a unique match. Set this side-text as active.
 		elif candidate_count == 1:
 			set_active_text(text_candidates[0])
-		# Otherwise, we have no matches. Go back to focusing the main text.
-		# TODO: Emit some sort of selection_typo signal instead, so it can be handled by the
-		#       main game (e.g. locking the spellbook temporarily, dropping the matches, etc.)
+		# Otherwise, we have no matches.
 		else:
-			set_active_text(main_text)
+			if input_state == InputState.SELECTION:
+				# If we have no matches and were previously in the SELECTION state, then we
+				# mistyped something during selection. Emit the selection_mistyped signal
+				# with the matches we had before typing this last key.
+				selection_mistyped.emit(get_text_candidates_matching_prefix(selection_prefix))
+
+				# There's nowhere reasonable to send this keypress anymore, so just return.
+				return
 
 	# Only append the character if there is an active text to append to. Otherwise, we are in
 	# the SELECTION state, which is handled above.
