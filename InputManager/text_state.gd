@@ -61,28 +61,62 @@ func append_character(chr: String) -> void:
 	if locked:
 		return
 
-	var chr_matches := chr == text[input_index]
-	if chr == " " and text[input_index] == "\n":
-		chr_matches = true
+	var chr_matches := (
+		chr == text[input_index] or (is_space_like(chr) and is_space_like(text[input_index]))
+	)
 
 	if !chr_matches && mistake_index == -1:
 		mistake_index = input_index
 
-	input_index += 1
+	var space_skip_offset := skip_spaces(chr)
+	if space_skip_offset == 0:
+		input_index += 1
+	else:
+		input_index += space_skip_offset
 
 	if mistake_index != -1:
 		typed_since_mistake += chr
 
 	updated.emit(id)
 
-	if chr_matches and text[input_index - 1] == "\n":
-		newline.emit(id)
+	if space_skip_offset == 0:
+		if chr_matches and text[input_index - 1] == "\n":
+			newline.emit(id)
+	else:
+		if text.substr(max(0, input_index - space_skip_offset), input_index - 1).contains("\n"):
+			newline.emit(id)
 
 	if mistake_index != -1:
 		mistyped.emit(id)
 
 	if mistake_index == -1 && input_index >= len(text):
 		finished.emit(id)
+
+
+## Calculate the offset to the input_index needed to skip the current and following
+## space characters, as defined by is_space_like.
+func skip_spaces(input: String) -> int:
+	if is_space_like(input):
+		var offset := 0
+		while input_index + offset < len(text) and is_space_like(text[input_index + offset]):
+			offset += 1
+		return offset
+
+	return 0
+
+
+## Calculate the offset to the input_index needed to skip the previous bunch of space
+## characters, as defined by is_space_like.
+func skip_spaces_reverse() -> int:
+	var offset := 0
+	while input_index - offset - 1 > 0 and is_space_like(text[input_index - offset - 1]):
+		offset += 1
+	return offset
+
+
+## Check if a character is a space-like character. Right now: space and newline.
+func is_space_like(chr: String) -> bool:
+	return chr == " " or chr == "\n"
 
 
 ## Removes the last character from the current text progress.
@@ -93,7 +127,11 @@ func backspace() -> void:
 	if locked:
 		return
 
-	input_index -= 1
+	var space_skip_offset := skip_spaces_reverse()
+	if space_skip_offset == 0:
+		input_index -= 1
+	else:
+		input_index -= space_skip_offset
 
 	if input_index <= mistake_index:
 		mistake_index = -1

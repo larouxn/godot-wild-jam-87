@@ -83,30 +83,32 @@ func _on_spell_mistyped(spell: TextState, callback_name: String) -> void:
 
 func _on_shorten_words_finished() -> void:
 	var words_to_change := 30
-	modify_remaining_words(func(words: PackedStringArray) -> PackedStringArray:
-		var text_pattern := RegEx.new()
-		text_pattern.compile("[a-zA-Z]")
+	modify_remaining_words(
+		func(words: PackedStringArray) -> PackedStringArray:
+			var text_pattern := RegEx.new()
+			text_pattern.compile("[a-zA-Z]")
 
-		var symbol_at_end_pattern := RegEx.new()
-		symbol_at_end_pattern.compile("[^a-zA-Z]+$")
+			var symbol_at_end_pattern := RegEx.new()
+			symbol_at_end_pattern.compile("[^a-zA-Z]+$")
 
-		var ix := 0
-		var changes_left := words_to_change
-		while ix < words.size() and changes_left > 0:
-			var word := words[ix]
-			if text_pattern.search(word) != null:
-				var trailing_symbols := symbol_at_end_pattern.search(word)
-				var new_len: int = max(2, floor(len(word) * 0.4))
-				words[ix] = word.left(new_len)
-				if trailing_symbols != null:
-					words[ix] += trailing_symbols.get_string()
+			var ix := 1  # skip end of current word
+			var changes_left := words_to_change
+			while ix < words.size() and changes_left > 0:
+				var word := words[ix]
+				if text_pattern.search(word) != null:
+					var trailing_symbols := symbol_at_end_pattern.search(word)
+					var new_len: int = max(2, floor(len(word) * 0.4))
+					words[ix] = word.left(new_len)
+					if trailing_symbols != null:
+						words[ix] += trailing_symbols.get_string()
 
-				changes_left -= 1
+					changes_left -= 1
 
-			ix += 1
+				ix += 1
 
-		return words
+			return words
 	)
+
 
 func _on_shorten_words_mistyped() -> void:
 	pass
@@ -121,7 +123,7 @@ func _on_remove_punctuation_finished() -> void:
 			pattern.compile("[^a-zA-Z0-9 \\n]")
 
 			var chars_left := chars_to_change
-			var ix := 0
+			var ix := 1  # skip end of current word
 			while ix < words.size() and chars_left > 0:
 				words[ix] = pattern.sub(words[ix], "", true)
 				chars_left -= len(words[ix])
@@ -129,6 +131,7 @@ func _on_remove_punctuation_finished() -> void:
 
 			return words
 	)
+
 
 func _on_remove_punctuation_mistyped() -> void:
 	pass
@@ -176,12 +179,19 @@ func modify_remaining_words(f: Callable) -> void:
 	new_rest[0] = rest_orig[0].substr(0, char_ix) + new_rest[0]
 
 	# Remove newlines from the output since CursorText will put them back in.
-	var final_rest: PackedStringArray = []
+	var result: PackedStringArray = []
+
 	var ix := 0
+	while ix < word_ix:
+		if words[ix] != "\n":
+			result.append(words[ix])
+		ix += 1
+
+	ix = 0
 	while ix < new_rest.size():
 		if new_rest[ix] != "\n":
-			final_rest.append(new_rest[ix])
+			result.append(new_rest[ix])
 		ix += 1
 
 	# Update the main text with the modified version
-	main_text_ui.set_text_words(words.slice(0, word_ix) + final_rest)
+	main_text_ui.set_text_words(result)
