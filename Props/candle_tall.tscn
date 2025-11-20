@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://qliltvxtxt56"]
+[gd_scene load_steps=17 format=3 uid="uid://qliltvxtxt56"]
 
 [ext_resource type="PackedScene" uid="uid://bdt7wy0vjckfn" path="res://Models/Candle_2.gltf" id="1_1n2ok"]
+[ext_resource type="Script" uid="uid://c20un1qahqqxp" path="res://Props/candle_tall.gd" id="1_ygcyg"]
 [ext_resource type="Texture2D" uid="uid://dw3ne585l0r6p" path="res://Models/blob.png" id="2_qdrud"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_qdrud"]
@@ -53,7 +54,45 @@ particles_anim_loop = false
 material = SubResource("StandardMaterial3D_rs5rh")
 size = Vector2(0.05, 0.1)
 
+[sub_resource type="Animation" id="Animation_om8tw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OmniLight3D:light_energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.75]
+}
+
+[sub_resource type="Animation" id="Animation_pbvb7"]
+resource_name = "flicker"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("OmniLight3D:light_energy")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.20840217, 0.4057713, 0.595785, 0.8041872),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.75, 0.8, 0.7, 0.8, 0.6]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uaool"]
+_data = {
+&"RESET": SubResource("Animation_om8tw"),
+&"flicker": SubResource("Animation_pbvb7")
+}
+
 [node name="CandleTall" type="StaticBody3D"]
+script = ExtResource("1_ygcyg")
 
 [node name="Candle_22" parent="." instance=ExtResource("1_1n2ok")]
 
@@ -62,7 +101,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12072754, 0)
 shape = SubResource("CylinderShape3D_qdrud")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.26182297, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.26376247, 0)
 light_color = Color(1, 0.78999996, 0.64, 1)
 light_energy = 0.75
 shadow_enabled = true
@@ -76,3 +115,9 @@ speed_scale = 0.5
 randomness = 0.8
 process_material = SubResource("ParticleProcessMaterial_mao8x")
 draw_pass_1 = SubResource("QuadMesh_og1vw")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_uaool")
+}
+speed_scale = 0.5
