@@ -22,6 +22,13 @@ func _ready() -> void:
 	child_exiting_tree.connect(_on_child_exiting)
 
 
+## Get a control node from the viewport.
+func get_control_node(path: NodePath) -> Control:
+	if viewport != null:
+		return viewport.get_node(path)
+	return null
+
+
 ## If a child node is added and it is a Control node, sync the viewport.
 func _on_child_added(node: Node) -> void:
 	if node is Control:

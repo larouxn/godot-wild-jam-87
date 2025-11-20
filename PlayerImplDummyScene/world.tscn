@@ -1,0 +1,248 @@
+[gd_scene load_steps=17 format=3 uid="uid://v3wwd22rqrwo"]
+
+[ext_resource type="PackedScene" uid="uid://bpm7kbn4oyb1w" path="res://InputManager/input_manager.tscn" id="1_7hkb7"]
+[ext_resource type="PackedScene" uid="uid://bwtnomfwynpi5" path="res://Props/table.tscn" id="1_vp0se"]
+[ext_resource type="PackedScene" uid="uid://dxscn68lii64q" path="res://Props/typewriter.tscn" id="2_1g5j2"]
+[ext_resource type="PackedScene" uid="uid://qliltvxtxt56" path="res://Props/candle_tall.tscn" id="3_ivlv2"]
+[ext_resource type="PackedScene" uid="uid://c7jai0gpn7h48" path="res://Props/book.tscn" id="4_7hkb7"]
+[ext_resource type="Script" uid="uid://bdrruvd1jchww" path="res://PlayerImplDummyScene/player.gd" id="6_rsgq7"]
+[ext_resource type="PackedScene" uid="uid://cqv5bwibkp7fy" path="res://UI/ControlView3D/control_view_3d.tscn" id="8_gmr51"]
+[ext_resource type="FontFile" uid="uid://dr8ltua3y13rg" path="res://Fonts/CMU-Typewriter-Text/cmunbtl.otf" id="8_olvty"]
+[ext_resource type="FontFile" uid="uid://cyadepqyog8cm" path="res://Fonts/CMU-Typewriter-Text/cmuntb.otf" id="9_0tmwt"]
+[ext_resource type="FontFile" uid="uid://lqt4hgti71uw" path="res://Fonts/CMU-Typewriter-Text/cmunit.otf" id="9_olvty"]
+[ext_resource type="PackedScene" uid="uid://blfginyn8bta8" path="res://UI/CursorText/cursor_text.tscn" id="10_41cnj"]
+
+[sub_resource type="Animation" id="Animation_gmr51"]
+length = 0.001
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, -0.023441851, 1.2924932, 0.7696304)
+
+[sub_resource type="Animation" id="Animation_341wk"]
+resource_name = "look_book"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -0.5]
+}
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, -0.023441851, 1.2924932, 0.7696304, 0.25, 1, 0.5, 1.292, 0.7)
+
+[sub_resource type="Animation" id="Animation_0tmwt"]
+resource_name = "look_typewriter"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.5, 0.0]
+}
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0.5, 1.292, 0.7, 0.25, 1, -0.023441851, 1.2924932, 0.7696304)
+
+[sub_resource type="Animation" id="Animation_rsgq7"]
+resource_name = "sway"
+length = 6.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 3, 4, 6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, -0.5, -0.5, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_olvty"]
+_data = {
+&"RESET": SubResource("Animation_gmr51"),
+&"look_book": SubResource("Animation_341wk"),
+&"look_typewriter": SubResource("Animation_0tmwt"),
+&"sway": SubResource("Animation_rsgq7")
+}
+
+[node name="World" type="Node3D"]
+
+[node name="InputManager" parent="." instance=ExtResource("1_7hkb7")]
+
+[node name="Table" parent="." instance=ExtResource("1_vp0se")]
+
+[node name="Typewriter" parent="Table" instance=ExtResource("2_1g5j2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.88258445, 0.17703605)
+
+[node name="CandleTall" parent="Table" instance=ExtResource("3_ivlv2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.81539345, 0.8887459, 0.18174505)
+
+[node name="Book" parent="Table" instance=ExtResource("4_7hkb7")]
+transform = Transform3D(0.8190628, -0.49044284, -0.29766044, -0.017932573, 0.49670014, -0.86773705, 0.57342345, 0.71606874, 0.39803368, 0.74475896, 1.0360311, 0.2802378)
+
+[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("input_manager")]
+transform = Transform3D(1, 0, 0, 0, 0.8899106, 0.4561353, 0, -0.4561353, 0.8899106, -0.023441851, 1.2924932, 0.7696304)
+script = ExtResource("6_rsgq7")
+input_manager = NodePath("../InputManager")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.9999998, 0, 0, 0, 0.9999999, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+libraries = {
+&"": SubResource("AnimationLibrary_olvty")
+}
+
+[node name="MainText" parent="." instance=ExtResource("8_gmr51")]
+transform = Transform3D(0.05, 0, 0, 0, 0.04330127, 0.025, 0, -0.025, 0.04330127, 0, 1.0381562, 0.33150864)
+
+[node name="CursorText" parent="MainText" node_paths=PackedStringArray("input_manager") instance=ExtResource("10_41cnj")]
+custom_minimum_size = Vector2(1300, 1080)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -650.0
+offset_top = -540.0
+offset_right = 650.0
+offset_bottom = 540.0
+input_manager = NodePath("../../InputManager")
+
+[node name="Spells" parent="." instance=ExtResource("8_gmr51")]
+transform = Transform3D(0.040101293, 0.014932229, -0.025863377, 0, 0.043301266, 0.024999999, 0.029864458, -0.020050647, 0.03472874, 0.707034, 1.0204153, 0.44283193)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Spells"]
+custom_minimum_size = Vector2(1300, 1080)
+anchors_preset = -1
+anchor_left = 0.16100001
+anchor_right = 0.83900005
+anchor_bottom = 1.0
+offset_left = 0.87997437
+offset_right = -0.88012695
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
+
+[node name="Title" type="RichTextLabel" parent="Spells/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/line_separation = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/normal_font = ExtResource("8_olvty")
+theme_override_fonts/bold_font = ExtResource("9_0tmwt")
+theme_override_fonts/italics_font = ExtResource("9_olvty")
+theme_override_font_sizes/normal_font_size = 40
+theme_override_font_sizes/bold_font_size = 60
+theme_override_font_sizes/italics_font_size = 30
+bbcode_enabled = true
+text = "[b][u]SPELLS:[/u][/b]"
+fit_content = true
+
+[node name="CursorText" parent="Spells/VBoxContainer" node_paths=PackedStringArray("input_manager") instance=ExtResource("10_41cnj")]
+layout_mode = 2
+font_size = 40
+input_manager = NodePath("../../../InputManager")
+
+[node name="SpellDesc" type="RichTextLabel" parent="Spells/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/line_separation = 0
+theme_override_constants/outline_size = 4
+theme_override_fonts/normal_font = ExtResource("8_olvty")
+theme_override_fonts/bold_font = ExtResource("9_0tmwt")
+theme_override_fonts/italics_font = ExtResource("9_olvty")
+theme_override_font_sizes/normal_font_size = 40
+theme_override_font_sizes/italics_font_size = 30
+bbcode_enabled = true
+text = "[i](shorter words)[/i]"
+fit_content = true
+
+[node name="CursorText2" parent="Spells/VBoxContainer" node_paths=PackedStringArray("input_manager") instance=ExtResource("10_41cnj")]
+layout_mode = 2
+font_size = 40
+input_manager = NodePath("../../../InputManager")
+
+[node name="SpellDesc2" type="RichTextLabel" parent="Spells/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/line_separation = 0
+theme_override_constants/outline_size = 4
+theme_override_fonts/normal_font = ExtResource("8_olvty")
+theme_override_fonts/bold_font = ExtResource("9_0tmwt")
+theme_override_fonts/italics_font = ExtResource("9_olvty")
+theme_override_font_sizes/normal_font_size = 40
+theme_override_font_sizes/italics_font_size = 30
+bbcode_enabled = true
+text = "[i](no punctuation)[/i]"
+fit_content = true
+
+[node name="CursorText3" parent="Spells/VBoxContainer" node_paths=PackedStringArray("input_manager") instance=ExtResource("10_41cnj")]
+layout_mode = 2
+font_size = 40
+input_manager = NodePath("../../../InputManager")
+
+[node name="SpellDesc3" type="RichTextLabel" parent="Spells/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/line_separation = 0
+theme_override_constants/outline_size = 4
+theme_override_fonts/normal_font = ExtResource("8_olvty")
+theme_override_fonts/bold_font = ExtResource("9_0tmwt")
+theme_override_fonts/italics_font = ExtResource("9_olvty")
+theme_override_font_sizes/normal_font_size = 40
+theme_override_font_sizes/italics_font_size = 30
+bbcode_enabled = true
+text = "[i](no capital letters)[/i]"
+fit_content = true
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="Spells"]
+visible = false
+clip_contents = false
+custom_minimum_size = Vector2(1300, 1080)
+offset_left = 310.0
+offset_top = 70.5
+offset_right = 1610.0
+offset_bottom = 1150.5
+theme_override_constants/line_separation = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/normal_font = ExtResource("8_olvty")
+theme_override_fonts/italics_font = ExtResource("9_olvty")
+theme_override_font_sizes/normal_font_size = 40
+theme_override_font_sizes/italics_font_size = 30
+bbcode_enabled = true
+text = "[u]SPELLS:[/u]
+
+@hippopotomonstrosesquipedaliophobia
+  [i](shorter words)[/i]
+
+@state { text = filter (not . symbol) $ state ^. #text) }
+  [i](no punctuation)[/i]
+
+@gO AwAy cApItAL LEttErs nO OnE LIkEs yOU
+  [i](no capital letters)[/i]"
+fit_content = true
