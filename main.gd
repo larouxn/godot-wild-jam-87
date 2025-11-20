@@ -10,12 +10,12 @@ var looking_at_book := false
 var health: float
 
 @onready var main_text_container := $MainTextContainer as MainTextContainer
-@onready var animation_player := $AnimationPlayer as AnimationPlayer
+@onready var animation_player := $Head/AnimationPlayer as AnimationPlayer
 @onready var player_ui := $PlayerUI as Control
 @onready var health_bar := $PlayerUI/ProgressBar as ProgressBar
 @onready var pause_menu := %PauseMenu as Control
 
-@onready var typewriter_sound_player := $Camera3D/TypewriterSoundPlayer as AudioStreamPlayer
+@onready var typewriter_sound_player := $Head/Camera3D/TypewriterSoundPlayer as AudioStreamPlayer
 @onready var typing_a_sound := load("res://Sound/Effects/TypeSoundA.mp3")
 @onready var typing_b_sound := load("res://Sound/Effects/TypeSoundB.mp3")
 @onready var typing_c_sound := load("res://Sound/Effects/TypeSoundC.mp3")

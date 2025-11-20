@@ -48,7 +48,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.15, 0.5, 0.55, 0.9),
 "transitions": PackedFloat32Array(0.25, 0.25, 2.5, 3, 0.6),
 "update": 0,
-"values": [Vector3(0, 0.21, 0), Vector3(0, 0.21, 0), Vector3(0, 0.3, 0), Vector3(0, 0.3, 0), Vector3(0, 0, 0)]
+"values": [Vector3(0, 0.3, 0), Vector3(0, 0.3, 0), Vector3(0, 0.45, 0), Vector3(0, 0.45, 0), Vector3(0, 0, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -77,7 +77,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 2),
 "transitions": PackedFloat32Array(-2, -2),
 "update": 0,
-"values": [Vector3(0, 0.18, 0), Vector3(0, 0.21, 0)]
+"values": [Vector3(0, 0.23, 0), Vector3(0, 0.3, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_8dt6d"]
@@ -93,7 +93,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.7, 2.7),
 "transitions": PackedFloat32Array(0.4, -2, 1),
 "update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0.21, 0), Vector3(0, 0.17972279, 0)]
+"values": [Vector3(0, 0, 0), Vector3(0, 0.3, 0), Vector3(0, 0.23, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -129,7 +129,7 @@ libraries = {
 }
 
 [node name="ControlView3D" parent="." instance=ExtResource("3_p2tj0")]
-transform = Transform3D(0.05, 0, 0, 0, 0.04330127, 0.025, 0, -0.025, 0.04330127, 0.075, 0.118, 0.192)
+transform = Transform3D(0.07, 0, 0, 0, 0.060621776, 0.035, 0, -0.035, 0.060621776, 0.075, 0.118, 0.192)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ControlView3D"]
 custom_minimum_size = Vector2(1300, 1080)
