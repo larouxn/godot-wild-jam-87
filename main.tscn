@@ -59,44 +59,7 @@ light_color = Color(0.95686275, 1, 1, 1)
 light_energy = 2.0
 shadow_enabled = true
 
-[node name="Debug" type="Node3D" parent="."]
-
-[node name="Floor" type="CSGBox3D" parent="Debug"]
-visible = false
-size = Vector3(25, 1, 25)
-metadata/_edit_lock_ = true
-
-[node name="Walls" type="CSGCombiner3D" parent="Debug"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
-visible = false
-metadata/_edit_lock_ = true
-
-[node name="Front" type="CSGBox3D" parent="Debug/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -7)
-size = Vector3(12, 6.5, 0.5)
-
-[node name="Doorway" type="CSGBox3D" parent="Debug/Walls/Front"]
-transform = Transform3D(1.2499331, 0, 0, 0, 1.4872512, 0, 0, 0, 1, 2.9963765, -0.5031522, -0.2997656)
-operation = 2
-size = Vector3(1.5, 2.4, 2)
-
-[node name="Back" type="CSGBox3D" parent="Debug/Walls"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 7)
-size = Vector3(12, 6.5, 0.5)
-
-[node name="Right" type="CSGBox3D" parent="Debug/Walls"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 6, 4, 0)
-size = Vector3(14, 6.5, 0.5)
-
-[node name="Left" type="CSGBox3D" parent="Debug/Walls"]
-transform = Transform3D(1.3113416e-07, 0, -1, 0, 1, 0, 1, 0, 1.3113416e-07, -6, 4, -3.5762791e-06)
-size = Vector3(14, 6.5, 0.5)
-
-[node name="Windowframe" type="CSGBox3D" parent="Debug/Walls/Left"]
-transform = Transform3D(1.4162223, 0, 0, 0, 1.3629568, 0, 0, 0, 1, -3.8062456, 0.92305565, -4.7683716e-07)
-operation = 2
-
-[node name="ProtoController" parent="Debug" instance=ExtResource("1_ig7tw")]
+[node name="DebugPlayer" parent="." instance=ExtResource("1_ig7tw")]
 transform = Transform3D(-1.5, 0, -2.2649371e-07, 0, 1.5, 0, 2.2649371e-07, 0, -1.5, 4.144963, 0.00657326, -5.9246616)
 can_sprint = true
 input_left = "move_left"
