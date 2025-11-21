@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://dm3ra1iniucmx"]
+[gd_scene load_steps=39 format=3 uid="uid://dm3ra1iniucmx"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://Addons/ProtoController/proto_controller.tscn" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://b2vypfu6gurry" path="res://Set/floor_tile.tscn" id="2_0xm2m"]
@@ -32,6 +32,9 @@
 [ext_resource type="Theme" uid="uid://bv7g70yg6r2oc" path="res://StartMenu/start_menu.tres" id="28_qsp4k"]
 [ext_resource type="Script" uid="uid://booac3vwmbcoy" path="res://pause_menu.gd" id="29_kq58d"]
 [ext_resource type="Script" uid="uid://gfgeyqxng50f" path="res://InputManager/input_manager.gd" id="30_kq58d"]
+[ext_resource type="PackedScene" uid="uid://bmcfoc8kpg3lo" path="res://Models/hand_left.blend" id="33_jq2sk"]
+[ext_resource type="PackedScene" uid="uid://d0npe1265c66j" path="res://Models/hand_right.blend" id="34_4k2k6"]
+[ext_resource type="PackedScene" uid="uid://de66ji1hm08gh" path="res://Props/hands.tscn" id="35_0rl1p"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7dm0k"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -878,6 +881,18 @@ bbcode_enabled = true
 text = "Confirm"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="DebugHands" type="Node3D" parent="."]
+visible = false
+
+[node name="hand_left" parent="DebugHands" instance=ExtResource("33_jq2sk")]
+transform = Transform3D(0.09661918, -0.025244268, -0.0052402453, 0, 0.020324877, -0.097912714, 0.025782425, 0.094602466, 0.01963773, -1.7267033, 1.5813279, 0.44988155)
+
+[node name="hand_right" parent="DebugHands" instance=ExtResource("34_4k2k6")]
+transform = Transform3D(0.09552061, 0.027563585, 0.010773203, 0, 0.036403157, -0.09313865, -0.029594142, 0.0889666, 0.034772515, -2.5192463, 1.5375283, 0.46856552)
+
+[node name="Hands" parent="." instance=ExtResource("35_0rl1p")]
+transform = Transform3D(-0.1, 0, -8.742278e-09, 0, 0.1, 0, 8.742278e-09, 0, -0.1, -2.1407049, 1.5288275, 0.57046705)
 
 [connection signal="value_changed" from="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/MasterVolumeCon/MasterVolumeSlider" to="PauseMenu" method="_on_master_volume_slider_value_changed"]
 [connection signal="value_changed" from="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/MusicVolumeCon/MusicVolumeSlider" to="PauseMenu" method="_on_music_volume_slider_value_changed"]
