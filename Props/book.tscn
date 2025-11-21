@@ -1,36 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://c7jai0gpn7h48"]
+[gd_scene load_steps=9 format=3 uid="uid://c7jai0gpn7h48"]
 
+[ext_resource type="Script" uid="uid://yuwc3ic467q4" path="res://Props/book.gd" id="1_j181p"]
 [ext_resource type="PackedScene" uid="uid://dlm3u8wku4j0q" path="res://Models/Book_7.gltf" id="1_yny0g"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_j181p"]
 size = Vector3(0.25357056, 0.08099365, 0.33218384)
-
-[sub_resource type="Animation" id="Animation_yny0g"]
-resource_name = "rise"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Visuals:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(-2, -2),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0.25, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Visuals:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(-2, -2),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(1.0471976, 0, 0)]
-}
 
 [sub_resource type="Animation" id="Animation_j181p"]
 length = 0.001
@@ -61,6 +35,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_n8xsc"]
 resource_name = "fall"
+length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -68,8 +43,8 @@ tracks/0/path = NodePath("Visuals:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(-2, -2),
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(2, 2),
 "update": 0,
 "values": [Vector3(0, 0.25, 0), Vector3(0, 0, 0)]
 }
@@ -80,8 +55,8 @@ tracks/1/path = NodePath("Visuals:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(-2, -2),
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(2, 2),
 "update": 0,
 "values": [Vector3(1.0471976, 0, 0), Vector3(0, 0, 0)]
 }
@@ -97,10 +72,38 @@ tracks/0/path = NodePath("Visuals:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1, 2, 3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(-2, -2),
 "update": 0,
-"values": [Vector3(0, 0.25, 0), Vector3(0, 0.3, 0), Vector3(0, 0.25, 0), Vector3(0, 0.2, 0)]
+"values": [Vector3(0, 0.25, 0), Vector3(0, 0.3, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_yny0g"]
+resource_name = "rise"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(2, 0.5),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0.25, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visuals:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(2, 0.5),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(1.0471976, 0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_n8xsc"]
@@ -112,6 +115,7 @@ _data = {
 }
 
 [node name="Book" type="StaticBody3D"]
+script = ExtResource("1_j181p")
 
 [node name="Visuals" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0)
@@ -126,3 +130,5 @@ shape = SubResource("BoxShape3D_j181p")
 libraries = {
 &"": SubResource("AnimationLibrary_n8xsc")
 }
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
