@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://dm3ra1iniucmx"]
+[gd_scene load_steps=34 format=3 uid="uid://dm3ra1iniucmx"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://Addons/ProtoController/proto_controller.tscn" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://b2vypfu6gurry" path="res://Set/floor_tile.tscn" id="2_0xm2m"]
@@ -27,6 +27,9 @@
 [ext_resource type="PackedScene" uid="uid://dfp5bcknl0aws" path="res://Models/Floor_WoodDark.gltf" id="17_a6jrf"]
 [ext_resource type="PackedScene" uid="uid://delu2qjrw6teu" path="res://Addons/Mirror3D/Mirror3D.tscn" id="18_lswn8"]
 [ext_resource type="PackedScene" uid="uid://cgijrb0gl6egt" path="res://Set/corner_interior_big.tscn" id="19_cegan"]
+[ext_resource type="Theme" uid="uid://bv7g70yg6r2oc" path="res://StartMenu/start_menu.tres" id="28_qsp4k"]
+[ext_resource type="Script" uid="uid://booac3vwmbcoy" path="res://pause_menu.gd" id="29_kq58d"]
+[ext_resource type="Script" uid="uid://gfgeyqxng50f" path="res://InputManager/input_manager.gd" id="30_kq58d"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7dm0k"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -61,12 +64,6 @@ shadow_enabled = true
 
 [node name="DebugPlayer" parent="." instance=ExtResource("1_ig7tw")]
 transform = Transform3D(-1.5, 0, -2.2649371e-07, 0, 1.5, 0, 2.2649371e-07, 0, -1.5, 4.144963, 0.00657326, -5.9246616)
-can_sprint = true
-input_left = "move_left"
-input_right = "move_right"
-input_forward = "move_up"
-input_back = "move_down"
-input_jump = "jump"
 
 [node name="Props" type="Node3D" parent="."]
 
@@ -702,3 +699,178 @@ transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -4.917011, -0.002143502
 
 [node name="CornerInteriorBig" parent="Set/Walls/Front" instance=ExtResource("19_cegan")]
 transform = Transform3D(-3.3657763e-08, -0.77, 6.731554e-08, 0.77, -3.365777e-08, -6.731554e-08, 6.731554e-08, 6.731553e-08, 0.77, -2.9808109, 3.2741039, 6.774164)
+
+[node name="PauseMenu" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("28_qsp4k")
+script = ExtResource("29_kq58d")
+
+[node name="PauseInputManager" type="Node3D" parent="PauseMenu"]
+unique_name_in_owner = true
+script = ExtResource("30_kq58d")
+metadata/_custom_type_script = "uid://gfgeyqxng50f"
+
+[node name="MarginContainer" type="MarginContainer" parent="PauseMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -250.0
+offset_right = 400.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Panel" type="Panel" parent="PauseMenu/MarginContainer"]
+layout_mode = 2
+
+[node name="TotalMenuBox" type="VBoxContainer" parent="PauseMenu/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="PauseMenuLabel" type="RichTextLabel" parent="PauseMenu/MarginContainer/TotalMenuBox"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_vertical = 2
+text = "Pause Menu"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MenuBox" type="MarginContainer" parent="PauseMenu/MarginContainer/TotalMenuBox"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+
+[node name="NavigationMenu" type="VBoxContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ResumeButton" type="RichTextLabel" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/NavigationMenu"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Resume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MainMenuButton" type="RichTextLabel" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/NavigationMenu"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Main Menu"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionsButton" type="RichTextLabel" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/NavigationMenu"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Options"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="QuitButton" type="RichTextLabel" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/NavigationMenu"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Quit"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionMenu" type="VBoxContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MasterVolumeCon" type="HBoxContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MasterVolumeLabel" type="RichTextLabel" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/MasterVolumeCon"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Master Volume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MasterVolumeSlider" type="HSlider" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/MasterVolumeCon"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.001
+
+[node name="MusicVolumeCon" type="HBoxContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MusicVolumeLabel" type="RichTextLabel" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/MusicVolumeCon"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Music Volume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MusicVolumeSlider" type="HSlider" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/MusicVolumeCon"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.001
+
+[node name="SFXVolumeCon" type="HBoxContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SFXVolumeLabel" type="RichTextLabel" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/SFXVolumeCon"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SFX Volume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SFXVolumeSlider" type="HSlider" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/SFXVolumeCon"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.001
+
+[node name="ConfirmButton" type="RichTextLabel" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Confirm"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="value_changed" from="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/MasterVolumeCon/MasterVolumeSlider" to="PauseMenu" method="_on_master_volume_slider_value_changed"]
+[connection signal="value_changed" from="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/MusicVolumeCon/MusicVolumeSlider" to="PauseMenu" method="_on_music_volume_slider_value_changed"]
+[connection signal="value_changed" from="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/SFXVolumeCon/SFXVolumeSlider" to="PauseMenu" method="_on_sfx_volume_slider_value_changed"]

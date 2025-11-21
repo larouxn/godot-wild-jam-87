@@ -12,9 +12,6 @@
 [ext_resource type="PackedScene" uid="uid://dxscn68lii64q" path="res://Props/typewriter.tscn" id="9_acoh7"]
 [ext_resource type="PackedScene" uid="uid://c7jai0gpn7h48" path="res://Props/book.tscn" id="10_6p4e4"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xsckg"]
-bg_color = Color(0.29411766, 0.29411766, 0.29411766, 0.8901961)
-
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jxkec"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
 ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -36,8 +33,33 @@ volumetric_fog_density = 0.055
 volumetric_fog_albedo = Color(0.2946406, 0.29464063, 0.2946406, 1)
 volumetric_fog_length = 255.54
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xsckg"]
+bg_color = Color(0.29411766, 0.29411766, 0.29411766, 0.8901961)
+
 [node name="StartMenu" type="Node3D"]
 script = ExtResource("1_ia0g5")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ld0yp")
+
+[node name="Camera3D" type="Camera3D" parent="WorldEnvironment"]
+transform = Transform3D(-0.9976282, 1.8582273e-09, -0.068833634, -0.026669677, 0.9218902, 0.38653228, 0.06345706, 0.38745123, -0.91970366, -2.2367299, 2.0850995, 0.049279213)
+
+[node name="Table" parent="." instance=ExtResource("6_xsckg")]
+transform = Transform3D(-1.5, 0, 2.2649371e-07, 0, 1.5, 0, -2.2649371e-07, 0, -1.5, -2.1098118, 0, 1.2829747)
+
+[node name="TableDrawers" parent="Table" instance=ExtResource("7_gfl6h")]
+transform = Transform3D(1, 0, -1.4210855e-14, 0, 1, 0, 1.4210855e-14, 0, 1, 0, 0, 0)
+
+[node name="CandleTall" parent="Table" instance=ExtResource("8_kefd2")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, -0.57155985, 0.88346285, 0.17029244)
+visible = false
+
+[node name="Typewriter" parent="Table" instance=ExtResource("9_acoh7")]
+transform = Transform3D(1, 0, -4.2632564e-14, 0, 1, 0, 4.2632564e-14, 0, 1, 0, 0.8863606, 0.17754018)
+
+[node name="Book" parent="Table" instance=ExtResource("10_6p4e4")]
+transform = Transform3D(0.8324187, 0, -0.55414724, 0, 1, 0, 0.55414724, 0, 0.8324187, 0.6968763, 0.92069995, 0.16492212)
 
 [node name="InputManager" parent="." instance=ExtResource("2_x7exu")]
 visible = false
@@ -273,35 +295,6 @@ bbcode_enabled = true
 text = "Back"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_ld0yp")
-
-[node name="Camera3D" type="Camera3D" parent="WorldEnvironment"]
-transform = Transform3D(-0.9976282, 1.8582273e-09, -0.068833634, -0.026669677, 0.9218902, 0.38653228, 0.06345706, 0.38745123, -0.91970366, -2.2367299, 2.0850995, 0.049279213)
-
-[node name="Moon" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.39185983, 0.5814883, -0.71296364, 0.8098492, 0.14971077, 0.5672132, 0.43656617, -0.79966116, -0.4122522, -11, 19.375662, -7.09461)
-visible = false
-light_color = Color(0.95686275, 1, 1, 1)
-light_energy = 2.0
-shadow_enabled = true
-
-[node name="Table" parent="." instance=ExtResource("6_xsckg")]
-transform = Transform3D(-1.5, 0, 2.2649371e-07, 0, 1.5, 0, -2.2649371e-07, 0, -1.5, -2.1098118, 0, 1.2829747)
-
-[node name="TableDrawers" parent="Table" instance=ExtResource("7_gfl6h")]
-transform = Transform3D(1, 0, -1.4210855e-14, 0, 1, 0, 1.4210855e-14, 0, 1, 0, 0, 0)
-
-[node name="CandleTall" parent="Table" instance=ExtResource("8_kefd2")]
-transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, -0.57155985, 0.88346285, 0.17029244)
-visible = false
-
-[node name="Typewriter" parent="Table" instance=ExtResource("9_acoh7")]
-transform = Transform3D(1, 0, -4.2632564e-14, 0, 1, 0, 4.2632564e-14, 0, 1, 0, 0.8863606, 0.17754018)
-
-[node name="Book" parent="Table" instance=ExtResource("10_6p4e4")]
-transform = Transform3D(0.8324187, 0, -0.55414724, 0, 1, 0, 0.55414724, 0, 0.8324187, 0.6968763, 0.92069995, 0.16492212)
 
 [connection signal="value_changed" from="OptionsMenu/MasterVolumeCon/MasterVolumeSlider" to="." method="_on_master_volume_slider_value_changed"]
 [connection signal="value_changed" from="OptionsMenu/MusicVolumeCon/MusicVolumeSlider" to="." method="_on_music_volume_slider_value_changed"]
