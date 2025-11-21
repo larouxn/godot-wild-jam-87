@@ -25,4 +25,4 @@ bus/4/solo = false
 bus/4/mute = false
 bus/4/bypass_fx = false
 bus/4/volume_db = -11.4623785
-bus/4/send = &"SFX"
+bus/4/send = &"Master"

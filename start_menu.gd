@@ -31,6 +31,7 @@ var sfx_bus_index := AudioServer.get_bus_index("SFX")
 
 @onready var match_sound_player := $MatchSoundPlayer as AudioStreamPlayer
 @onready var bg_music := $BackgroundMusicPlayer as AudioStreamPlayer
+@onready var bell_player := $TypewriterBellPlayer as AudioStreamPlayer
 @onready var typewriter_sound_player := $TypewriterSoundPlayer as AudioStreamPlayer
 @onready var typing_a_sound := load("res://Sound/TypeSoundA.mp3")
 @onready var typing_b_sound := load("res://Sound/TypeSoundB.mp3")
@@ -63,11 +64,9 @@ func _ready() -> void:
 	match_sound_player.finished.connect(_start_bg_music)
 
 	# set up audio
-
 	master_slider.value = AudioServer.get_bus_volume_linear(master_bus_index)
 	music_slider.value = AudioServer.get_bus_volume_linear(music_bus_index)
 	sfx_slider.value = AudioServer.get_bus_volume_linear(sfx_bus_index)
-	print(master_slider.value)
 	render_ui()
 
 
@@ -98,8 +97,9 @@ func render_text_state(ts: TextState) -> String:
 
 func _on_open_menu(id: int) -> void:
 	print(id)
-	candle.show()
+	bell_player.play()
 	match_sound_player.play()
+	candle.show()
 	game_title.show()
 	open_label.hide()
 	start_label.show()
