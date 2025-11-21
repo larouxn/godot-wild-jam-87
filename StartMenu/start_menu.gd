@@ -124,6 +124,7 @@ func _on_options(id: int) -> void:
 	main_menu.hide()
 	bg_panel.show()
 	options_menu.show()
+	master_slider.grab_focus()
 
 
 func _on_credits(id: int) -> void:
