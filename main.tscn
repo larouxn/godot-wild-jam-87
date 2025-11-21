@@ -25,6 +25,8 @@
 [ext_resource type="PackedScene" uid="uid://dldll62hrkhle" path="res://Props/book_stack_1.tscn" id="11_d13ii"]
 [ext_resource type="PackedScene" uid="uid://bb7bcs2gesjq3" path="res://Props/book_2.tscn" id="13_0odxb"]
 [ext_resource type="PackedScene" uid="uid://dfp5bcknl0aws" path="res://Models/Floor_WoodDark.gltf" id="17_a6jrf"]
+[ext_resource type="PackedScene" uid="uid://bjvs6p7ty12n3" path="res://Models/Key_Metal.gltf" id="17_qsp4k"]
+[ext_resource type="PackedScene" uid="uid://fqn33flahbpv" path="res://Models/Chalice.gltf" id="18_kq58d"]
 [ext_resource type="PackedScene" uid="uid://delu2qjrw6teu" path="res://Addons/Mirror3D/Mirror3D.tscn" id="18_lswn8"]
 [ext_resource type="PackedScene" uid="uid://cgijrb0gl6egt" path="res://Set/corner_interior_big.tscn" id="19_cegan"]
 [ext_resource type="Theme" uid="uid://bv7g70yg6r2oc" path="res://StartMenu/start_menu.tres" id="28_qsp4k"]
@@ -141,6 +143,12 @@ transform = Transform3D(-0.634879, 0, -0.7726118, 0, 1.0000002, 0, 0.7726118, 0,
 
 [node name="CandleTall" parent="Props/Shelf" instance=ExtResource("7_2cqfq")]
 transform = Transform3D(-1, 0, -1.5099582e-07, 0, 1, 0, 1.5099582e-07, 0, -1, -0.21957478, 0.110257626, 0.22721362)
+
+[node name="Key_Metal2" parent="Props/Shelf" instance=ExtResource("17_qsp4k")]
+transform = Transform3D(1.1673653, 0, 0.9419446, 0, 1.5, 0, -0.9419446, 0, 1.1673653, 0.28965002, 0.117776394, 0.22351527)
+
+[node name="Chalice2" parent="Props/Shelf" instance=ExtResource("18_kq58d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.044307414, 0.10744631, 0.22651911)
 
 [node name="Mirror" type="Node3D" parent="Props"]
 
