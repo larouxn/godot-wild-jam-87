@@ -1,7 +1,0 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bv7g70yg6r2oc"]
-
-[ext_resource type="FontFile" uid="uid://dr8ltua3y13rg" path="res://Fonts/CMU-Typewriter-Text/cmunbtl.otf" id="1_2pxfm"]
-
-[resource]
-default_font = ExtResource("1_2pxfm")
-default_font_size = 32
