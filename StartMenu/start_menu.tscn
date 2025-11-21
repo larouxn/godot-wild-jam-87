@@ -1,0 +1,308 @@
+[gd_scene load_steps=16 format=3 uid="uid://dy7lqufy3iwjt"]
+
+[ext_resource type="Script" uid="uid://g54886uediyr" path="res://StartMenu/start_menu.gd" id="1_ia0g5"]
+[ext_resource type="PackedScene" uid="uid://bpm7kbn4oyb1w" path="res://InputManager/input_manager.tscn" id="2_x7exu"]
+[ext_resource type="Theme" uid="uid://bv7g70yg6r2oc" path="res://StartMenu/start_menu.tres" id="3_vpdu5"]
+[ext_resource type="AudioStream" uid="uid://dir7ol8dcnbk" path="res://Sound/Effects/EndOfLineBellSound.mp3" id="4_gfl6h"]
+[ext_resource type="AudioStream" uid="uid://dl4puu5rfh8y8" path="res://Sound/Effects/match-lighting-candle-81020.mp3" id="4_v2mkm"]
+[ext_resource type="AudioStream" uid="uid://cmh8jdy5tdfb3" path="res://Sound/Music/WriteAtSea.wav" id="5_ctwoq"]
+[ext_resource type="PackedScene" uid="uid://bwtnomfwynpi5" path="res://Props/table.tscn" id="6_xsckg"]
+[ext_resource type="PackedScene" uid="uid://ol1wfjtta0rd" path="res://Props/table_drawers.tscn" id="7_gfl6h"]
+[ext_resource type="PackedScene" uid="uid://qliltvxtxt56" path="res://Props/candle_tall.tscn" id="8_kefd2"]
+[ext_resource type="PackedScene" uid="uid://dxscn68lii64q" path="res://Props/typewriter.tscn" id="9_acoh7"]
+[ext_resource type="PackedScene" uid="uid://c7jai0gpn7h48" path="res://Props/book.tscn" id="10_6p4e4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xsckg"]
+bg_color = Color(0.29411766, 0.29411766, 0.29411766, 0.8901961)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jxkec"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_ig7tw"]
+sky_material = SubResource("ProceduralSkyMaterial_jxkec")
+
+[sub_resource type="Environment" id="Environment_ld0yp"]
+background_mode = 2
+background_energy_multiplier = 0.5
+sky = SubResource("Sky_ig7tw")
+ambient_light_sky_contribution = 0.0
+ambient_light_energy = 0.0
+tonemap_mode = 3
+ssao_enabled = true
+glow_enabled = true
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.055
+volumetric_fog_albedo = Color(0.2946406, 0.29464063, 0.2946406, 1)
+volumetric_fog_length = 255.54
+
+[node name="StartMenu" type="Node3D"]
+script = ExtResource("1_ia0g5")
+
+[node name="InputManager" parent="." instance=ExtResource("2_x7exu")]
+visible = false
+
+[node name="BackgroundMusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_ctwoq")
+bus = &"TypewriterSounds"
+
+[node name="TypewriterSoundPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"TypewriterSounds"
+
+[node name="TypewriterBellPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_gfl6h")
+bus = &"TypewriterSounds"
+
+[node name="MatchSoundPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_v2mkm")
+bus = &"MatchSound"
+
+[node name="GameTitleLabel" type="RichTextLabel" parent="."]
+visible = false
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 150.0
+grow_horizontal = 2
+theme = ExtResource("3_vpdu5")
+theme_override_font_sizes/normal_font_size = 64
+text = "#cursed"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MenuPanel" type="Panel" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -420.0
+offset_top = -200.0
+offset_right = 420.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_xsckg")
+
+[node name="MainMenu" type="VBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -200.0
+offset_right = 200.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_vpdu5")
+
+[node name="OpenMenuText" type="RichTextLabel" parent="MainMenu"]
+clip_children = 2
+z_index = 1
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("3_vpdu5")
+bbcode_enabled = true
+text = "Type to Begin"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StartGameText" type="RichTextLabel" parent="MainMenu"]
+visible = false
+z_index = 1
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("3_vpdu5")
+bbcode_enabled = true
+text = "Sign the Contract"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionsText" type="RichTextLabel" parent="MainMenu"]
+visible = false
+z_index = 1
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("3_vpdu5")
+bbcode_enabled = true
+text = "Negotiate Terms"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CreditsText" type="RichTextLabel" parent="MainMenu"]
+visible = false
+z_index = 1
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("3_vpdu5")
+bbcode_enabled = true
+text = "Meet the Authors"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="QuitText" type="RichTextLabel" parent="MainMenu"]
+visible = false
+z_index = 1
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("3_vpdu5")
+bbcode_enabled = true
+text = "Run Away"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionsMenu" type="VBoxContainer" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -200.0
+offset_right = 400.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_vpdu5")
+
+[node name="MasterVolumeCon" type="HBoxContainer" parent="OptionsMenu"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MasterVolumeLabel" type="RichTextLabel" parent="OptionsMenu/MasterVolumeCon"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Master Volume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MasterVolumeSlider" type="HSlider" parent="OptionsMenu/MasterVolumeCon"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.001
+
+[node name="MusicVolumeCon" type="HBoxContainer" parent="OptionsMenu"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MusicVolumeLabel" type="RichTextLabel" parent="OptionsMenu/MusicVolumeCon"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Music Volume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MusicVolumeSlider" type="HSlider" parent="OptionsMenu/MusicVolumeCon"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.001
+
+[node name="SFXVolumeCon" type="HBoxContainer" parent="OptionsMenu"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SFXVolumeLabel" type="RichTextLabel" parent="OptionsMenu/SFXVolumeCon"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SFX Volume"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SFXVolumeSlider" type="HSlider" parent="OptionsMenu/SFXVolumeCon"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.001
+
+[node name="OptionsReturnLabel" type="RichTextLabel" parent="OptionsMenu"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Confirm"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CreditsMenu" type="VBoxContainer" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -200.0
+offset_right = 400.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_vpdu5")
+
+[node name="CreditsTitleLabel" type="RichTextLabel" parent="CreditsMenu"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[u]Credits[/u]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CreditsLabel" type="RichTextLabel" parent="CreditsMenu"]
+custom_minimum_size = Vector2(0, 350)
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[b]Game Jam Team:[/b] rhitakorrr, Nicholas La Roux, Will Boccard
+
+Font: CMU-Typewriter-Text Font (add website)
+
+Third Party Sound Effects: TBD"
+vertical_alignment = 1
+
+[node name="CreditsReturnLabel" type="RichTextLabel" parent="CreditsMenu"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "Back"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ld0yp")
+
+[node name="Camera3D" type="Camera3D" parent="WorldEnvironment"]
+transform = Transform3D(-0.9976282, 1.8582273e-09, -0.068833634, -0.026669677, 0.9218902, 0.38653228, 0.06345706, 0.38745123, -0.91970366, -2.2367299, 2.0850995, 0.049279213)
+
+[node name="Moon" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.39185983, 0.5814883, -0.71296364, 0.8098492, 0.14971077, 0.5672132, 0.43656617, -0.79966116, -0.4122522, -11, 19.375662, -7.09461)
+visible = false
+light_color = Color(0.95686275, 1, 1, 1)
+light_energy = 2.0
+shadow_enabled = true
+
+[node name="Table" parent="." instance=ExtResource("6_xsckg")]
+transform = Transform3D(-1.5, 0, 2.2649371e-07, 0, 1.5, 0, -2.2649371e-07, 0, -1.5, -2.1098118, 0, 1.2829747)
+
+[node name="TableDrawers" parent="Table" instance=ExtResource("7_gfl6h")]
+transform = Transform3D(1, 0, -1.4210855e-14, 0, 1, 0, 1.4210855e-14, 0, 1, 0, 0, 0)
+
+[node name="CandleTall" parent="Table" instance=ExtResource("8_kefd2")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, -0.57155985, 0.88346285, 0.17029244)
+visible = false
+
+[node name="Typewriter" parent="Table" instance=ExtResource("9_acoh7")]
+transform = Transform3D(1, 0, -4.2632564e-14, 0, 1, 0, 4.2632564e-14, 0, 1, 0, 0.8863606, 0.17754018)
+
+[node name="Book" parent="Table" instance=ExtResource("10_6p4e4")]
+transform = Transform3D(0.8324187, 0, -0.55414724, 0, 1, 0, 0.55414724, 0, 0.8324187, 0.6968763, 0.92069995, 0.16492212)
+
+[connection signal="value_changed" from="OptionsMenu/MasterVolumeCon/MasterVolumeSlider" to="." method="_on_master_volume_slider_value_changed"]
+[connection signal="value_changed" from="OptionsMenu/MusicVolumeCon/MusicVolumeSlider" to="." method="_on_music_volume_slider_value_changed"]
+[connection signal="value_changed" from="OptionsMenu/SFXVolumeCon/SFXVolumeSlider" to="." method="_on_sfx_volume_slider_value_changed"]

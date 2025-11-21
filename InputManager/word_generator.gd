@@ -324,11 +324,18 @@ const SYLLABLE_DICT = {
 	"where": 1,
 	"writ": 1
 }
-const MAX_SYLLABLES: int = 3
-const PUNCTUATION_ARRAY: Array = ["_", "--", ", ", "; ", "'", "-", "... "]
-const MAX_SENTENCE_LENGTH: int = 10  # must be greater than 3
-const CHANCE_OF_RANDOM_PUNCTUATION: float = 0.25  # perecentage value 0.0 - 1.0
+const PUNCTUATION_ARRAY: Array = ["--", ",", ";", "'", "-", "..."]
+
 var random: RandomNumberGenerator = RandomNumberGenerator.new()
+var max_syllables: int
+var max_sentence_length: int  # must be greater than 3
+var chance_of_random_punctuation: float  # perecentage value 0.0 - 1.0
+
+
+func _init(max_syl: int = 3, max_sent: int = 10, chance: float = 0.25) -> void:
+	self.max_syllables = max_syl
+	self.max_sentence_length = max_sent
+	self.chance_of_random_punctuation = chance
 
 
 func _get_syllable() -> String:
@@ -336,7 +343,7 @@ func _get_syllable() -> String:
 
 
 func _get_word() -> String:
-	var num_syllables: int = (random.randi() % MAX_SYLLABLES) + 1
+	var num_syllables: int = (random.randi() % max_syllables) + 1
 	var word: String = ""
 	for syllable in range(num_syllables):
 		var next_syllable: String = _get_syllable()
@@ -363,12 +370,20 @@ func get_sentence_array(num_words: int) -> Array:
 		elif word_index == (num_words - 1):
 			sentence.append(next_word)
 			sentence.append([".", "!", "?"].pick_random())
+			sentence.append(" ")
 			continue
-		sentence.append(next_word)
-		var add_random_punctuation: bool = randf() > (1 - CHANCE_OF_RANDOM_PUNCTUATION)
+
+		var add_random_punctuation: bool = randf() > (1 - chance_of_random_punctuation)
 		if add_random_punctuation:
-			sentence.append(_get_punctuation())
+			var random_punctuation := _get_punctuation()
+			next_word += random_punctuation
+			if random_punctuation in [",", ";", "..."]:
+				sentence.append(next_word)
+				sentence.append(" ")
+			else:
+				sentence.append(next_word)
 		else:
+			sentence.append(next_word)
 			sentence.append(" ")
 	return sentence
 
@@ -376,7 +391,7 @@ func get_sentence_array(num_words: int) -> Array:
 func get_paragraph_array(num_sentences: int) -> Array:
 	var paragraph: Array = []
 	for sentence_index in range(num_sentences):
-		var sentence_length: int = randi_range(3, MAX_SENTENCE_LENGTH)
+		var sentence_length: int = randi_range(3, max_sentence_length)
 		var next_sentence: Array = get_sentence_array(sentence_length)
 		paragraph.append(next_sentence)
 	return paragraph
@@ -391,6 +406,12 @@ func join_paragraph_to_string(token_array: Array) -> String:
 	for sentence: Array in token_array:
 		var sentence_string: String = "".join(sentence)
 		paragraph += sentence_string
-		paragraph += " "
+		#paragraph += " "
 	paragraph = paragraph.strip_edges()
 	return paragraph
+
+
+func update_configuration(max_syl: int = 3, max_sent: int = 10, chance: float = 0.25) -> void:
+	self.max_syllables = max_syl
+	self.max_sentence_length = max_sent
+	self.chance_of_random_punctuation = chance

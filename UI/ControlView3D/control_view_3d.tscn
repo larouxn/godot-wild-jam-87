@@ -13,3 +13,4 @@ texture = SubResource("ViewportTexture_uorvt")
 
 [node name="SubViewport" type="SubViewport" parent="Sprite3D"]
 transparent_bg = true
+size = Vector2i(1152, 648)

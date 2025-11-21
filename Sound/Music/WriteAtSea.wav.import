@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://cmh8jdy5tdfb3"
-path="res://.godot/imported/WriteAtSea.wav-5795bc01aec2105a1c3af21f9e58c865.sample"
+path="res://.godot/imported/WriteAtSea.wav-ed38d1b77ffb1a8db0dbc697322ad501.sample"
 
 [deps]
 
-source_file="res://Sound/WriteAtSea.wav"
-dest_files=["res://.godot/imported/WriteAtSea.wav-5795bc01aec2105a1c3af21f9e58c865.sample"]
+source_file="res://Sound/Music/WriteAtSea.wav"
+dest_files=["res://.godot/imported/WriteAtSea.wav-ed38d1b77ffb1a8db0dbc697322ad501.sample"]
 
 [params]
 
