@@ -21,6 +21,6 @@ func flicker() -> void:
 	animation_player.seek(randf_range(0.0, animation_length))
 
 
-func _on_animation_player_animation_finished(animation_name: String) -> void:
+func _on_animation_player_animation_finished(animation_name: StringName) -> void:
 	if animation_name == "ignite":
 		flicker()
