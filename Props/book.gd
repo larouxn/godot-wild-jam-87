@@ -9,6 +9,7 @@ func _ready() -> void:
 
 func rise() -> void:
 	animation_player.play("rise")
+	animation_player.queue("hover")
 
 
 func fall() -> void:
@@ -17,8 +18,3 @@ func fall() -> void:
 
 func hover() -> void:
 	animation_player.play("hover")
-
-
-func _on_animation_player_animation_finished(animation_name: StringName) -> void:
-	if animation_name == "rise":
-		animation_player.play("hover", 0.3)
