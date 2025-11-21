@@ -1,0 +1,90 @@
+[gd_scene load_steps=10 format=3 uid="uid://de66ji1hm08gh"]
+
+[ext_resource type="PackedScene" uid="uid://bmcfoc8kpg3lo" path="res://Models/hand_left.blend" id="1_8vta4"]
+[ext_resource type="Script" uid="uid://7dp0see6gll8" path="res://Props/hands.gd" id="1_ye1r8"]
+[ext_resource type="PackedScene" uid="uid://d0npe1265c66j" path="res://Models/hand_right.blend" id="2_q1sge"]
+[ext_resource type="PackedScene" uid="uid://bq07m5e5n1oed" path="res://Models/typewriter-black.fbx" id="3_q1sge"]
+[ext_resource type="PackedScene" uid="uid://dlm3u8wku4j0q" path="res://Models/Book_7.gltf" id="4_ejcrg"]
+[ext_resource type="Animation" uid="uid://d1bmy04r2m0nl" path="res://Animations/type.res" id="5_dfwpq"]
+[ext_resource type="Animation" uid="uid://chbw4vtrsa1vh" path="res://Animations/cast.res" id="6_ye1r8"]
+
+[sub_resource type="Animation" id="Animation_ejcrg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("hand_left:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-2.5, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("hand_right:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(2.5, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("hand_left:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-1.2640482, -2.3261, 2.0313632)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("hand_right:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-1.2793162, 2.3331933, -1.967557)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_222jm"]
+_data = {
+&"RESET": SubResource("Animation_ejcrg"),
+&"cast": ExtResource("6_ye1r8"),
+&"type": ExtResource("5_dfwpq")
+}
+
+[node name="Hands" type="Node3D"]
+script = ExtResource("1_ye1r8")
+
+[node name="hand_left" parent="." instance=ExtResource("2_q1sge")]
+transform = Transform3D(0.9264339, 0.30559313, -0.2198461, 0.270496, -0.134208, 0.9533205, 0.261823, -0.94265634, -0.20699663, -2.5, 0, 0)
+
+[node name="hand_right" parent="." instance=ExtResource("1_8vta4")]
+transform = Transform3D(0.9057616, -0.3693313, 0.20782112, -0.26504654, -0.1110492, 0.95781934, -0.3306744, -0.9226384, -0.19847418, 2.5, 0, 0)
+
+[node name="typewriter-black" parent="." instance=ExtResource("3_q1sge")]
+transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 0, -2.0113626, -4.438263)
+visible = false
+
+[node name="Book_72" parent="." instance=ExtResource("4_ejcrg")]
+transform = Transform3D(15, 0, 0, 0, 7.4999995, -12.990381, 0, 12.990381, 7.4999995, 0, 2.6153522, -5.965579)
+visible = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_222jm")
+}
+speed_scale = 0.5
