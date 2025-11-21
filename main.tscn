@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://dm3ra1iniucmx"]
+[gd_scene load_steps=36 format=3 uid="uid://dm3ra1iniucmx"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://Addons/ProtoController/proto_controller.tscn" id="1_ig7tw"]
 [ext_resource type="PackedScene" uid="uid://b2vypfu6gurry" path="res://Set/floor_tile.tscn" id="2_0xm2m"]
@@ -700,10 +700,10 @@ transform = Transform3D(-1.5, 0, -2.2649371e-07, 0, 1.5, 0, 2.2649371e-07, 0, -1
 transform = Transform3D(-1.5, 0, -1.907388e-07, 0, 1.5, 0, 1.907388e-07, 0, -1.5, -4.182932, 0, 7.0000005)
 
 [node name="DoorFrame" parent="Set/Walls/Front" instance=ExtResource("5_lquwl")]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -4.132863, 0, 6.9604664)
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -4.133, 0, 7)
 
 [node name="Door" parent="Set/Walls/Front" instance=ExtResource("6_7mycd")]
-transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -4.917011, -0.0021435022, 6.8001966)
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -4.9, 0, 6.8)
 
 [node name="CornerInteriorBig" parent="Set/Walls/Front" instance=ExtResource("19_cegan")]
 transform = Transform3D(-3.3657763e-08, -0.77, 6.731554e-08, 0.77, -3.365777e-08, -6.731554e-08, 6.731554e-08, 6.731553e-08, 0.77, -2.9808109, 3.2741039, 6.774164)
