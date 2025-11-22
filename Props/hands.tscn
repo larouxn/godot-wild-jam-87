@@ -70,7 +70,7 @@ _data = {
 script = ExtResource("1_ye1r8")
 
 [node name="hand_left" parent="." instance=ExtResource("2_q1sge")]
-transform = Transform3D(0.9264339, 0.30559313, -0.2198461, 0.270496, -0.134208, 0.9533205, 0.261823, -0.94265634, -0.20699663, -2.5, 0, 0)
+transform = Transform3D(0.9264339, 0.30559313, -0.2198461, 0.27049598, -0.134208, 0.9533205, 0.26182297, -0.94265634, -0.20699663, -2.5, 0, 0)
 
 [node name="hand_right" parent="." instance=ExtResource("1_8vta4")]
 transform = Transform3D(0.9057616, -0.3693313, 0.20782112, -0.26504654, -0.1110492, 0.95781934, -0.3306744, -0.9226384, -0.19847418, 2.5, 0, 0)
