@@ -10,7 +10,7 @@ var looking_at_book := false
 var health: float
 var old_cursor_position: Vector2i
 
-@onready var main_text_container := $MainTextContainer as MainTextContainer
+@onready var main_text_container := $MainText as MainTextContainer
 @onready var animation_player := $Head/AnimationPlayer as AnimationPlayer
 @onready var player_ui := $PlayerUI as Control
 @onready var health_bar := $PlayerUI/ProgressBar as ProgressBar
