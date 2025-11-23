@@ -34,7 +34,7 @@ volumetric_fog_albedo = Color(0.2946406, 0.29464063, 0.2946406, 1)
 volumetric_fog_length = 255.54
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xsckg"]
-bg_color = Color(0.29411766, 0.29411766, 0.29411766, 0.8901961)
+bg_color = Color(0, 0, 0, 0.8862745)
 
 [node name="StartMenu" type="Node3D"]
 script = ExtResource("1_ia0g5")
