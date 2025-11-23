@@ -65,8 +65,9 @@ func init_nodes() -> void:
 
 
 func _process(_delta: float) -> void:
+	health = health_bar.value
 	if health <= 0:
-		print("Game Over!")
+		get_tree().change_scene_to_file("res://Menus/end_menu.tscn")
 
 
 func _on_spellbook_spell_failed() -> void:

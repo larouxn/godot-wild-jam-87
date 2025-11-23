@@ -1,7 +1,7 @@
 class_name EndMenu extends Node3D
 
-var try_again_text := TextState.new("Try again")
-var main_menu_text := TextState.new("Return to menu")
+var try_again_text := TextState.new("Try Again")
+var main_menu_text := TextState.new("Return to Menu")
 var quit_text := TextState.new("Run Away")
 
 var master_bus_index := AudioServer.get_bus_index("Master")
@@ -39,7 +39,7 @@ func _ready() -> void:
 	try_again_text.finished.connect(_on_start_game)
 	main_menu_text.finished.connect(_on_open_menu)
 	quit_text.finished.connect(_on_quit)
-	match_sound_player.finished.connect(_start_bg_music)
+	_start_bg_music()
 
 	game_title.show()
 	render_ui()
