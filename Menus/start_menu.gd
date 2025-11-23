@@ -1,6 +1,4 @@
-class_name StartMenu extends Node3D
-
-static var jump_to_main_menu: bool = false
+extends Node3D
 
 var open_menu_text: TextState = TextState.new()
 var start_game_text: TextState
@@ -66,10 +64,6 @@ func _ready() -> void:
 	master_slider.value = AudioServer.get_bus_volume_linear(master_bus_index)
 	music_slider.value = AudioServer.get_bus_volume_linear(music_bus_index)
 	sfx_slider.value = AudioServer.get_bus_volume_linear(sfx_bus_index)
-
-	if jump_to_main_menu:
-		_on_open_menu(-1)
-		jump_to_main_menu = false
 
 
 func init_nodes() -> void:

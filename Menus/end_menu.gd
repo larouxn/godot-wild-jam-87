@@ -1,8 +1,8 @@
-class_name EndMenu extends Node3D
+extends Node3D
 
-var try_again_text := TextState.new("Try Again")
-var main_menu_text := TextState.new("Return to Menu")
-var quit_text := TextState.new("Run Away")
+var try_again_text: TextState
+var main_menu_text: TextState
+var quit_text: TextState
 
 var master_bus_index := AudioServer.get_bus_index("Master")
 var music_bus_index := AudioServer.get_bus_index("BackgroundMusic")
@@ -10,11 +10,9 @@ var sfx_bus_index := AudioServer.get_bus_index("SFX")
 
 @onready var input_manager := $InputManager as InputManager
 @onready var game_title := $GameTitleLabel as RichTextLabel
-@onready var menu := $Menu as VBoxContainer
-@onready var try_again_label := $Menu/TryAgainText as RichTextLabel
-@onready var main_menu_label := $Menu/MainMenuText as RichTextLabel
-@onready var quit_label := $Menu/QuitText as RichTextLabel
-@onready var bg_panel := $MenuPanel as Panel
+@onready var try_again_cursor := $Menu/TryAgainCursor as CursorText
+@onready var main_menu_cursor := $Menu/MainMenuCursor as CursorText
+@onready var quit_cursor := $Menu/QuitCursor as CursorText
 
 @onready var bg_music := $BackgroundMusicPlayer as AudioStreamPlayer
 @onready var bell_player := $TypewriterBellPlayer as AudioStreamPlayer
@@ -27,27 +25,21 @@ var sfx_bus_index := AudioServer.get_bus_index("SFX")
 
 
 func _ready() -> void:
-	# set up inputs
-	input_manager.set_main_text(try_again_text)
-	input_manager.register_side_text(main_menu_text)
-	input_manager.register_side_text(quit_text)
-
-	# set up signals
-	input_manager.connect("key_pressed", render_ui)
+	_setup_text_states()
 	input_manager.connect("key_pressed", play_type_sound)
-	try_again_text.finished.connect(_on_start_game)
-	main_menu_text.finished.connect(_on_open_menu)
-	quit_text.finished.connect(_on_quit)
 	_start_bg_music()
 
 	game_title.show()
-	render_ui()
 
 
-func render_ui() -> void:
-	try_again_label.text = render_text_state(try_again_text)
-	main_menu_label.text = render_text_state(main_menu_text)
-	quit_label.text = render_text_state(quit_text)
+func _setup_text_states() -> void:
+	try_again_text = try_again_cursor.create_and_link_one_line_text_state("Try Again", true)
+	main_menu_text = main_menu_cursor.create_and_link_one_line_text_state("Return to Start")
+	quit_text = quit_cursor.create_and_link_one_line_text_state("Run Away")
+
+	try_again_text.finished.connect(_on_start_game)
+	main_menu_text.finished.connect(_on_open_menu)
+	quit_text.finished.connect(_on_quit)
 
 
 func play_type_sound() -> void:
@@ -62,16 +54,8 @@ func play_type_sound() -> void:
 	typewriter_sound_player.play()
 
 
-func render_text_state(ts: TextState) -> String:
-	var split := ts.parts()
-	return (
-		"[color=green]" + split[0] + "[/color][color=red][u]" + split[1] + "[/u][/color]" + split[2]
-	)
-
-
 func _on_open_menu(id: int) -> void:
 	print(id)
-	StartMenu.jump_to_main_menu = true
 	get_tree().change_scene_to_file("res://Menus/start_menu.tscn")
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c6ift4t1xw2e4"]
+[gd_scene load_steps=12 format=3 uid="uid://c6ift4t1xw2e4"]
 
 [ext_resource type="Script" uid="uid://ebq5avwlhecb" path="res://Menus/end_menu.gd" id="1_aofu2"]
 [ext_resource type="AudioStream" uid="uid://v7r04ketuo42" path="res://Sound/Music/WriteAtSeaLoud.wav" id="3_aofu2"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bpm7kbn4oyb1w" path="res://InputManager/input_manager.tscn" id="7_lbn72"]
 [ext_resource type="AudioStream" uid="uid://dir7ol8dcnbk" path="res://Sound/Effects/EndOfLineBellSound.mp3" id="9_s4bew"]
 [ext_resource type="Theme" uid="uid://bv7g70yg6r2oc" path="res://Menus/start_menu.tres" id="11_mfr6d"]
+[ext_resource type="PackedScene" uid="uid://blfginyn8bta8" path="res://UI/CursorText/cursor_text.tscn" id="12_b8l67"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_aofu2"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -104,36 +105,22 @@ offset_bottom = 250.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("11_mfr6d")
+alignment = 1
 
-[node name="TryAgainText" type="RichTextLabel" parent="Menu"]
-clip_children = 2
-z_index = 1
+[node name="TryAgainCursor" parent="Menu" node_paths=PackedStringArray("input_manager") instance=ExtResource("12_b8l67")]
 layout_mode = 2
 size_flags_vertical = 3
-theme = ExtResource("11_mfr6d")
-bbcode_enabled = true
 text = "Try Again"
-horizontal_alignment = 1
-vertical_alignment = 1
+input_manager = NodePath("../../InputManager")
 
-[node name="MainMenuText" type="RichTextLabel" parent="Menu"]
-clip_children = 2
-z_index = 1
+[node name="MainMenuCursor" parent="Menu" node_paths=PackedStringArray("input_manager") instance=ExtResource("12_b8l67")]
 layout_mode = 2
 size_flags_vertical = 3
-theme = ExtResource("11_mfr6d")
-bbcode_enabled = true
 text = "Return to Menu"
-horizontal_alignment = 1
-vertical_alignment = 1
+input_manager = NodePath("../../InputManager")
 
-[node name="QuitText" type="RichTextLabel" parent="Menu"]
-clip_children = 2
-z_index = 1
+[node name="QuitCursor" parent="Menu" node_paths=PackedStringArray("input_manager") instance=ExtResource("12_b8l67")]
 layout_mode = 2
 size_flags_vertical = 3
-theme = ExtResource("11_mfr6d")
-bbcode_enabled = true
 text = "Run Away"
-horizontal_alignment = 1
-vertical_alignment = 1
+input_manager = NodePath("../../InputManager")
