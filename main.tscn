@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://dm3ra1iniucmx"]
+[gd_scene load_steps=49 format=3 uid="uid://dm3ra1iniucmx"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://Addons/ProtoController/proto_controller.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://7n0c1ali4re7" path="res://main.gd" id="1_ok6jj"]
@@ -37,7 +37,8 @@
 [ext_resource type="Theme" uid="uid://bv7g70yg6r2oc" path="res://Menus/start_menu.tres" id="28_qsp4k"]
 [ext_resource type="Script" uid="uid://booac3vwmbcoy" path="res://pause_menu.gd" id="29_kq58d"]
 [ext_resource type="Script" uid="uid://gfgeyqxng50f" path="res://InputManager/input_manager.gd" id="30_kq58d"]
-[ext_resource type="PackedScene" path="res://Props/hands.tscn" id="35_0rl1p"]
+[ext_resource type="PackedScene" uid="uid://de66ji1hm08gh" path="res://Props/hands.tscn" id="35_0rl1p"]
+[ext_resource type="PackedScene" uid="uid://blfginyn8bta8" path="res://UI/CursorText/cursor_text.tscn" id="39_come4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7dm0k"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -58,6 +59,28 @@ volumetric_fog_enabled = true
 volumetric_fog_density = 0.01
 volumetric_fog_albedo = Color(0.2946406, 0.29464063, 0.2946406, 1)
 volumetric_fog_length = 255.54
+
+[sub_resource type="Animation" id="Animation_4lmeg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3.1415927]
+}
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, -2.045, 2.4, 0.125)
 
 [sub_resource type="Animation" id="Animation_h8e4i"]
 resource_name = "look_book"
@@ -81,28 +104,6 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = PackedFloat32Array(0, 1, -2.045, 2.4, 0.125, 0.5, 1, -2.7, 2.2, 0.3)
-
-[sub_resource type="Animation" id="Animation_4lmeg"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation:y")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [3.1415927]
-}
-tracks/1/type = "position_3d"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array(0, 1, -2.045, 2.4, 0.125)
 
 [sub_resource type="Animation" id="Animation_0cp0l"]
 resource_name = "look_typewriter"
@@ -136,6 +137,9 @@ _data = {
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_4lmeg"]
 viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_come4"]
+bg_color = Color(0, 0, 0, 0.8862745)
 
 [node name="Main" type="Node3D" node_paths=PackedStringArray("input_manager")]
 script = ExtResource("1_ok6jj")
@@ -171,6 +175,7 @@ autoplay = true
 
 [node name="InputManager" type="Node3D" parent="."]
 unique_name_in_owner = true
+process_mode = 3
 script = ExtResource("30_kq58d")
 metadata/_custom_type_script = "uid://gfgeyqxng50f"
 
@@ -836,6 +841,7 @@ visible = false
 
 [node name="PauseMenu" type="Control" parent="." node_paths=PackedStringArray("input_manager")]
 unique_name_in_owner = true
+process_mode = 3
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -868,6 +874,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="Panel" type="Panel" parent="PauseMenu/MarginContainer"]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_come4")
 
 [node name="TotalMenuBox" type="VBoxContainer" parent="PauseMenu/MarginContainer"]
 layout_mode = 2
@@ -892,41 +899,45 @@ custom_minimum_size = Vector2(0, 400)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ResumeButton" type="RichTextLabel" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/NavigationMenu"]
-unique_name_in_owner = true
+[node name="CenterContainer" type="CenterContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/NavigationMenu"]
 layout_mode = 2
 size_flags_vertical = 3
-bbcode_enabled = true
-text = "Resume"
-horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="MainMenuButton" type="RichTextLabel" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/NavigationMenu"]
+[node name="ResumeCursor" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/NavigationMenu/CenterContainer" node_paths=PackedStringArray("input_manager") instance=ExtResource("39_come4")]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 3
-bbcode_enabled = true
-text = "Main Menu"
-horizontal_alignment = 1
-vertical_alignment = 1
+text = "#Resume"
+input_manager = NodePath("../../../../../../../InputManager")
 
-[node name="OptionsButton" type="RichTextLabel" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/NavigationMenu"]
-unique_name_in_owner = true
+[node name="CenterContainer2" type="CenterContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/NavigationMenu"]
 layout_mode = 2
 size_flags_vertical = 3
-bbcode_enabled = true
-text = "Options"
-horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="QuitButton" type="RichTextLabel" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/NavigationMenu"]
+[node name="MainMenuCursor" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/NavigationMenu/CenterContainer2" node_paths=PackedStringArray("input_manager") instance=ExtResource("39_come4")]
 unique_name_in_owner = true
 layout_mode = 2
+text = "#Main Menu"
+input_manager = NodePath("../../../../../../../InputManager")
+
+[node name="CenterContainer3" type="CenterContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/NavigationMenu"]
+layout_mode = 2
 size_flags_vertical = 3
-bbcode_enabled = true
-text = "Quit"
-horizontal_alignment = 1
-vertical_alignment = 1
+
+[node name="OptionsCursor" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/NavigationMenu/CenterContainer3" node_paths=PackedStringArray("input_manager") instance=ExtResource("39_come4")]
+unique_name_in_owner = true
+layout_mode = 2
+text = "#Options"
+input_manager = NodePath("../../../../../../../InputManager")
+
+[node name="CenterContainer4" type="CenterContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/NavigationMenu"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="QuitCursor" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/NavigationMenu/CenterContainer4" node_paths=PackedStringArray("input_manager") instance=ExtResource("39_come4")]
+unique_name_in_owner = true
+layout_mode = 2
+text = "#Quit"
+input_manager = NodePath("../../../../../../../InputManager")
 
 [node name="OptionMenu" type="VBoxContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox"]
 unique_name_in_owner = true
@@ -992,16 +1003,17 @@ size_flags_vertical = 4
 max_value = 1.0
 step = 0.001
 
-[node name="ConfirmButton" type="RichTextLabel" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu"]
+[node name="CenterContainer" type="CenterContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu"]
+layout_mode = 2
+
+[node name="ConfirmCursor" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/CenterContainer" node_paths=PackedStringArray("input_manager") instance=ExtResource("39_come4")]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 3
-bbcode_enabled = true
-text = "Confirm"
-horizontal_alignment = 1
-vertical_alignment = 1
+text = "#Confirm"
+input_manager = NodePath("../../../../../../../InputManager")
 
 [connection signal="damage_dealt" from="." to="PlayerUI" method="_on_main_damage_dealt"]
+[connection signal="pause_game" from="Spellbook" to="." method="_on_spellbook_pause_game"]
 [connection signal="spell_failed" from="Spellbook" to="." method="_on_spellbook_spell_failed"]
 [connection signal="focus_entered" from="PauseMenu" to="PauseMenu" method="_on_focus_entered"]
 [connection signal="value_changed" from="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/MasterVolumeCon/MasterVolumeSlider" to="PauseMenu" method="_on_master_volume_slider_value_changed"]

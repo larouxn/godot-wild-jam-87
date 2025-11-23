@@ -2,21 +2,21 @@ extends Control
 
 @export var input_manager: InputManager
 
-var resume_text := TextState.new("Resume")
-var main_menu_text := TextState.new("Main Menu")
-var options_text := TextState.new("Options")
-var quit_text := TextState.new("Quit")
-var confirm_text := TextState.new("Confirm")
+var resume_text: TextState
+var main_menu_text: TextState
+var options_text: TextState
+var quit_text: TextState
+var confirm_text: TextState
 
 var master_bus_index := AudioServer.get_bus_index("Master")
 var music_bus_index := AudioServer.get_bus_index("BackgroundMusic")
 var sfx_bus_index := AudioServer.get_bus_index("SFX")
 
-@onready var resume_label := %ResumeButton as RichTextLabel
-@onready var main_menu_label := %MainMenuButton as RichTextLabel
-@onready var options_label := %OptionsButton as RichTextLabel
-@onready var quit_label := %QuitButton as RichTextLabel
-@onready var confirm_label := %ConfirmButton as RichTextLabel
+@onready var resume_cursor := %ResumeCursor as CursorText
+@onready var main_menu_cursor := %MainMenuCursor as CursorText
+@onready var options_cursor := %OptionsCursor as CursorText
+@onready var quit_cursor := %QuitCursor as CursorText
+@onready var confirm_cursor := %ConfirmCursor as CursorText
 
 @onready var pause_menu := %PauseMenu
 @onready var nav_menu := %NavigationMenu
@@ -26,65 +26,56 @@ var sfx_bus_index := AudioServer.get_bus_index("SFX")
 @onready var sfx_slider := %SFXVolumeSlider as HSlider
 
 
-func _on_focus_entered() -> void:
-	input_manager.register_side_text(resume_text)
-	input_manager.register_side_text(main_menu_text)
-	input_manager.register_side_text(options_text)
-	input_manager.register_side_text(quit_text)
+func _ready() -> void:
+	init_nodes.call_deferred()
 
-	input_manager.connect("key_pressed", render_ui)
+	# set up audio
+	master_slider.value = AudioServer.get_bus_volume_linear(master_bus_index)
+	music_slider.value = AudioServer.get_bus_volume_linear(music_bus_index)
+	sfx_slider.value = AudioServer.get_bus_volume_linear(sfx_bus_index)
+
+
+func init_nodes() -> void:
+	resume_text = resume_cursor.create_and_link_one_line_text_state(resume_cursor.text)
+	main_menu_text = main_menu_cursor.create_and_link_one_line_text_state(main_menu_cursor.text)
+	options_text = options_cursor.create_and_link_one_line_text_state(options_cursor.text)
+	quit_text = quit_cursor.create_and_link_one_line_text_state(quit_cursor.text)
+	confirm_text = confirm_cursor.create_and_link_one_line_text_state(confirm_cursor.text)
+
 	resume_text.finished.connect(_on_resume)
 	main_menu_text.finished.connect(_on_main_menu)
 	options_text.finished.connect(_on_options)
 	quit_text.finished.connect(_on_quit)
 	confirm_text.finished.connect(_on_confirm)
 
-	# set up audio
-	master_slider.value = AudioServer.get_bus_volume_linear(master_bus_index)
-	music_slider.value = AudioServer.get_bus_volume_linear(music_bus_index)
-	sfx_slider.value = AudioServer.get_bus_volume_linear(sfx_bus_index)
-	render_ui()
-
-
-func render_text_state(ts: TextState) -> String:
-	var split := ts.parts()
-	return (
-		"[color=green]" + split[0] + "[/color][color=red][u]" + split[1] + "[/u][/color]" + split[2]
-	)
-
-
-func render_ui() -> void:
-	resume_label.text = render_text_state(resume_text)
-	main_menu_label.text = render_text_state(main_menu_text)
-	options_label.text = render_text_state(options_text)
-	quit_label.text = render_text_state(quit_text)
-	confirm_label.text = render_text_state(confirm_text)
-
 
 func _on_resume(_id: int) -> void:
 	get_tree().paused = false
+	input_manager.handle_key("escape")
 	pause_menu.hide()
 
 
 func _on_main_menu(_id: int) -> void:
-	get_tree().change_scene_to_file("res://StartMenu/start_menu.tscn")
+	input_manager.handle_key("escape")
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://Menus/start_menu.tscn")
 
 
-func _on_options(id: int) -> void:
-	input_manager.unregister_side_text(id)
-	input_manager.register_side_text(confirm_text)
+func _on_options(_id: int) -> void:
+	input_manager.handle_key("escape")
 	nav_menu.hide()
 	option_menu.show()
 	master_slider.grab_focus()
 
 
 func _on_quit(_id: int) -> void:
+	input_manager.handle_key("escape")
+	get_tree().paused = false
 	get_tree().quit()
 
 
-func _on_confirm(id: int) -> void:
-	input_manager.unregister_side_text(id)
-	input_manager.register_side_text(options_text)
+func _on_confirm(_id: int) -> void:
+	input_manager.handle_key("escape")
 	option_menu.hide()
 	nav_menu.show()
 

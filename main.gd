@@ -83,3 +83,8 @@ func play_type_sound() -> void:
 		. pick_random()
 	)
 	typewriter_sound_player.play()
+
+
+func _on_spellbook_pause_game() -> void:
+	get_tree().paused = true
+	pause_menu.show()

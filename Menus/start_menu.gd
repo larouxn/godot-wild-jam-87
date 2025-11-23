@@ -119,6 +119,7 @@ func _on_open_menu(id: int) -> void:
 
 
 func _start_bg_music() -> void:
+	print("starting background music")
 	bg_music.play()
 
 

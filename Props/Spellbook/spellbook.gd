@@ -1,6 +1,7 @@
 class_name Spellbook extends Node3D
 
 signal spell_failed
+signal pause_game
 
 @export var main_text_ui: MainTextContainer
 @export var input_manager: InputManager
@@ -156,6 +157,14 @@ func _on_remove_capital_letters_finished() -> void:
 
 
 func _on_remove_capital_letters_mistyped() -> void:
+	pass
+
+
+func _on_pause() -> void:
+	pause_game.emit()
+
+
+func _on_pause_mistyped() -> void:
 	pass
 
 

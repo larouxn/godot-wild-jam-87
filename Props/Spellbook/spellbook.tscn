@@ -177,3 +177,10 @@ text = "@gO AwAy cApItAL LEttErs nO OnE LIkEs yOU"
 description = "remove capital letters"
 on_finish = "_on_remove_capital_letters_finished"
 on_typo = "_on_remove_capital_letters_mistyped"
+
+[node name="Pause" parent="ControlView3D/VBoxContainer" instance=ExtResource("7_rrm8l")]
+layout_mode = 2
+text = "@pause"
+description = "take a break"
+on_finish = "_on_pause"
+on_typo = "_on_pause_mistyped"
