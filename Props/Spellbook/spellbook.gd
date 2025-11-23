@@ -2,6 +2,7 @@ class_name Spellbook extends Node3D
 
 signal spell_failed
 signal pause_game
+signal revert_decay(mistyped: bool)
 
 @export var main_text_ui: MainTextContainer
 @export var input_manager: InputManager
@@ -158,6 +159,14 @@ func _on_remove_capital_letters_finished() -> void:
 
 func _on_remove_capital_letters_mistyped() -> void:
 	pass
+
+
+func _on_revert_decay_finished() -> void:
+	revert_decay.emit(false)
+
+
+func _on_revert_decay_mistyped() -> void:
+	revert_decay.emit(true)
 
 
 func _on_pause() -> void:

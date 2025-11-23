@@ -25,6 +25,7 @@ var used_newlines: Dictionary[int, bool] = {}
 @onready var typing_e_sound := load("res://Sound/Effects/TypeSoundE.mp3")
 
 @onready var spellbook := $Spellbook as Spellbook
+@onready var head := $Head as Node3D
 
 
 func _ready() -> void:
@@ -47,6 +48,14 @@ func _ready() -> void:
 	input_manager.key_pressed.connect(play_type_sound)
 	main_text.newline.connect(_on_new_line)
 	main_text.finished.connect(_win_game)
+
+	spellbook.revert_decay.connect(
+		func(mistyped: bool) -> void:
+			if mistyped:
+				damage_dealt.emit(15)
+			else:
+				damage_dealt.emit(-20)
+	)
 
 
 func init_nodes() -> void:
@@ -77,6 +86,19 @@ func _on_spellbook_spell_failed() -> void:
 
 
 func _on_main_text_failed(_id: int) -> void:
+	var tween := get_tree().create_tween()
+	var prev_pos := head.position
+	var new_pos := head.position
+	new_pos.y += 0.11
+	new_pos.x += 0.11
+	new_pos.z += 0.11
+
+	tween.tween_property(head, "position", new_pos, 0.25).from_current().set_trans(
+		Tween.TRANS_BOUNCE
+	)
+	tween.tween_property(head, "position", prev_pos, 0.25).from_current().set_trans(
+		Tween.TRANS_BOUNCE
+	)
 	damage_dealt.emit(3)
 
 
@@ -104,7 +126,7 @@ func _on_spellbook_pause_game() -> void:
 func _on_new_line(_id: int) -> void:
 	typewriter_bell_player.play()
 	if !used_newlines.has(cursor_text.cursor_position.y - 1):
-		damage_dealt.emit(-15)
+		damage_dealt.emit(-5)
 	used_newlines[cursor_text.cursor_position.y - 1] = true
 
 

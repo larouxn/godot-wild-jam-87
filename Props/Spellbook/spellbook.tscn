@@ -178,6 +178,13 @@ description = "remove capital letters"
 on_finish = "_on_remove_capital_letters_finished"
 on_typo = "_on_remove_capital_letters_mistyped"
 
+[node name="Heal" parent="ControlView3D/VBoxContainer" instance=ExtResource("7_rrm8l")]
+layout_mode = 2
+text = "@'Ey, Decay! Just go AWAY. 'Mkay?"
+description = "revert some decay"
+on_finish = "_on_revert_decay_finished"
+on_typo = "_on_revert_decay_mistyped"
+
 [node name="Pause" parent="ControlView3D/VBoxContainer" instance=ExtResource("7_rrm8l")]
 layout_mode = 2
 text = "@pause"
