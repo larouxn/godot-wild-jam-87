@@ -72,7 +72,7 @@ offset_bottom = 150.0
 grow_horizontal = 2
 theme = ExtResource("11_mfr6d")
 theme_override_font_sizes/normal_font_size = 64
-text = "#cursed"
+text = "Cursed"
 horizontal_alignment = 1
 vertical_alignment = 1
 
