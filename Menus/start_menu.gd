@@ -23,13 +23,15 @@ var sfx_bus_index := AudioServer.get_bus_index("SFX")
 @onready var credits_menu := $CreditsMenu as VBoxContainer
 @onready var bg_panel := $MenuPanel as Panel
 
-@onready var open_label := $OpenMenuText as RichTextLabel
-@onready var start_label := $MainMenu/StartGameText as RichTextLabel
-@onready var options_label := $MainMenu/OptionsText as RichTextLabel
-@onready var credits_label := $MainMenu/CreditsText as RichTextLabel
-@onready var quit_label := $MainMenu/QuitText as RichTextLabel
-@onready var options_return_label := $OptionsMenu/OptionsReturnLabel as RichTextLabel
-@onready var credits_return_label := $CreditsMenu/CreditsReturnLabel as RichTextLabel
+@onready var open_label := $OpenCursor as RichTextLabel
+@onready var start_label := $MainMenu/StartCursor as RichTextLabel
+@onready var options_label := $MainMenu/OptionsCursor as RichTextLabel
+@onready var credits_label := $MainMenu/CreditsCursor as RichTextLabel
+@onready var quit_label := $MainMenu/QuitCursor as RichTextLabel
+@onready
+var options_return_label := $OptionsMenu/CenterContainer/OptionsReturnCursor as RichTextLabel
+@onready
+var credits_return_label := $CreditsMenu/CenterContainer/CreditsReturnCursor as RichTextLabel
 
 @onready var open_cursor := $OpenCursor as CursorText
 @onready var start_cursor := $MainMenu/StartCursor as CursorText
