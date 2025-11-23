@@ -74,9 +74,9 @@ func _ready() -> void:
 
 func init_nodes() -> void:
 	open_menu_text = open_cursor.create_and_link_one_line_text_state(open_cursor.text)
-	start_game_text = start_cursor.create_and_link_one_line_text_state("Sign the Contract")
-	options_text = options_cursor.create_and_link_one_line_text_state("Negotiate Terms")
-	credits_text = credits_cursor.create_and_link_one_line_text_state("Meet the Authors")
+	start_game_text = start_cursor.create_and_link_one_line_text_state("Start")
+	options_text = options_cursor.create_and_link_one_line_text_state("Options")
+	credits_text = credits_cursor.create_and_link_one_line_text_state("Credits")
 	quit_text = quit_cursor.create_and_link_one_line_text_state("Run Away")
 	options_return_text = options_return_cursor.create_and_link_one_line_text_state("Confirm")
 	credits_return_text = credits_return_cursor.create_and_link_one_line_text_state("Back")
