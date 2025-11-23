@@ -1,6 +1,8 @@
 extends Control
 
 @export var input_manager: InputManager
+@export var main_text_container: MainTextContainer
+@export var spellbook: Spellbook
 
 var resume_text: TextState
 var main_menu_text: TextState
@@ -48,6 +50,23 @@ func init_nodes() -> void:
 	quit_text.finished.connect(_on_quit)
 	confirm_text.finished.connect(_on_confirm)
 
+	lock_all_texts()
+	confirm_text.lock()
+
+
+func lock_all_texts() -> void:
+	resume_text.lock()
+	main_menu_text.lock()
+	options_text.lock()
+	quit_text.lock()
+
+
+func unlock_all_texts() -> void:
+	resume_text.unlock()
+	main_menu_text.unlock()
+	options_text.unlock()
+	quit_text.unlock()
+
 
 func _on_resume(_id: int) -> void:
 	get_tree().paused = false
@@ -63,6 +82,8 @@ func _on_main_menu(_id: int) -> void:
 
 func _on_options(_id: int) -> void:
 	input_manager.handle_key("escape")
+	lock_all_texts()
+	confirm_text.unlock()
 	nav_menu.hide()
 	option_menu.show()
 	master_slider.grab_focus()
@@ -76,6 +97,8 @@ func _on_quit(_id: int) -> void:
 
 func _on_confirm(_id: int) -> void:
 	input_manager.handle_key("escape")
+	confirm_text.lock()
+	unlock_all_texts()
 	option_menu.hide()
 	nav_menu.show()
 

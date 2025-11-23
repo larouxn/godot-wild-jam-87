@@ -850,7 +850,7 @@ transform = Transform3D(-0.1, 0, -8.742278e-09, 0, 0.1, 0, 8.742278e-09, 0, -0.1
 transform = Transform3D(-1.5, 0, -2.2649373e-07, 0, 1.5, 0, 2.2649373e-07, 0, -1.5, 4.1449633, 0.0065732, -5.9246616)
 visible = false
 
-[node name="PauseMenu" type="Control" parent="." node_paths=PackedStringArray("input_manager")]
+[node name="PauseMenu" type="Control" parent="." node_paths=PackedStringArray("input_manager", "main_text_container", "spellbook")]
 unique_name_in_owner = true
 process_mode = 3
 visible = false
@@ -863,6 +863,8 @@ grow_vertical = 2
 theme = ExtResource("28_qsp4k")
 script = ExtResource("29_kq58d")
 input_manager = NodePath("../InputManager")
+main_text_container = NodePath("../MainText")
+spellbook = NodePath("../Spellbook")
 
 [node name="MarginContainer" type="MarginContainer" parent="PauseMenu"]
 layout_mode = 1

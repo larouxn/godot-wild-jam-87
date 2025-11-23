@@ -15,10 +15,6 @@ var old_cursor_position: Vector2i
 @onready var player_ui := $PlayerUI as Control
 @onready var health_bar := $PlayerUI/ProgressBar as ProgressBar
 @onready var pause_menu := %PauseMenu as Control
-@onready var main_text_cursor := (
-	$MainText/SubViewport/SubViewportContainer/SubViewport/CenterContainer/TextOffset/CursorText
-	as CursorText
-)
 
 @onready var typewriter_sound_player := $Head/Camera3D/TypewriterSoundPlayer as AudioStreamPlayer
 @onready var typewriter_bell_player := $Head/Camera3D/TypewriterBellPlayer as AudioStreamPlayer
@@ -27,6 +23,8 @@ var old_cursor_position: Vector2i
 @onready var typing_c_sound := load("res://Sound/Effects/TypeSoundC.mp3")
 @onready var typing_d_sound := load("res://Sound/Effects/TypeSoundD.mp3")
 @onready var typing_e_sound := load("res://Sound/Effects/TypeSoundE.mp3")
+
+@onready var spellbook := $Spellbook as Spellbook
 
 
 func _ready() -> void:
@@ -47,8 +45,7 @@ func _ready() -> void:
 	main_text.mistyped.connect(_on_main_text_failed)
 	health = health_bar.value
 	input_manager.key_pressed.connect(play_type_sound)
-	main_text_cursor.cursor_position_changed.connect(_on_new_line)
-	old_cursor_position = main_text_cursor.cursor_position
+	main_text_container.cursor_text.cursor_position_changed.connect(_on_new_line)
 
 
 func init_nodes() -> void:
@@ -94,6 +91,10 @@ func play_type_sound() -> void:
 
 
 func _on_spellbook_pause_game() -> void:
+	main_text.lock()
+	for ts: TextState in spellbook.spells.values():
+		ts.lock()
+	pause_menu.unlock_all_texts()
 	get_tree().paused = true
 	pause_menu.show()
 
