@@ -1,0 +1,139 @@
+[gd_scene load_steps=16 format=3 uid="uid://cqbfkkhbe0tf2"]
+
+[ext_resource type="Script" uid="uid://dumascwsdqxy3" path="res://Menus/win_menu.gd" id="1_mpuyw"]
+[ext_resource type="PackedScene" uid="uid://bwtnomfwynpi5" path="res://Props/table.tscn" id="2_qaduw"]
+[ext_resource type="PackedScene" uid="uid://ol1wfjtta0rd" path="res://Props/table_drawers.tscn" id="3_35jy5"]
+[ext_resource type="PackedScene" uid="uid://qliltvxtxt56" path="res://Props/candle_tall.tscn" id="4_iashh"]
+[ext_resource type="PackedScene" uid="uid://dxscn68lii64q" path="res://Props/typewriter.tscn" id="5_h4anv"]
+[ext_resource type="PackedScene" uid="uid://c7jai0gpn7h48" path="res://Props/book.tscn" id="6_78nj3"]
+[ext_resource type="PackedScene" uid="uid://bpm7kbn4oyb1w" path="res://InputManager/input_manager.tscn" id="7_7wkjn"]
+[ext_resource type="AudioStream" uid="uid://jvshwcvty6at" path="res://Sound/Music/industrial_and_dreary_110bpm.wav" id="8_mpuyw"]
+[ext_resource type="AudioStream" uid="uid://dir7ol8dcnbk" path="res://Sound/Effects/EndOfLineBellSound.mp3" id="9_iibma"]
+[ext_resource type="AudioStream" uid="uid://dl4puu5rfh8y8" path="res://Sound/Effects/match-lighting-candle-81020.mp3" id="10_bjlyv"]
+[ext_resource type="Theme" uid="uid://bv7g70yg6r2oc" path="res://Menus/start_menu.tres" id="11_8leds"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jxkec"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_ig7tw"]
+sky_material = SubResource("ProceduralSkyMaterial_jxkec")
+
+[sub_resource type="Environment" id="Environment_ld0yp"]
+background_mode = 2
+background_energy_multiplier = 0.5
+sky = SubResource("Sky_ig7tw")
+ambient_light_sky_contribution = 0.0
+ambient_light_energy = 0.0
+tonemap_mode = 3
+ssao_enabled = true
+glow_enabled = true
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.055
+volumetric_fog_albedo = Color(0.2946406, 0.29464063, 0.2946406, 1)
+volumetric_fog_length = 255.54
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xsckg"]
+bg_color = Color(0, 0, 0, 0.77254903)
+
+[node name="WinMenu" type="Node3D"]
+script = ExtResource("1_mpuyw")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ld0yp")
+
+[node name="Camera3D" type="Camera3D" parent="WorldEnvironment"]
+transform = Transform3D(-0.9976282, 1.8582273e-09, -0.068833634, -0.026669677, 0.9218902, 0.38653228, 0.06345706, 0.38745123, -0.91970366, -2.2367299, 2.0850995, 0.049279213)
+
+[node name="Table" parent="." instance=ExtResource("2_qaduw")]
+transform = Transform3D(-1.5, 0, 2.2649371e-07, 0, 1.5, 0, -2.2649371e-07, 0, -1.5, -2.1098118, 0, 1.2829747)
+
+[node name="TableDrawers" parent="Table" instance=ExtResource("3_35jy5")]
+transform = Transform3D(1, 0, -1.4210855e-14, 0, 1, 0, 1.4210855e-14, 0, 1, 0, 0, 0)
+
+[node name="CandleTall" parent="Table" instance=ExtResource("4_iashh")]
+transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, -0.57155985, 0.88346285, 0.17029244)
+
+[node name="Typewriter" parent="Table" instance=ExtResource("5_h4anv")]
+transform = Transform3D(1, 0, -4.2632564e-14, 0, 1, 0, 4.2632564e-14, 0, 1, 0, 0.8863606, 0.17754018)
+
+[node name="Book" parent="Table" instance=ExtResource("6_78nj3")]
+transform = Transform3D(0.8324187, 0, -0.55414724, 0, 1, 0, 0.55414724, 0, 0.8324187, 0.6968763, 0.92069995, 0.16492212)
+
+[node name="InputManager" parent="." instance=ExtResource("7_7wkjn")]
+visible = false
+
+[node name="BackgroundMusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_mpuyw")
+volume_db = 5.0
+autoplay = true
+bus = &"TypewriterSounds"
+
+[node name="TypewriterSoundPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"TypewriterSounds"
+
+[node name="TypewriterBellPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_iibma")
+bus = &"TypewriterSounds"
+
+[node name="MatchSoundPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_bjlyv")
+bus = &"MatchSound"
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -725.0
+offset_top = -360.0
+offset_right = 725.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_xsckg")
+
+[node name="WinText" type="VBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -700.0
+offset_top = -350.0
+offset_right = 700.0
+offset_bottom = 350.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("11_8leds")
+
+[node name="WinParagraph" type="RichTextLabel" parent="WinText"]
+custom_minimum_size = Vector2(0, 600)
+layout_mode = 2
+size_flags_vertical = 3
+text = "As you type your final word, you feel the curse melting your corporeal form flow out of your veins like a rush of water down a drain.
+
+Your soul remains yours... for the moment. 
+
+But it isn't long before you notice the lingering pull of the typewriter sitting at your desk. Your body aches with an odd compulsion, yearning for the fear, for the thrill, for the rush!
+
+Your skin was melting from your bones, but now your life feels stagnant. The utter sameness of it all insults your senses.
+
+Maybe this is what the daemon had meant.
+
+Your fate is decay, not by a curse, but by your own hand..."
+
+[node name="RestartText" type="RichTextLabel" parent="WinText"]
+clip_children = 2
+z_index = 1
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("11_8leds")
+bbcode_enabled = true
+text = "Type once more..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="finished" from="TypewriterBellPlayer" to="." method="_on_typewriter_bell_player_finished"]

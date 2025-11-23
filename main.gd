@@ -46,6 +46,7 @@ func _ready() -> void:
 	health = health_bar.value
 	input_manager.key_pressed.connect(play_type_sound)
 	main_text.newline.connect(_on_new_line)
+	main_text.finished.connect(_win_game)
 
 
 func init_nodes() -> void:
@@ -105,3 +106,7 @@ func _on_new_line(_id: int) -> void:
 	if !used_newlines.has(cursor_text.cursor_position.y - 1):
 		damage_dealt.emit(-15)
 	used_newlines[cursor_text.cursor_position.y - 1] = true
+
+
+func _win_game(_id: int) -> void:
+	get_tree().change_scene_to_file("res://Menus/win_menu.tscn")
