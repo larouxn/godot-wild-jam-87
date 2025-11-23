@@ -115,7 +115,7 @@ offset_left = -200.0
 offset_top = -33.0
 offset_right = 200.0
 offset_bottom = 33.0
-text = "Type to Begin"
+text = "Type this to begin"
 input_manager = NodePath("../InputManager")
 
 [node name="MainMenu" type="VBoxContainer" parent="."]
