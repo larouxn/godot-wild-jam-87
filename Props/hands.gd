@@ -30,11 +30,6 @@ func _type() -> void:
 	animation_timer.start()
 
 
-func _cast() -> void:
-	animation_timer.stop()
-	animation_player.play("cast")
-
-
 func _idle() -> void:
 	animation_timer.stop()
 	animation_player.stop()

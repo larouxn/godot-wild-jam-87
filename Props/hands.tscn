@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://de66ji1hm08gh"]
+[gd_scene load_steps=9 format=3 uid="uid://de66ji1hm08gh"]
 
 [ext_resource type="PackedScene" uid="uid://bmcfoc8kpg3lo" path="res://Models/hand_right.blend" id="1_8vta4"]
 [ext_resource type="Script" uid="uid://7dp0see6gll8" path="res://Props/hands.gd" id="1_ye1r8"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://bq07m5e5n1oed" path="res://Models/typewriter-black.fbx" id="3_q1sge"]
 [ext_resource type="PackedScene" uid="uid://dlm3u8wku4j0q" path="res://Models/Book_7.gltf" id="4_ejcrg"]
 [ext_resource type="Animation" uid="uid://d1bmy04r2m0nl" path="res://Animations/type.res" id="5_dfwpq"]
-[ext_resource type="Animation" uid="uid://chbw4vtrsa1vh" path="res://Animations/cast.res" id="6_ye1r8"]
 
 [sub_resource type="Animation" id="Animation_ejcrg"]
 length = 0.001
@@ -62,7 +61,6 @@ tracks/3/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_222jm"]
 _data = {
 &"RESET": SubResource("Animation_ejcrg"),
-&"cast": ExtResource("6_ye1r8"),
 &"type": ExtResource("5_dfwpq")
 }
 
@@ -73,7 +71,7 @@ script = ExtResource("1_ye1r8")
 transform = Transform3D(0.9264339, 0.30559313, -0.21984611, 0.27049598, -0.134208, 0.95332056, 0.26182297, -0.94265634, -0.20699665, -2.5, 0, 0)
 
 [node name="hand_left" parent="." instance=ExtResource("1_8vta4")]
-transform = Transform3D(0.9057616, -0.36933133, 0.20782106, -0.26504654, -0.111049205, 0.95781904, -0.3306744, -0.9226384, -0.19847412, 2.5, 0, 0)
+transform = Transform3D(0.9057616, -0.3693313, 0.20782106, -0.26504654, -0.1110492, 0.95781904, -0.3306744, -0.9226384, -0.19847412, 2.5, 0, 0)
 
 [node name="typewriter-black" parent="." instance=ExtResource("3_q1sge")]
 transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 0, -2.0113626, -4.438263)
