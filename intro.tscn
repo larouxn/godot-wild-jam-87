@@ -37,6 +37,7 @@ volume_db = -10.0
 autoplay = true
 
 [node name="TypewriterSoundPlayer" type="AudioStreamPlayer" parent="Audio"]
+volume_db = -8.0
 
 [node name="TypewriterBellPlayer" type="AudioStreamPlayer" parent="Audio"]
 stream = SubResource("AudioStreamPlaylist_h0kys")
