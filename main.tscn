@@ -27,8 +27,8 @@
 [ext_resource type="PackedScene" uid="uid://dfp5bcknl0aws" path="res://Models/Floor_WoodDark.gltf" id="17_a6jrf"]
 [ext_resource type="PackedScene" uid="uid://bjvs6p7ty12n3" path="res://Models/Key_Metal.gltf" id="17_qsp4k"]
 [ext_resource type="PackedScene" uid="uid://fqn33flahbpv" path="res://Models/Chalice.gltf" id="18_kq58d"]
-[ext_resource type="PackedScene" uid="uid://delu2qjrw6teu" path="res://Addons/Mirror3D/Mirror3D.tscn" id="18_lswn8"]
 [ext_resource type="PackedScene" uid="uid://cgijrb0gl6egt" path="res://Set/corner_interior_big.tscn" id="19_cegan"]
+[ext_resource type="Texture2D" uid="uid://uwj67162vglu" path="res://Art/skull_painting.jpg" id="20_jq2sk"]
 [ext_resource type="Theme" uid="uid://bv7g70yg6r2oc" path="res://StartMenu/start_menu.tres" id="28_qsp4k"]
 [ext_resource type="Script" uid="uid://booac3vwmbcoy" path="res://pause_menu.gd" id="29_kq58d"]
 [ext_resource type="Script" uid="uid://gfgeyqxng50f" path="res://InputManager/input_manager.gd" id="30_kq58d"]
@@ -151,29 +151,26 @@ transform = Transform3D(1.1673653, 0, 0.9419446, 0, 1.5, 0, -0.9419446, 0, 1.167
 [node name="Chalice2" parent="Props/Shelf" instance=ExtResource("18_kq58d")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.044307414, 0.10744631, 0.22651911)
 
-[node name="Mirror" type="Node3D" parent="Props"]
+[node name="Painting" type="Node3D" parent="Props"]
 
-[node name="CandleShort2" parent="Props/Mirror" instance=ExtResource("6_vivmo")]
-transform = Transform3D(0.45106453, 0, 0.89249134, 0, 1.0000001, 0, -0.89249134, 0, 0.45106453, -0.61688644, 0.013010442, 5.3922753)
+[node name="CandleShort2" parent="Props/Painting" instance=ExtResource("6_vivmo")]
+transform = Transform3D(0.45106453, 0, 0.89249134, 0, 1.0000001, 0, -0.89249134, 0, 0.45106453, -0.61688644, 0.013010442, 5.8715844)
 
-[node name="CandleTall" parent="Props/Mirror" instance=ExtResource("7_2cqfq")]
-transform = Transform3D(-0.9195818, 0, 0.3928988, 0, 1, 0, -0.3928988, 0, -0.9195818, -0.42489308, 0.0089665055, 5.452541)
+[node name="CandleTall" parent="Props/Painting" instance=ExtResource("7_2cqfq")]
+transform = Transform3D(-0.9195818, 0, 0.3928988, 0, 1, 0, -0.3928988, 0, -0.9195818, -0.42489308, 0.0089665055, 5.93185)
 
-[node name="CandleShort3" parent="Props/Mirror" instance=ExtResource("6_vivmo")]
-transform = Transform3D(0.23675331, 0, 0.97157, 0, 1.0000002, 0, -0.97157, 0, 0.23675331, -3.6538606, 0.007298231, 5.59468)
+[node name="CandleShort3" parent="Props/Painting" instance=ExtResource("6_vivmo")]
+transform = Transform3D(0.23675331, 0, 0.97157, 0, 1.0000002, 0, -0.97157, 0, 0.23675331, -3.6538606, 0.007298231, 5.7796216)
 
-[node name="CandleTall2" parent="Props/Mirror" instance=ExtResource("7_2cqfq")]
-transform = Transform3D(-0.83047926, 0, -0.5570501, 0, 1, 0, 0.5570501, 0, -0.83047926, -3.8145485, 0.013103247, 5.987206)
+[node name="CandleShort4" parent="Props/Painting" instance=ExtResource("6_vivmo")]
+transform = Transform3D(0.801515, 0, -0.597975, 0, 1.0000002, 0, 0.597975, 0, 0.801515, -3.9542565, 0.007298231, 5.6617618)
 
-[node name="CandleShort4" parent="Props/Mirror" instance=ExtResource("6_vivmo")]
-transform = Transform3D(0.801515, 0, -0.597975, 0, 1.0000002, 0, 0.597975, 0, 0.801515, -3.9542565, 0.007298231, 5.47682)
+[node name="MirrorFrame" parent="Props/Painting" instance=ExtResource("17_a6jrf")]
+transform = Transform3D(1.4006257, 0, 0, 0, -5.0416034e-08, 1.5422634, 0, -1.1533844, -6.7414476e-08, -2.1505606, 2.20185, 6.699003)
 
-[node name="MirrorFrame" parent="Props/Mirror" instance=ExtResource("17_a6jrf")]
-transform = Transform3D(1.2308066, 0, 0, 0, 0.20028314, 1.7456013, 0, -1.135862, 0.3077967, -2.1505723, 1.7622366, 6.376333)
-
-[node name="Mirror3D" parent="Props/Mirror" instance=ExtResource("18_lswn8")]
-transform = Transform3D(1, 0, 0, 0, 0.9848077, -0.17364818, 0, 0.17364818, 0.9848077, -2.151957, 1.7695572, 6.349326)
-size = Vector2(2, 3)
+[node name="Sprite3D" type="Sprite3D" parent="Props/Painting/MirrorFrame"]
+transform = Transform3D(0.17575096, 0, 0, 0, -8.742276e-09, -0.19999997, 0, 0.22986084, -1.0047536e-08, 0, 0.10145521, 0.004371166)
+texture = ExtResource("20_jq2sk")
 
 [node name="AboveDoor" type="Node3D" parent="Props"]
 

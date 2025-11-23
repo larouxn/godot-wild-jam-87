@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cgfd2md4bfnkd"]
+
+[ext_resource type="Texture2D" uid="uid://uwj67162vglu" path="res://Art/skull_painting.jpg" id="1_3a7up"]
+
+[node name="SkullPainting" type="Node2D"]
+
+[node name="SkullPainting" type="Sprite2D" parent="."]
+texture = ExtResource("1_3a7up")
