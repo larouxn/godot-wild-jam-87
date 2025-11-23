@@ -21,7 +21,7 @@ sky_material = SubResource("ProceduralSkyMaterial_jxkec")
 
 [sub_resource type="Environment" id="Environment_ld0yp"]
 background_mode = 2
-background_energy_multiplier = 0.5
+background_energy_multiplier = 0.0
 sky = SubResource("Sky_ig7tw")
 ambient_light_sky_contribution = 0.0
 ambient_light_energy = 0.0
