@@ -5,7 +5,6 @@ var restart_text := TextState.new("Type once more...")
 @onready var input_manager := $InputManager as InputManager
 @onready var restart_label := $WinText/RestartText as RichTextLabel
 
-@onready var match_sound_player := $MatchSoundPlayer as AudioStreamPlayer
 @onready var bg_music := $BackgroundMusicPlayer as AudioStreamPlayer
 @onready var bell_player := $TypewriterBellPlayer as AudioStreamPlayer
 @onready var typewriter_sound_player := $TypewriterSoundPlayer as AudioStreamPlayer

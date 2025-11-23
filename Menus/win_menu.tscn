@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cqbfkkhbe0tf2"]
+[gd_scene load_steps=15 format=3 uid="uid://cqbfkkhbe0tf2"]
 
 [ext_resource type="Script" uid="uid://dumascwsdqxy3" path="res://Menus/win_menu.gd" id="1_mpuyw"]
 [ext_resource type="PackedScene" uid="uid://bwtnomfwynpi5" path="res://Props/table.tscn" id="2_qaduw"]
@@ -9,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://bpm7kbn4oyb1w" path="res://InputManager/input_manager.tscn" id="7_7wkjn"]
 [ext_resource type="AudioStream" uid="uid://jvshwcvty6at" path="res://Sound/Music/industrial_and_dreary_110bpm.wav" id="8_mpuyw"]
 [ext_resource type="AudioStream" uid="uid://dir7ol8dcnbk" path="res://Sound/Effects/EndOfLineBellSound.mp3" id="9_iibma"]
-[ext_resource type="AudioStream" uid="uid://dl4puu5rfh8y8" path="res://Sound/Effects/match-lighting-candle-81020.mp3" id="10_bjlyv"]
 [ext_resource type="Theme" uid="uid://bv7g70yg6r2oc" path="res://Menus/start_menu.tres" id="11_8leds"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jxkec"]
@@ -75,10 +74,6 @@ bus = &"TypewriterSounds"
 [node name="TypewriterBellPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("9_iibma")
 bus = &"TypewriterSounds"
-
-[node name="MatchSoundPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("10_bjlyv")
-bus = &"MatchSound"
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = 8

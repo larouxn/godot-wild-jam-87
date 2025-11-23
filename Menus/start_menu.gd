@@ -41,7 +41,6 @@ var credits_return_label := $CreditsMenu/CenterContainer/CreditsReturnCursor as 
 @onready var options_return_cursor := $OptionsMenu/CenterContainer/OptionsReturnCursor as CursorText
 @onready var credits_return_cursor := $CreditsMenu/CenterContainer/CreditsReturnCursor as CursorText
 
-@onready var match_sound_player := $MatchSoundPlayer as AudioStreamPlayer
 @onready var bg_music := $BackgroundMusicPlayer as AudioStreamPlayer
 @onready var bell_player := $TypewriterBellPlayer as AudioStreamPlayer
 @onready var typewriter_sound_player := $TypewriterSoundPlayer as AudioStreamPlayer
@@ -62,7 +61,6 @@ func _ready() -> void:
 
 	# set up signals
 	input_manager.connect("key_pressed", play_type_sound)
-	match_sound_player.finished.connect(_start_bg_music)
 
 	# set up audio
 	master_slider.value = AudioServer.get_bus_volume_linear(master_bus_index)
@@ -125,7 +123,7 @@ func _unlock_all_menu_cursors() -> void:
 func _on_open_menu(_id: int) -> void:
 	input_manager.handle_key("escape")  # clears input
 	bell_player.play()
-	match_sound_player.play()
+	_start_bg_music()
 	candle.show()
 	open_cursor.hide()
 	open_menu_text.lock()

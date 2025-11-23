@@ -16,7 +16,6 @@ var sfx_bus_index := AudioServer.get_bus_index("SFX")
 @onready var quit_label := $Menu/QuitText as RichTextLabel
 @onready var bg_panel := $MenuPanel as Panel
 
-@onready var match_sound_player := $MatchSoundPlayer as AudioStreamPlayer
 @onready var bg_music := $BackgroundMusicPlayer as AudioStreamPlayer
 @onready var bell_player := $TypewriterBellPlayer as AudioStreamPlayer
 @onready var typewriter_sound_player := $TypewriterSoundPlayer as AudioStreamPlayer
