@@ -971,7 +971,8 @@ text = "Confirm"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="selection_mistyped" from="InputManager" to="." method="_on_input_manager_selection_mistyped"]
+[connection signal="damage_dealt" from="." to="PlayerUI" method="_on_main_damage_dealt"]
+[connection signal="spell_failed" from="Spellbook" to="." method="_on_spellbook_spell_failed"]
 [connection signal="value_changed" from="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/MasterVolumeCon/MasterVolumeSlider" to="PauseMenu" method="_on_master_volume_slider_value_changed"]
 [connection signal="value_changed" from="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/MusicVolumeCon/MusicVolumeSlider" to="PauseMenu" method="_on_music_volume_slider_value_changed"]
 [connection signal="value_changed" from="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/SFXVolumeCon/SFXVolumeSlider" to="PauseMenu" method="_on_sfx_volume_slider_value_changed"]

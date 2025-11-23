@@ -1,5 +1,7 @@
 extends Node3D
 
+signal damage_dealt(damage: int)
+
 @export var input_manager: InputManager
 
 var cursor_text: CursorText
@@ -28,6 +30,8 @@ func _ready() -> void:
 	input_manager.selection_mistyped.connect(
 		func(_candidates: Array[TextState]) -> void: input_manager.set_active_text(main_text)
 	)
+	main_text.mistyped.connect(_on_main_text_failed)
+	health = health_bar.value
 
 
 func init_nodes() -> void:
@@ -49,3 +53,12 @@ func init_nodes() -> void:
 func _process(_delta: float) -> void:
 	if health <= 0:
 		print("Game Over!")
+
+
+func _on_spellbook_spell_failed() -> void:
+	print("spell failed")
+	damage_dealt.emit(5)
+
+
+func _on_main_text_failed(_id: int) -> void:
+	damage_dealt.emit(3)

@@ -30,3 +30,7 @@ func _process(_delta: float) -> void:
 
 func _on_timer_timeout() -> void:
 	value_change = -1
+
+
+func _on_main_damage_dealt(damage: Variant) -> void:
+	value_change = -damage

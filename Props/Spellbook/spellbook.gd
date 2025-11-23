@@ -1,5 +1,7 @@
 class_name Spellbook extends Node3D
 
+signal spell_failed
+
 @export var main_text_ui: CursorText
 @export var input_manager: InputManager
 
@@ -79,6 +81,7 @@ func _on_spell_mistyped(spell: TextState, callback_name: String) -> void:
 	lock_main()
 	Callable(self, callback_name).call()
 	input_manager.set_active_text(input_manager.main_text)
+	spell_failed.emit()
 
 
 func _on_shorten_words_finished() -> void:
