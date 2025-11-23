@@ -1,6 +1,7 @@
 # Cursed 💀
 
-https://itch.io/jam/godot-wild-jam-87
+- https://rhitakorrr.itch.io/cursed
+- https://itch.io/jam/godot-wild-jam-87
 
 ## Development
 
