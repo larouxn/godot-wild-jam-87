@@ -80,7 +80,6 @@ func _on_spell_finished(callback_name: String) -> void:
 
 func _on_spell_mistyped(spell: TextState, callback_name: String) -> void:
 	lock_spell(spell, 10)
-	lock_main()
 	Callable(self, callback_name).call()
 	input_manager.set_active_text(input_manager.main_text)
 	spell_failed.emit()

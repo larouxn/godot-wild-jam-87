@@ -9,6 +9,8 @@ var main_text := TextState.new()
 var looking_at_book := false
 var health: float
 var used_newlines: Dictionary[int, bool] = {}
+var main_locked_by_spell := false
+var main_locked_by_self := false
 
 @onready var main_text_container := $MainText as MainTextContainer
 @onready var animation_player := $Head/AnimationPlayer as AnimationPlayer
@@ -35,10 +37,11 @@ func _ready() -> void:
 		func(input_state: InputManager.InputState) -> void:
 			if input_state == InputManager.InputState.MAIN_TEXT:
 				looking_at_book = false
-				animation_player.play("look_typewriter")
+				# Call deferred as a hack to get animations in the right order.
+				look_at_typewriter.call_deferred()
 			elif !looking_at_book:
 				looking_at_book = true
-				animation_player.play("look_book")
+				animation_player.play("look_book", 0.5)
 	)
 	input_manager.selection_mistyped.connect(
 		func(_candidates: Array[TextState]) -> void: input_manager.set_active_text(main_text)
@@ -58,6 +61,12 @@ func _ready() -> void:
 	)
 
 
+func look_at_typewriter() -> void:
+	if animation_player.current_animation == "damage_taken_short":
+		await get_tree().create_timer(0.2).timeout
+	animation_player.play("look_typewriter", 0.5)
+
+
 func init_nodes() -> void:
 	cursor_text = main_text_container.cursor_text
 
@@ -66,12 +75,6 @@ func init_nodes() -> void:
 		paragraph.append_array(sentence)
 
 	cursor_text.link_text_state(main_text, paragraph)
-	main_text.mistyped.connect(
-		func(_id: int) -> void:
-			main_text.lock()
-			await get_tree().create_timer(3.0).timeout
-			main_text.unlock()
-	)
 
 
 func _process(_delta: float) -> void:
@@ -82,24 +85,26 @@ func _process(_delta: float) -> void:
 
 func _on_spellbook_spell_failed() -> void:
 	print("spell failed")
+	animation_player.play("damage_taken_short")
 	damage_dealt.emit(5)
+	main_locked_by_spell = true
+	main_text.lock()
+	await get_tree().create_timer(0.7).timeout
+	main_locked_by_spell = false
+	if !main_locked_by_self:
+		main_text.unlock()
 
 
 func _on_main_text_failed(_id: int) -> void:
-	var tween := get_tree().create_tween()
-	var prev_pos := head.position
-	var new_pos := head.position
-	new_pos.y += 0.11
-	new_pos.x += 0.11
-	new_pos.z += 0.11
-
-	tween.tween_property(head, "position", new_pos, 0.25).from_current().set_trans(
-		Tween.TRANS_BOUNCE
-	)
-	tween.tween_property(head, "position", prev_pos, 0.25).from_current().set_trans(
-		Tween.TRANS_BOUNCE
-	)
+	print("main failed")
 	damage_dealt.emit(3)
+	animation_player.play("damage_taken")
+	main_locked_by_self = true
+	main_text.lock()
+	await get_tree().create_timer(3.0).timeout
+	main_locked_by_self = false
+	if !main_locked_by_spell:
+		main_text.unlock()
 
 
 func play_type_sound() -> void:
