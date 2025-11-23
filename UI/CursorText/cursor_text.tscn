@@ -14,7 +14,6 @@ shader = ExtResource("2_4hqcv")
 shader_parameter/enabled = false
 
 [node name="CursorText" type="MarginContainer"]
-clip_contents = true
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -46,6 +45,7 @@ theme_override_font_sizes/bold_italics_font_size = 45
 theme_override_font_sizes/italics_font_size = 45
 theme_override_font_sizes/mono_font_size = 45
 bbcode_enabled = true
+fit_content = true
 scroll_active = false
 autowrap_mode = 0
 

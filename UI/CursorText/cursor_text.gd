@@ -171,8 +171,8 @@ func words_to_lines_of_words(words: PackedStringArray) -> Array[PackedStringArra
 
 ## Given an index into the text and the lines of the text as an array, return the
 ## position of the cursor as xy-coordinates suitable for cursor_position.
-## Note that the cursor remains at Y 0 as lines scroll up to meet it.
 func cursor_position_from_lines(index: int, lines: PackedStringArray) -> Vector2i:
+	var current_line := 0
 	var cumulative_length := 0
 	var last_line := ""
 	for line in lines:
@@ -182,6 +182,7 @@ func cursor_position_from_lines(index: int, lines: PackedStringArray) -> Vector2
 			break
 		else:
 			cumulative_length += line_len + 1
+			current_line += 1
 
 	var space_prefix_offset := len(last_line) - len(last_line.strip_edges(true, false))
 	return Vector2i(max(0, index - cumulative_length - space_prefix_offset), 0)
@@ -382,10 +383,3 @@ func render_linked_text(_id: int) -> void:
 	)
 
 	set_cursor_position_from_lines(linked_text_state.input_index, linked_text_state_lines)
-
-
-func scroll_line() -> void:
-	var line_height: int = text_label.get_line_height(0)
-	var current_text_scroll: float = text_label.get_v_scroll_bar().value
-
-	text_label.get_v_scroll_bar().value = current_text_scroll + line_height
