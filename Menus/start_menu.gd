@@ -1,4 +1,6 @@
-extends Node3D
+class_name StartMenu extends Node3D
+
+static var jump_to_main_menu: bool = false
 
 var open_menu_text := TextState.new("Type to Begin")
 var start_game_text := TextState.new("Sign the Contract")
@@ -68,6 +70,10 @@ func _ready() -> void:
 	music_slider.value = AudioServer.get_bus_volume_linear(music_bus_index)
 	sfx_slider.value = AudioServer.get_bus_volume_linear(sfx_bus_index)
 	render_ui()
+
+	if jump_to_main_menu:
+		_on_open_menu(-1)
+		jump_to_main_menu = false
 
 
 func render_ui() -> void:
