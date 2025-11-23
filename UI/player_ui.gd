@@ -15,7 +15,7 @@ var pixel_shift_per_tick: float
 func _ready() -> void:
 	pixel_shift_per_tick = health_bar.get_global_rect().size.x / 100
 	falling_health.move_local_x(-pixel_shift_per_tick * (100 - health_bar.value))
-	update_health_bar_color()
+	_update_health_bar_color()
 
 
 func _process(_delta: float) -> void:
@@ -28,7 +28,7 @@ func _process(_delta: float) -> void:
 		falling_health.emitting = true
 
 	if value_change != 0:
-		update_health_bar_color()
+		_update_health_bar_color()
 		health_bar.value += value_change
 		var position_shift := pixel_shift_per_tick * value_change
 		if (falling_health.position.x + position_shift) > full_health_position:
@@ -46,7 +46,7 @@ func _on_main_damage_dealt(damage: Variant) -> void:
 	value_change = -damage
 
 
-func update_health_bar_color() -> void:
+func _update_health_bar_color() -> void:
 	var ratio: float = health_bar.value / health_bar.max_value
 	var weighted_ratio: float = ease(ratio, 2.0)  # Transition colors quicker
 	var new_color: Color = COLOR_HEALTH_LOW.lerp(COLOR_HEALTH_HIGH, weighted_ratio)
