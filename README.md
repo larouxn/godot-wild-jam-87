@@ -1,4 +1,6 @@
-# Godot Wild Jam #87
+# Cursed 💀
+
+https://itch.io/jam/godot-wild-jam-87
 
 ## Development
 
