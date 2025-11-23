@@ -1,6 +1,5 @@
-[gd_scene load_steps=52 format=3 uid="uid://dm3ra1iniucmx"]
+[gd_scene load_steps=51 format=3 uid="uid://dm3ra1iniucmx"]
 
-[ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://Addons/ProtoController/proto_controller.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://7n0c1ali4re7" path="res://main.gd" id="1_ok6jj"]
 [ext_resource type="PackedScene" uid="uid://b2vypfu6gurry" path="res://Set/floor_tile.tscn" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://cs5hnafroh83a" path="res://UI/player_ui.tscn" id="2_b1qrp"]
@@ -846,10 +845,6 @@ transform = Transform3D(-3.3657763e-08, -0.77, 6.731554e-08, 0.77, -3.365777e-08
 
 [node name="Hands" parent="." instance=ExtResource("35_0rl1p")]
 transform = Transform3D(-0.1, -5.337033e-10, 8.725972e-09, 0, 0.09981348, 0.0061048544, -8.742278e-09, 0.0061048544, -0.09981348, -2.1162376, 1.5288275, 0.52028763)
-
-[node name="DebugPlayer" parent="." instance=ExtResource("1_ig7tw")]
-transform = Transform3D(-1.5, 0, -2.2649373e-07, 0, 1.5, 0, 2.2649373e-07, 0, -1.5, 4.1449633, 0.0065732, -5.9246616)
-visible = false
 
 [node name="PauseMenu" type="Control" parent="." node_paths=PackedStringArray("input_manager", "main_node", "spellbook")]
 unique_name_in_owner = true
