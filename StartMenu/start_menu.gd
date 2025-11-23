@@ -81,6 +81,10 @@ func render_ui() -> void:
 
 
 func play_type_sound() -> void:
+	# Check if the node is inside the tree before trying to play
+	if not is_inside_tree():
+		return
+
 	typewriter_sound_player.stream = (
 		[typing_a_sound, typing_b_sound, typing_c_sound, typing_d_sound, typing_e_sound]
 		. pick_random()

@@ -153,23 +153,17 @@ func words_to_lines_of_words(words: PackedStringArray) -> Array[PackedStringArra
 	for word in words:
 		var current_str := "".join(current)
 		if len(word) >= line_length:
-			if !current_str.strip_edges().is_empty():
-				current[0] = current[0].strip_edges(true, false)
-				current[-1] = current[-1].strip_edges(false, true)
+			if !current_str.is_empty():
 				result.append(current)
-			result.append([word.strip_edges()])
+			result.append([word])
 			current = []
 		elif len(word) + len(current_str) > line_length:
-			current[0] = current[0].strip_edges(true, false)
-			current[-1] = current[-1].strip_edges(false, true)
 			result.append(current)
 			current = [word]
 		else:
 			current.append(word)
 
 	if !current.is_empty():
-		current[0] = current[0].strip_edges(true, false)
-		current[-1] = current[-1].strip_edges(false, true)
 		result.append(current)
 
 	return result
@@ -180,14 +174,17 @@ func words_to_lines_of_words(words: PackedStringArray) -> Array[PackedStringArra
 ## Note that the cursor remains at Y 0 as lines scroll up to meet it.
 func cursor_position_from_lines(index: int, lines: PackedStringArray) -> Vector2i:
 	var cumulative_length := 0
+	var last_line := ""
 	for line in lines:
 		var line_len := len(line)
 		if index <= line_len + cumulative_length:
+			last_line = line
 			break
 		else:
 			cumulative_length += line_len + 1
 
-	return Vector2i(index - cumulative_length, 0)
+	var space_prefix_offset := len(last_line) - len(last_line.strip_edges(true, false))
+	return Vector2i(max(0, index - cumulative_length - space_prefix_offset), 0)
 
 
 ## The same as cursor_position_from_lines, but sets the cursor_position instead of
@@ -358,6 +355,24 @@ func create_and_link_one_line_text_state(line: String, is_main_text: bool = fals
 ## moving the cursor to the right position.
 func render_linked_text(_id: int) -> void:
 	var parts := linked_text_state.parts()
+
+	# Replace series of spaces + newline with just a newline.
+	var pattern := RegEx.new()
+	pattern.compile(" *\n *")
+
+	parts[0] = pattern.sub(parts[0], "\n", true)
+	if parts[0].ends_with("\n"):
+		parts[1] = parts[1].strip_edges(true, false)
+		if parts[1].is_empty():
+			parts[2] = parts[2].strip_edges(true, false)
+
+	parts[1] = pattern.sub(parts[1], "\n", true)
+	if parts[1].ends_with("\n"):
+		parts[2].strip_edges(true, false)
+
+	parts[2] = pattern.sub(parts[2], "\n", true)
+	parts[2] = parts[2].strip_edges(false, true)
+
 	var good := "[color=#00ff00]" + parts[0] + "[/color]"
 	var mistake := "[color=#ff0000][u]" + parts[1] + "[/u][/color]"
 	var untyped := "[color=#999999]" + parts[2] + "[/color]"
