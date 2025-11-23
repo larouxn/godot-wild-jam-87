@@ -116,8 +116,6 @@ But it isn't long before you notice the lingering pull of the typewriter sitting
 
 Your skin was melting from your bones, but now your life feels stagnant. The utter sameness of it all insults your senses.
 
-Maybe this is what the daemon had meant.
-
 Your fate is decay, not by a curse, but by your own hand..."
 
 [node name="RestartText" type="RichTextLabel" parent="WinText"]
