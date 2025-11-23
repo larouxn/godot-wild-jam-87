@@ -95,7 +95,7 @@ func _on_shorten_words_finished() -> void:
 			var symbol_at_end_pattern := RegEx.new()
 			symbol_at_end_pattern.compile("[^a-zA-Z]+$")
 
-			var ix := 1  # skip end of current word
+			var ix := 0
 			var changes_left := words_to_change
 			while ix < words.size() and changes_left > 0:
 				var word := words[ix]
@@ -127,7 +127,7 @@ func _on_remove_punctuation_finished() -> void:
 			pattern.compile("[^a-zA-Z0-9 \\n]")
 
 			var chars_left := chars_to_change
-			var ix := 1  # skip end of current word
+			var ix := 0
 			while ix < words.size() and chars_left > 0:
 				words[ix] = pattern.sub(words[ix], "", true)
 				chars_left -= len(words[ix])
