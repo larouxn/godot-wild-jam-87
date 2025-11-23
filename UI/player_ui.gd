@@ -1,11 +1,19 @@
 extends Control
 
+## Emitted when a health threshold is passed.
+signal health_threshold_passed(threshold: float)
+
 const COLOR_HEALTH_HIGH = Color("#911b1b")  # Healthy red
 const COLOR_HEALTH_LOW = Color("#afb515")  # Sickly yellow
+const HEALTH_THRESHOLDS = {
+	MAX = 100.0,
+	TWO_THIRDS = 66.0,
+	ONE_THIRD = 33.0,
+}
 
 var value_change: int = 0
 var pixel_shift_per_tick: float
-var health_current_max_limit: float = 100.0
+var health_current_max_limit: float = HEALTH_THRESHOLDS.MAX
 
 @onready var health_bar := $ProgressBar as ProgressBar
 @onready var falling_health := $FallingHealth/CPUParticles2D as CPUParticles2D
@@ -47,10 +55,18 @@ func _on_main_damage_dealt(damage: Variant) -> void:
 func _update_health() -> void:
 	var new_health: float = health_bar.value + value_change
 
-	if new_health <= 33.0:
-		health_current_max_limit = 33.0
-	elif new_health <= 66.0 and health_current_max_limit > 66.0:
-		health_current_max_limit = 66.0
+	if (
+		new_health <= HEALTH_THRESHOLDS.ONE_THIRD
+		and health_current_max_limit > HEALTH_THRESHOLDS.ONE_THIRD
+	):
+		health_current_max_limit = HEALTH_THRESHOLDS.ONE_THIRD
+		health_threshold_passed.emit(HEALTH_THRESHOLDS.ONE_THIRD)
+	elif (
+		new_health <= HEALTH_THRESHOLDS.TWO_THIRDS
+		and health_current_max_limit > HEALTH_THRESHOLDS.TWO_THIRDS
+	):
+		health_current_max_limit = HEALTH_THRESHOLDS.TWO_THIRDS
+		health_threshold_passed.emit(HEALTH_THRESHOLDS.TWO_THIRDS)
 
 	health_bar.value = clamp(new_health, 0, health_current_max_limit)
 
