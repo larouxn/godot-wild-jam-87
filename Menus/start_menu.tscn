@@ -81,14 +81,14 @@ stream = ExtResource("4_v2mkm")
 bus = &"MatchSound"
 
 [node name="GameTitleLabel" type="RichTextLabel" parent="."]
-visible = false
 anchors_preset = 10
 anchor_right = 1.0
+offset_left = 998.0
 offset_bottom = 150.0
 grow_horizontal = 2
 theme = ExtResource("3_vpdu5")
 theme_override_font_sizes/normal_font_size = 64
-text = "#cursed"
+text = "Cursed"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -108,30 +108,33 @@ grow_vertical = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_xsckg")
 
-[node name="MainMenu" type="VBoxContainer" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -200.0
-offset_right = 200.0
-offset_bottom = 250.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("3_vpdu5")
-
-[node name="OpenMenuText" type="RichTextLabel" parent="MainMenu"]
+[node name="OpenMenuText" type="RichTextLabel" parent="."]
 clip_children = 2
 z_index = 1
-layout_mode = 2
+offset_left = 760.0
+offset_top = 240.0
+offset_right = 1160.0
+offset_bottom = 690.0
 size_flags_vertical = 3
 theme = ExtResource("3_vpdu5")
 bbcode_enabled = true
 text = "Type to Begin"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="MainMenu" type="VBoxContainer" parent="."]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 300.0
+offset_top = -300.0
+offset_right = 700.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_vpdu5")
 
 [node name="StartGameText" type="RichTextLabel" parent="MainMenu"]
 visible = false

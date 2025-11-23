@@ -895,83 +895,87 @@ layout_mode = 2
 theme_override_constants/separation = 10
 
 [node name="PauseMenuLabel" type="RichTextLabel" parent="PauseMenu/MarginContainer/TotalMenuBox"]
-custom_minimum_size = Vector2(0, 60)
+visible = false
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_vertical = 2
-text = "Pause Menu"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MenuBox" type="MarginContainer" parent="PauseMenu/MarginContainer/TotalMenuBox"]
+[node name="MarginContainer" type="MarginContainer" parent="PauseMenu/MarginContainer/TotalMenuBox"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MenuBox" type="MarginContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MarginContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_right = 20
 
-[node name="NavigationMenu" type="VBoxContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox"]
+[node name="NavigationMenu" type="VBoxContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MarginContainer/MenuBox"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 400)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="CenterContainer" type="CenterContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/NavigationMenu"]
+[node name="CenterContainer" type="CenterContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MarginContainer/MenuBox/NavigationMenu"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ResumeCursor" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/NavigationMenu/CenterContainer" node_paths=PackedStringArray("input_manager") instance=ExtResource("39_come4")]
+[node name="ResumeCursor" parent="PauseMenu/MarginContainer/TotalMenuBox/MarginContainer/MenuBox/NavigationMenu/CenterContainer" node_paths=PackedStringArray("input_manager") instance=ExtResource("39_come4")]
 unique_name_in_owner = true
 layout_mode = 2
-text = "#Resume"
-input_manager = NodePath("../../../../../../../InputManager")
+text = "Resume"
+input_manager = NodePath("../../../../../../../../InputManager")
 
-[node name="CenterContainer2" type="CenterContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/NavigationMenu"]
+[node name="CenterContainer2" type="CenterContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MarginContainer/MenuBox/NavigationMenu"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="MainMenuCursor" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/NavigationMenu/CenterContainer2" node_paths=PackedStringArray("input_manager") instance=ExtResource("39_come4")]
+[node name="MainMenuCursor" parent="PauseMenu/MarginContainer/TotalMenuBox/MarginContainer/MenuBox/NavigationMenu/CenterContainer2" node_paths=PackedStringArray("input_manager") instance=ExtResource("39_come4")]
 unique_name_in_owner = true
 layout_mode = 2
-text = "#Main Menu"
-input_manager = NodePath("../../../../../../../InputManager")
+text = "Main Menu"
+input_manager = NodePath("../../../../../../../../InputManager")
 
-[node name="CenterContainer3" type="CenterContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/NavigationMenu"]
+[node name="CenterContainer3" type="CenterContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MarginContainer/MenuBox/NavigationMenu"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="OptionsCursor" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/NavigationMenu/CenterContainer3" node_paths=PackedStringArray("input_manager") instance=ExtResource("39_come4")]
+[node name="OptionsCursor" parent="PauseMenu/MarginContainer/TotalMenuBox/MarginContainer/MenuBox/NavigationMenu/CenterContainer3" node_paths=PackedStringArray("input_manager") instance=ExtResource("39_come4")]
 unique_name_in_owner = true
 layout_mode = 2
-text = "#Options"
-input_manager = NodePath("../../../../../../../InputManager")
+text = "Options"
+input_manager = NodePath("../../../../../../../../InputManager")
 
-[node name="CenterContainer4" type="CenterContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/NavigationMenu"]
+[node name="CenterContainer4" type="CenterContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MarginContainer/MenuBox/NavigationMenu"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="QuitCursor" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/NavigationMenu/CenterContainer4" node_paths=PackedStringArray("input_manager") instance=ExtResource("39_come4")]
+[node name="QuitCursor" parent="PauseMenu/MarginContainer/TotalMenuBox/MarginContainer/MenuBox/NavigationMenu/CenterContainer4" node_paths=PackedStringArray("input_manager") instance=ExtResource("39_come4")]
 unique_name_in_owner = true
 layout_mode = 2
-text = "#Quit"
-input_manager = NodePath("../../../../../../../InputManager")
+text = "Quit"
+input_manager = NodePath("../../../../../../../../InputManager")
 
-[node name="OptionMenu" type="VBoxContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox"]
+[node name="OptionMenu" type="VBoxContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MarginContainer/MenuBox"]
 unique_name_in_owner = true
 visible = false
 custom_minimum_size = Vector2(0, 400)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="MasterVolumeCon" type="HBoxContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu"]
+[node name="MasterVolumeCon" type="HBoxContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MarginContainer/MenuBox/OptionMenu"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="MasterVolumeLabel" type="RichTextLabel" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/MasterVolumeCon"]
+[node name="MasterVolumeLabel" type="RichTextLabel" parent="PauseMenu/MarginContainer/TotalMenuBox/MarginContainer/MenuBox/OptionMenu/MasterVolumeCon"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Master Volume"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MasterVolumeSlider" type="HSlider" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/MasterVolumeCon"]
+[node name="MasterVolumeSlider" type="HSlider" parent="PauseMenu/MarginContainer/TotalMenuBox/MarginContainer/MenuBox/OptionMenu/MasterVolumeCon"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -979,18 +983,18 @@ size_flags_vertical = 4
 max_value = 1.0
 step = 0.001
 
-[node name="MusicVolumeCon" type="HBoxContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu"]
+[node name="MusicVolumeCon" type="HBoxContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MarginContainer/MenuBox/OptionMenu"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="MusicVolumeLabel" type="RichTextLabel" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/MusicVolumeCon"]
+[node name="MusicVolumeLabel" type="RichTextLabel" parent="PauseMenu/MarginContainer/TotalMenuBox/MarginContainer/MenuBox/OptionMenu/MusicVolumeCon"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Music Volume"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MusicVolumeSlider" type="HSlider" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/MusicVolumeCon"]
+[node name="MusicVolumeSlider" type="HSlider" parent="PauseMenu/MarginContainer/TotalMenuBox/MarginContainer/MenuBox/OptionMenu/MusicVolumeCon"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -998,18 +1002,18 @@ size_flags_vertical = 4
 max_value = 1.0
 step = 0.001
 
-[node name="SFXVolumeCon" type="HBoxContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu"]
+[node name="SFXVolumeCon" type="HBoxContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MarginContainer/MenuBox/OptionMenu"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="SFXVolumeLabel" type="RichTextLabel" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/SFXVolumeCon"]
+[node name="SFXVolumeLabel" type="RichTextLabel" parent="PauseMenu/MarginContainer/TotalMenuBox/MarginContainer/MenuBox/OptionMenu/SFXVolumeCon"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "SFX Volume"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SFXVolumeSlider" type="HSlider" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/SFXVolumeCon"]
+[node name="SFXVolumeSlider" type="HSlider" parent="PauseMenu/MarginContainer/TotalMenuBox/MarginContainer/MenuBox/OptionMenu/SFXVolumeCon"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1017,19 +1021,19 @@ size_flags_vertical = 4
 max_value = 1.0
 step = 0.001
 
-[node name="CenterContainer" type="CenterContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu"]
+[node name="CenterContainer" type="CenterContainer" parent="PauseMenu/MarginContainer/TotalMenuBox/MarginContainer/MenuBox/OptionMenu"]
 layout_mode = 2
 
-[node name="ConfirmCursor" parent="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/CenterContainer" node_paths=PackedStringArray("input_manager") instance=ExtResource("39_come4")]
+[node name="ConfirmCursor" parent="PauseMenu/MarginContainer/TotalMenuBox/MarginContainer/MenuBox/OptionMenu/CenterContainer" node_paths=PackedStringArray("input_manager") instance=ExtResource("39_come4")]
 unique_name_in_owner = true
 layout_mode = 2
-text = "#Confirm"
-input_manager = NodePath("../../../../../../../InputManager")
+text = "Confirm"
+input_manager = NodePath("../../../../../../../../InputManager")
 
 [connection signal="damage_dealt" from="." to="PlayerUI" method="_on_main_damage_dealt"]
 [connection signal="pause_game" from="Spellbook" to="." method="_on_spellbook_pause_game"]
 [connection signal="spell_failed" from="Spellbook" to="." method="_on_spellbook_spell_failed"]
 [connection signal="focus_entered" from="PauseMenu" to="PauseMenu" method="_on_focus_entered"]
-[connection signal="value_changed" from="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/MasterVolumeCon/MasterVolumeSlider" to="PauseMenu" method="_on_master_volume_slider_value_changed"]
-[connection signal="value_changed" from="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/MusicVolumeCon/MusicVolumeSlider" to="PauseMenu" method="_on_music_volume_slider_value_changed"]
-[connection signal="value_changed" from="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/SFXVolumeCon/SFXVolumeSlider" to="PauseMenu" method="_on_sfx_volume_slider_value_changed"]
+[connection signal="value_changed" from="PauseMenu/MarginContainer/TotalMenuBox/MarginContainer/MenuBox/OptionMenu/MasterVolumeCon/MasterVolumeSlider" to="PauseMenu" method="_on_master_volume_slider_value_changed"]
+[connection signal="value_changed" from="PauseMenu/MarginContainer/TotalMenuBox/MarginContainer/MenuBox/OptionMenu/MusicVolumeCon/MusicVolumeSlider" to="PauseMenu" method="_on_music_volume_slider_value_changed"]
+[connection signal="value_changed" from="PauseMenu/MarginContainer/TotalMenuBox/MarginContainer/MenuBox/OptionMenu/SFXVolumeCon/SFXVolumeSlider" to="PauseMenu" method="_on_sfx_volume_slider_value_changed"]
