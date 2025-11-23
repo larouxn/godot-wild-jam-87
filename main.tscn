@@ -34,7 +34,7 @@
 [ext_resource type="PackedScene" uid="uid://fqn33flahbpv" path="res://Models/Chalice.gltf" id="18_kq58d"]
 [ext_resource type="PackedScene" uid="uid://cgijrb0gl6egt" path="res://Set/corner_interior_big.tscn" id="19_cegan"]
 [ext_resource type="Texture2D" uid="uid://uwj67162vglu" path="res://Art/skull_painting.jpg" id="20_jq2sk"]
-[ext_resource type="Theme" uid="uid://bv7g70yg6r2oc" path="res://StartMenu/start_menu.tres" id="28_qsp4k"]
+[ext_resource type="Theme" uid="uid://bv7g70yg6r2oc" path="res://Menus/start_menu.tres" id="28_qsp4k"]
 [ext_resource type="Script" uid="uid://booac3vwmbcoy" path="res://pause_menu.gd" id="29_kq58d"]
 [ext_resource type="Script" uid="uid://gfgeyqxng50f" path="res://InputManager/input_manager.gd" id="30_kq58d"]
 [ext_resource type="PackedScene" uid="uid://de66ji1hm08gh" path="res://Props/hands.tscn" id="35_0rl1p"]

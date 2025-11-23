@@ -1,8 +1,8 @@
 [gd_scene load_steps=16 format=3 uid="uid://dy7lqufy3iwjt"]
 
-[ext_resource type="Script" uid="uid://g54886uediyr" path="res://StartMenu/start_menu.gd" id="1_ia0g5"]
+[ext_resource type="Script" uid="uid://g54886uediyr" path="res://Menus/start_menu.gd" id="1_ia0g5"]
 [ext_resource type="PackedScene" uid="uid://bpm7kbn4oyb1w" path="res://InputManager/input_manager.tscn" id="2_x7exu"]
-[ext_resource type="Theme" uid="uid://bv7g70yg6r2oc" path="res://StartMenu/start_menu.tres" id="3_vpdu5"]
+[ext_resource type="Theme" uid="uid://bv7g70yg6r2oc" path="res://Menus/start_menu.tres" id="3_vpdu5"]
 [ext_resource type="AudioStream" uid="uid://dir7ol8dcnbk" path="res://Sound/Effects/EndOfLineBellSound.mp3" id="4_gfl6h"]
 [ext_resource type="AudioStream" uid="uid://dl4puu5rfh8y8" path="res://Sound/Effects/match-lighting-candle-81020.mp3" id="4_v2mkm"]
 [ext_resource type="AudioStream" uid="uid://cmh8jdy5tdfb3" path="res://Sound/Music/WriteAtSea.wav" id="5_ctwoq"]
