@@ -1,7 +1,7 @@
 extends Control
 
 @export var input_manager: InputManager
-@export var main_text_container: MainTextContainer
+@export var main_node: Node3D
 @export var spellbook: Spellbook
 
 var resume_text: TextState
@@ -70,7 +70,11 @@ func unlock_all_texts() -> void:
 
 func _on_resume(_id: int) -> void:
 	get_tree().paused = false
+	lock_all_texts()
 	input_manager.handle_key("escape")
+	main_node.main_text.unlock()
+	for ts: TextState in spellbook.spells.values():
+		ts.unlock()
 	pause_menu.hide()
 
 
