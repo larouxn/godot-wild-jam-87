@@ -8,7 +8,7 @@ var cursor_text: CursorText
 var main_text := TextState.new()
 var looking_at_book := false
 var health: float
-var old_cursor_position: Vector2i
+var used_newlines: Dictionary[int, bool] = {}
 
 @onready var main_text_container := $MainText as MainTextContainer
 @onready var animation_player := $Head/AnimationPlayer as AnimationPlayer
@@ -45,7 +45,7 @@ func _ready() -> void:
 	main_text.mistyped.connect(_on_main_text_failed)
 	health = health_bar.value
 	input_manager.key_pressed.connect(play_type_sound)
-	main_text_container.cursor_text.cursor_position_changed.connect(_on_new_line)
+	main_text.newline.connect(_on_new_line)
 
 
 func init_nodes() -> void:
@@ -100,8 +100,8 @@ func _on_spellbook_pause_game() -> void:
 	pause_menu.show()
 
 
-func _on_new_line(new_cursor_position: Vector2i) -> void:
-	if new_cursor_position.x != 0:
-		return
+func _on_new_line(_id: int) -> void:
 	typewriter_bell_player.play()
-	damage_dealt.emit(-15)
+	if !used_newlines.has(cursor_text.cursor_position.y - 1):
+		damage_dealt.emit(-15)
+	used_newlines[cursor_text.cursor_position.y - 1] = true

@@ -83,7 +83,8 @@ func append_character(chr: String) -> void:
 		if chr_matches and text[input_index - 1] == "\n":
 			newline.emit(id)
 	else:
-		if text.substr(max(0, input_index - space_skip_offset), input_index - 1).contains("\n"):
+		var skipped_chars := text.substr(max(0, input_index - space_skip_offset), space_skip_offset)
+		if skipped_chars.contains("\n"):
 			newline.emit(id)
 
 	if mistake_index != -1:
