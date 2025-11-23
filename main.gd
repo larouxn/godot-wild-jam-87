@@ -8,14 +8,20 @@ var cursor_text: CursorText
 var main_text := TextState.new()
 var looking_at_book := false
 var health: float
+var old_cursor_position: Vector2i
 
 @onready var main_text_container := $MainTextContainer as MainTextContainer
 @onready var animation_player := $Head/AnimationPlayer as AnimationPlayer
 @onready var player_ui := $PlayerUI as Control
 @onready var health_bar := $PlayerUI/ProgressBar as ProgressBar
 @onready var pause_menu := %PauseMenu as Control
+@onready var main_text_cursor := (
+	$MainText/SubViewport/SubViewportContainer/SubViewport/CenterContainer/TextOffset/CursorText
+	as CursorText
+)
 
 @onready var typewriter_sound_player := $Head/Camera3D/TypewriterSoundPlayer as AudioStreamPlayer
+@onready var typewriter_bell_player := $Head/Camera3D/TypewriterBellPlayer as AudioStreamPlayer
 @onready var typing_a_sound := load("res://Sound/Effects/TypeSoundA.mp3")
 @onready var typing_b_sound := load("res://Sound/Effects/TypeSoundB.mp3")
 @onready var typing_c_sound := load("res://Sound/Effects/TypeSoundC.mp3")
@@ -41,6 +47,8 @@ func _ready() -> void:
 	main_text.mistyped.connect(_on_main_text_failed)
 	health = health_bar.value
 	input_manager.key_pressed.connect(play_type_sound)
+	main_text_cursor.cursor_position_changed.connect(_on_new_line)
+	old_cursor_position = main_text_cursor.cursor_position
 
 
 func init_nodes() -> void:
@@ -88,3 +96,10 @@ func play_type_sound() -> void:
 func _on_spellbook_pause_game() -> void:
 	get_tree().paused = true
 	pause_menu.show()
+
+
+func _on_new_line(new_cursor_position: Vector2i) -> void:
+	if new_cursor_position.x != 0:
+		return
+	typewriter_bell_player.play()
+	damage_dealt.emit(-15)

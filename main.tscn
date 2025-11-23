@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://dm3ra1iniucmx"]
+[gd_scene load_steps=52 format=3 uid="uid://dm3ra1iniucmx"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://Addons/ProtoController/proto_controller.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://7n0c1ali4re7" path="res://main.gd" id="1_ok6jj"]
@@ -6,7 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://cs5hnafroh83a" path="res://UI/player_ui.tscn" id="2_b1qrp"]
 [ext_resource type="AudioStream" uid="uid://csdauqiue5wef" path="res://Sound/Music/its_coming_final.wav" id="2_come4"]
 [ext_resource type="PackedScene" uid="uid://bwtnomfwynpi5" path="res://Props/table.tscn" id="2_ycdy4"]
+[ext_resource type="AudioStream" uid="uid://c2xelgg8o7qun" path="res://Sound/Effects/TypeCarriageReturnSound.mp3" id="3_4lmeg"]
 [ext_resource type="PackedScene" uid="uid://cknfue1vkxsw4" path="res://Set/wall_tile.tscn" id="3_h2yge"]
+[ext_resource type="AudioStream" uid="uid://dir7ol8dcnbk" path="res://Sound/Effects/EndOfLineBellSound.mp3" id="3_h8e4i"]
 [ext_resource type="PackedScene" uid="uid://cnpmv3o2hddcg" path="res://Set/wall_floor_board.tscn" id="3_kek77"]
 [ext_resource type="PackedScene" uid="uid://ol1wfjtta0rd" path="res://Props/table_drawers.tscn" id="3_w48qg"]
 [ext_resource type="PackedScene" uid="uid://b7ie0h5c0qa4o" path="res://Set/wall_with_door_hole.tscn" id="4_1bvp3"]
@@ -135,6 +137,12 @@ _data = {
 &"look_typewriter": SubResource("Animation_0cp0l")
 }
 
+[sub_resource type="AudioStreamPlaylist" id="AudioStreamPlaylist_0cp0l"]
+loop = false
+stream_count = 2
+stream_0 = ExtResource("3_h8e4i")
+stream_1 = ExtResource("3_4lmeg")
+
 [sub_resource type="ViewportTexture" id="ViewportTexture_4lmeg"]
 viewport_path = NodePath("SubViewport")
 
@@ -171,6 +179,9 @@ autoplay = true
 
 [node name="TypewriterSoundPlayer" type="AudioStreamPlayer" parent="Head/Camera3D"]
 
+[node name="TypewriterBellPlayer" type="AudioStreamPlayer" parent="Head/Camera3D"]
+stream = SubResource("AudioStreamPlaylist_0cp0l")
+
 [node name="PlayerUI" parent="." instance=ExtResource("2_b1qrp")]
 
 [node name="InputManager" type="Node3D" parent="."]
@@ -179,7 +190,7 @@ process_mode = 3
 script = ExtResource("30_kq58d")
 metadata/_custom_type_script = "uid://gfgeyqxng50f"
 
-[node name="MainTextContainer" parent="." node_paths=PackedStringArray("input_manager") instance=ExtResource("7_h8e4i")]
+[node name="MainText" parent="." node_paths=PackedStringArray("input_manager") instance=ExtResource("7_h8e4i")]
 transform = Transform3D(-0.1, 4.371139e-09, -7.5710345e-09, 0, 0.08660254, 0.05, 8.742278e-09, 0.05, -0.08660254, -2.078, 2.042, 1.181)
 texture = SubResource("ViewportTexture_4lmeg")
 minimum_width = 1100.0
@@ -187,7 +198,7 @@ input_manager = NodePath("../InputManager")
 
 [node name="Spellbook" parent="." node_paths=PackedStringArray("main_text_ui", "input_manager") instance=ExtResource("9_facbu")]
 transform = Transform3D(-1.070994, 0, 1.0502242, 0, 1.4999998, 0, -1.0502242, 0, -1.070994, -3.268349, 1.3815, 0.8935262)
-main_text_ui = NodePath("../MainTextContainer")
+main_text_ui = NodePath("../MainText")
 input_manager = NodePath("../InputManager")
 
 [node name="Props" type="Node3D" parent="."]
