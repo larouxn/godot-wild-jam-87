@@ -42,6 +42,26 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_2q4oh")
 value = 100.0
 show_percentage = false
 
+[node name="Seperator1" type="ColorRect" parent="ProgressBar"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.333
+anchor_right = 0.333
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_right = 1.0
+color = Color(0, 0, 0, 1)
+
+[node name="Seperator2" type="ColorRect" parent="ProgressBar"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.666
+anchor_right = 0.666
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_right = 1.0
+color = Color(0, 0, 0, 1)
+
 [node name="Timer" type="Timer" parent="."]
 process_callback = 0
 autostart = true
@@ -61,7 +81,7 @@ radial_accel_min = 80.0
 radial_accel_max = 150.0
 scale_amount_min = 4.0
 scale_amount_max = 12.0
-color = Color(0.37254903, 0.37254903, 0, 1)
+color = Color(0.5686275, 0.105882354, 0.105882354, 1)
 anim_speed_max = 81.82
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

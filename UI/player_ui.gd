@@ -5,6 +5,7 @@ const COLOR_HEALTH_LOW = Color("#afb515")  # Sickly yellow
 
 var value_change: int = 0
 var pixel_shift_per_tick: float
+var health_current_max_limit: float = 100.0
 
 @onready var health_bar := $ProgressBar as ProgressBar
 @onready var falling_health := $FallingHealth/CPUParticles2D as CPUParticles2D
@@ -28,13 +29,10 @@ func _process(_delta: float) -> void:
 		falling_health.emitting = true
 
 	if value_change != 0:
+		_update_health()
+		_update_particle_postion()
 		_update_health_bar_color()
-		health_bar.value += value_change
-		var position_shift := pixel_shift_per_tick * value_change
-		if (falling_health.position.x + position_shift) > full_health_position:
-			falling_health.position.x = full_health_position
-		else:
-			falling_health.move_local_x(position_shift)
+
 	value_change = 0
 
 
@@ -44,6 +42,23 @@ func _on_timer_timeout() -> void:
 
 func _on_main_damage_dealt(damage: Variant) -> void:
 	value_change = -damage
+
+
+func _update_health() -> void:
+	var new_health: float = health_bar.value + value_change
+
+	if new_health <= 33.0:
+		health_current_max_limit = 33.0
+	elif new_health <= 66.0 and health_current_max_limit > 66.0:
+		health_current_max_limit = 66.0
+
+	health_bar.value = clamp(new_health, 0, health_current_max_limit)
+
+
+func _update_particle_postion() -> void:
+	var missing_health: float = health_bar.max_value - health_bar.value
+	var target_x: float = full_health_position - (pixel_shift_per_tick * missing_health)
+	falling_health.position.x = target_x
 
 
 func _update_health_bar_color() -> void:
