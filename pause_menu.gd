@@ -1,5 +1,7 @@
 extends Control
 
+@export var input_manager: InputManager
+
 var resume_text := TextState.new("Resume")
 var main_menu_text := TextState.new("Main Menu")
 var options_text := TextState.new("Options")
@@ -9,8 +11,6 @@ var confirm_text := TextState.new("Confirm")
 var master_bus_index := AudioServer.get_bus_index("Master")
 var music_bus_index := AudioServer.get_bus_index("BackgroundMusic")
 var sfx_bus_index := AudioServer.get_bus_index("SFX")
-
-@onready var input_manager := %InputManager as InputManager
 
 @onready var resume_label := %ResumeButton as RichTextLabel
 @onready var main_menu_label := %MainMenuButton as RichTextLabel
@@ -26,11 +26,11 @@ var sfx_bus_index := AudioServer.get_bus_index("SFX")
 @onready var sfx_slider := %SFXVolumeSlider as HSlider
 
 
-func _ready() -> void:
-	#input_manager.set_main_text(resume_text)
-	#input_manager.register_side_text(main_menu_text)
-	#input_manager.register_side_text(options_text)
-	#input_manager.register_side_text(quit_text)
+func _on_focus_entered() -> void:
+	input_manager.register_side_text(resume_text)
+	input_manager.register_side_text(main_menu_text)
+	input_manager.register_side_text(options_text)
+	input_manager.register_side_text(quit_text)
 
 	input_manager.connect("key_pressed", render_ui)
 	resume_text.finished.connect(_on_resume)
@@ -61,13 +61,12 @@ func render_ui() -> void:
 	confirm_label.text = render_text_state(confirm_text)
 
 
-func _on_resume(id: int) -> void:
-	print(id)
+func _on_resume(_id: int) -> void:
+	get_tree().paused = false
 	pause_menu.hide()
 
 
-func _on_main_menu(id: int) -> void:
-	print(id)
+func _on_main_menu(_id: int) -> void:
 	get_tree().change_scene_to_file("res://StartMenu/start_menu.tscn")
 
 
@@ -79,8 +78,7 @@ func _on_options(id: int) -> void:
 	master_slider.grab_focus()
 
 
-func _on_quit(id: int) -> void:
-	print(id)
+func _on_quit(_id: int) -> void:
 	get_tree().quit()
 
 

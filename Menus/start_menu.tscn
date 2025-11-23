@@ -5,10 +5,10 @@
 [ext_resource type="Theme" uid="uid://bv7g70yg6r2oc" path="res://Menus/start_menu.tres" id="3_vpdu5"]
 [ext_resource type="AudioStream" uid="uid://dir7ol8dcnbk" path="res://Sound/Effects/EndOfLineBellSound.mp3" id="4_gfl6h"]
 [ext_resource type="AudioStream" uid="uid://dl4puu5rfh8y8" path="res://Sound/Effects/match-lighting-candle-81020.mp3" id="4_v2mkm"]
-[ext_resource type="AudioStream" uid="uid://cmh8jdy5tdfb3" path="res://Sound/Music/WriteAtSea.wav" id="5_ctwoq"]
 [ext_resource type="PackedScene" uid="uid://bwtnomfwynpi5" path="res://Props/table.tscn" id="6_xsckg"]
 [ext_resource type="PackedScene" uid="uid://ol1wfjtta0rd" path="res://Props/table_drawers.tscn" id="7_gfl6h"]
 [ext_resource type="PackedScene" uid="uid://qliltvxtxt56" path="res://Props/candle_tall.tscn" id="8_kefd2"]
+[ext_resource type="AudioStream" uid="uid://v7r04ketuo42" path="res://Sound/Music/WriteAtSeaLoud.wav" id="8_y57kn"]
 [ext_resource type="PackedScene" uid="uid://dxscn68lii64q" path="res://Props/typewriter.tscn" id="9_acoh7"]
 [ext_resource type="PackedScene" uid="uid://c7jai0gpn7h48" path="res://Props/book.tscn" id="10_6p4e4"]
 
@@ -65,7 +65,8 @@ transform = Transform3D(0.8324187, 0, -0.55414724, 0, 1, 0, 0.55414724, 0, 0.832
 visible = false
 
 [node name="BackgroundMusicPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_ctwoq")
+stream = ExtResource("8_y57kn")
+volume_db = 2.0
 bus = &"TypewriterSounds"
 
 [node name="TypewriterSoundPlayer" type="AudioStreamPlayer" parent="."]

@@ -13,6 +13,14 @@ var health: float
 @onready var animation_player := $AnimationPlayer as AnimationPlayer
 @onready var player_ui := $PlayerUI as Control
 @onready var health_bar := $PlayerUI/ProgressBar as ProgressBar
+@onready var pause_menu := %PauseMenu as Control
+
+@onready var typewriter_sound_player := $Camera3D/TypewriterSoundPlayer as AudioStreamPlayer
+@onready var typing_a_sound := load("res://Sound/Effects/TypeSoundA.mp3")
+@onready var typing_b_sound := load("res://Sound/Effects/TypeSoundB.mp3")
+@onready var typing_c_sound := load("res://Sound/Effects/TypeSoundC.mp3")
+@onready var typing_d_sound := load("res://Sound/Effects/TypeSoundD.mp3")
+@onready var typing_e_sound := load("res://Sound/Effects/TypeSoundE.mp3")
 
 
 func _ready() -> void:
@@ -32,6 +40,7 @@ func _ready() -> void:
 	)
 	main_text.mistyped.connect(_on_main_text_failed)
 	health = health_bar.value
+	input_manager.key_pressed.connect(play_type_sound)
 
 
 func init_nodes() -> void:
@@ -62,3 +71,15 @@ func _on_spellbook_spell_failed() -> void:
 
 func _on_main_text_failed(_id: int) -> void:
 	damage_dealt.emit(3)
+
+
+func play_type_sound() -> void:
+	# Check if the node is inside the tree before trying to play
+	if not is_inside_tree():
+		return
+
+	typewriter_sound_player.stream = (
+		[typing_a_sound, typing_b_sound, typing_c_sound, typing_d_sound, typing_e_sound]
+		. pick_random()
+	)
+	typewriter_sound_player.play()

@@ -1,9 +1,10 @@
-[gd_scene load_steps=47 format=3 uid="uid://dm3ra1iniucmx"]
+[gd_scene load_steps=48 format=3 uid="uid://dm3ra1iniucmx"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://Addons/ProtoController/proto_controller.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://7n0c1ali4re7" path="res://main.gd" id="1_ok6jj"]
 [ext_resource type="PackedScene" uid="uid://b2vypfu6gurry" path="res://Set/floor_tile.tscn" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://cs5hnafroh83a" path="res://UI/player_ui.tscn" id="2_b1qrp"]
+[ext_resource type="AudioStream" uid="uid://csdauqiue5wef" path="res://Sound/Music/its_coming_final.wav" id="2_come4"]
 [ext_resource type="PackedScene" uid="uid://bwtnomfwynpi5" path="res://Props/table.tscn" id="2_ycdy4"]
 [ext_resource type="PackedScene" uid="uid://cqv5bwibkp7fy" path="res://UI/ControlView3D/control_view_3d.tscn" id="3_facbu"]
 [ext_resource type="PackedScene" uid="uid://cknfue1vkxsw4" path="res://Set/wall_tile.tscn" id="3_h2yge"]
@@ -114,6 +115,13 @@ shadow_enabled = true
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-1, 2.4758252e-08, -1.320089e-07, -4.2440785e-08, 0.8742554, 0.48546585, 1.2742883e-07, 0.4854658, -0.8742555, -2.0451348, 2.4745102, 0.12526911)
+
+[node name="BackgroundMusicPlayer" type="AudioStreamPlayer" parent="Camera3D"]
+stream = ExtResource("2_come4")
+volume_db = -10.0
+autoplay = true
+
+[node name="TypewriterSoundPlayer" type="AudioStreamPlayer" parent="Camera3D"]
 
 [node name="PlayerUI" parent="." instance=ExtResource("2_b1qrp")]
 
@@ -805,7 +813,7 @@ transform = Transform3D(-0.1, 0, -8.742278e-09, 0, 0.1, 0, 8.742278e-09, 0, -0.1
 transform = Transform3D(-1.5, 0, -2.2649373e-07, 0, 1.5, 0, 2.2649373e-07, 0, -1.5, 4.1449633, 0.0065732, -5.9246616)
 visible = false
 
-[node name="PauseMenu" type="Control" parent="."]
+[node name="PauseMenu" type="Control" parent="." node_paths=PackedStringArray("input_manager")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 3
@@ -816,6 +824,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("28_qsp4k")
 script = ExtResource("29_kq58d")
+input_manager = NodePath("../InputManager")
 
 [node name="MarginContainer" type="MarginContainer" parent="PauseMenu"]
 layout_mode = 1
@@ -973,6 +982,7 @@ vertical_alignment = 1
 
 [connection signal="damage_dealt" from="." to="PlayerUI" method="_on_main_damage_dealt"]
 [connection signal="spell_failed" from="Spellbook" to="." method="_on_spellbook_spell_failed"]
+[connection signal="focus_entered" from="PauseMenu" to="PauseMenu" method="_on_focus_entered"]
 [connection signal="value_changed" from="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/MasterVolumeCon/MasterVolumeSlider" to="PauseMenu" method="_on_master_volume_slider_value_changed"]
 [connection signal="value_changed" from="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/MusicVolumeCon/MusicVolumeSlider" to="PauseMenu" method="_on_music_volume_slider_value_changed"]
 [connection signal="value_changed" from="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/SFXVolumeCon/SFXVolumeSlider" to="PauseMenu" method="_on_sfx_volume_slider_value_changed"]
