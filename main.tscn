@@ -173,6 +173,7 @@ libraries = {
 [node name="Camera3D" type="Camera3D" parent="Head"]
 
 [node name="BackgroundMusicPlayer" type="AudioStreamPlayer" parent="Head/Camera3D"]
+process_mode = 3
 stream = ExtResource("2_come4")
 volume_db = -10.0
 autoplay = true
