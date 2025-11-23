@@ -1,13 +1,16 @@
-[gd_scene load_steps=37 format=3 uid="uid://dm3ra1iniucmx"]
+[gd_scene load_steps=42 format=3 uid="uid://dm3ra1iniucmx"]
 
 [ext_resource type="PackedScene" uid="uid://bs72ogkvdd7d6" path="res://Addons/ProtoController/proto_controller.tscn" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://7n0c1ali4re7" path="res://main.gd" id="1_ok6jj"]
 [ext_resource type="PackedScene" uid="uid://b2vypfu6gurry" path="res://Set/floor_tile.tscn" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://bwtnomfwynpi5" path="res://Props/table.tscn" id="2_ycdy4"]
+[ext_resource type="PackedScene" uid="uid://cqv5bwibkp7fy" path="res://UI/ControlView3D/control_view_3d.tscn" id="3_facbu"]
 [ext_resource type="PackedScene" uid="uid://cknfue1vkxsw4" path="res://Set/wall_tile.tscn" id="3_h2yge"]
 [ext_resource type="PackedScene" uid="uid://cnpmv3o2hddcg" path="res://Set/wall_floor_board.tscn" id="3_kek77"]
 [ext_resource type="PackedScene" uid="uid://ol1wfjtta0rd" path="res://Props/table_drawers.tscn" id="3_w48qg"]
 [ext_resource type="PackedScene" uid="uid://b7ie0h5c0qa4o" path="res://Set/wall_with_door_hole.tscn" id="4_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://dfmdfwg5aij2v" path="res://Set/wall_with_window_hole.tscn" id="4_272bh"]
+[ext_resource type="PackedScene" uid="uid://blfginyn8bta8" path="res://UI/CursorText/cursor_text.tscn" id="4_b1qrp"]
 [ext_resource type="PackedScene" uid="uid://dnd3cgc7odquu" path="res://Props/bed.tscn" id="4_vivmo"]
 [ext_resource type="PackedScene" uid="uid://cov6gyptri7u1" path="res://Props/bookshelf.tscn" id="5_2cqfq"]
 [ext_resource type="PackedScene" uid="uid://dbxes83ct2mbg" path="res://Set/window.tscn" id="5_5vw27"]
@@ -18,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://c7jai0gpn7h48" path="res://Props/book.tscn" id="7_1u8w0"]
 [ext_resource type="PackedScene" uid="uid://qliltvxtxt56" path="res://Props/candle_tall.tscn" id="7_2cqfq"]
 [ext_resource type="PackedScene" uid="uid://xyh8vnhin7aq" path="res://Props/chair.tscn" id="8_2cqfq"]
+[ext_resource type="PackedScene" uid="uid://bm4df37p8ivm5" path="res://Props/Spellbook/spellbook.tscn" id="9_facbu"]
 [ext_resource type="PackedScene" uid="uid://d2d5fknjr7wmk" path="res://Props/book_group_medium_1.tscn" id="9_getpj"]
 [ext_resource type="PackedScene" uid="uid://bfftqpddf2u41" path="res://Props/night_stand.tscn" id="9_yaehf"]
 [ext_resource type="PackedScene" uid="uid://du0jrq8qbaxdw" path="res://Props/shelf.tscn" id="10_074og"]
@@ -54,7 +58,12 @@ volumetric_fog_density = 0.01
 volumetric_fog_albedo = Color(0.2946406, 0.29464063, 0.2946406, 1)
 volumetric_fog_length = 255.54
 
-[node name="Main" type="Node3D"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ok6jj"]
+bg_color = Color(0.29411766, 0.29411766, 0.29411766, 0.7647059)
+
+[node name="Main" type="Node3D" node_paths=PackedStringArray("input_manager")]
+script = ExtResource("1_ok6jj")
+input_manager = NodePath("InputManager")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_0xm2m")
@@ -65,8 +74,47 @@ light_color = Color(0.95686275, 1, 1, 1)
 light_energy = 2.0
 shadow_enabled = true
 
-[node name="DebugPlayer" parent="." instance=ExtResource("1_ig7tw")]
-transform = Transform3D(-1.5, 0, -2.2649371e-07, 0, 1.5, 0, 2.2649371e-07, 0, -1.5, 4.144963, 0.00657326, -5.9246616)
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-1, -3.5527137e-15, -8.742278e-08, -3.7643353e-08, 0.9025477, 0.43058982, 7.890323e-08, 0.43058982, -0.9025477, -2.0451348, 2.4745102, 0.12526911)
+
+[node name="InputManager" type="Node3D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("30_kq58d")
+metadata/_custom_type_script = "uid://gfgeyqxng50f"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="MainText" parent="." instance=ExtResource("3_facbu")]
+transform = Transform3D(-0.08, 2.1095456e-09, -1.0178585e-08, -2.6218188e-09, 0.07170777, 0.035468213, 1.0058819e-08, 0.035468213, -0.07170777, -2.078, 2.042, 1.1810045)
+
+[node name="CenterContainer" type="CenterContainer" parent="MainText"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="MainText/CenterContainer"]
+custom_minimum_size = Vector2(1300, 400)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ok6jj")
+
+[node name="CursorText" parent="MainText/CenterContainer" node_paths=PackedStringArray("input_manager") instance=ExtResource("4_b1qrp")]
+custom_minimum_size = Vector2(1250, 320)
+layout_mode = 2
+text = "This is the text
+This is the text
+This is the text
+This is the text
+This is the text
+This is the text
+This is the text"
+input_manager = NodePath("../../../InputManager")
+
+[node name="Spellbook" parent="." node_paths=PackedStringArray("main_text_ui", "input_manager") instance=ExtResource("9_facbu")]
+transform = Transform3D(-1.2479308, 0, 0.8322666, 0, 1.4999998, 0, -0.8322666, 0, -1.2479308, -3.1553118, 1.3815, 1.0354745)
+main_text_ui = NodePath("../MainText/CenterContainer/CursorText")
+input_manager = NodePath("../InputManager")
 
 [node name="Props" type="Node3D" parent="."]
 
@@ -84,6 +132,7 @@ transform = Transform3D(1, 0, -4.2632564e-14, 0, 1, 0, 4.2632564e-14, 0, 1, 0, 0
 
 [node name="Book" parent="Props/Table" instance=ExtResource("7_1u8w0")]
 transform = Transform3D(0.8324187, 0, -0.55414724, 0, 1, 0, 0.55414724, 0, 0.8324187, 0.6968763, 0.92069995, 0.16492212)
+visible = false
 
 [node name="Bed" parent="Props" instance=ExtResource("4_vivmo")]
 transform = Transform3D(1.5, 0, 3.576279e-07, 0, 1.5, 0, -3.576279e-07, 0, 1.5, -4, 0, -4.6083555)
@@ -709,6 +758,13 @@ transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, -4.9, 0, 6.8)
 [node name="CornerInteriorBig" parent="Set/Walls/Front" instance=ExtResource("19_cegan")]
 transform = Transform3D(-3.3657763e-08, -0.77, 6.731554e-08, 0.77, -3.365777e-08, -6.731554e-08, 6.731554e-08, 6.731553e-08, 0.77, -2.9808109, 3.2741039, 6.774164)
 
+[node name="Hands" parent="." instance=ExtResource("35_0rl1p")]
+transform = Transform3D(-0.1, 0, -8.742278e-09, 0, 0.1, 0, 8.742278e-09, 0, -0.1, -2.1407049, 1.5288275, 0.57046705)
+
+[node name="DebugPlayer" parent="." instance=ExtResource("1_ig7tw")]
+transform = Transform3D(-1.5, 0, -2.2649373e-07, 0, 1.5, 0, 2.2649373e-07, 0, -1.5, 4.1449633, 0.0065732, -5.9246616)
+visible = false
+
 [node name="PauseMenu" type="Control" parent="."]
 unique_name_in_owner = true
 visible = false
@@ -720,11 +776,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("28_qsp4k")
 script = ExtResource("29_kq58d")
-
-[node name="PauseInputManager" type="Node3D" parent="PauseMenu"]
-unique_name_in_owner = true
-script = ExtResource("30_kq58d")
-metadata/_custom_type_script = "uid://gfgeyqxng50f"
 
 [node name="MarginContainer" type="MarginContainer" parent="PauseMenu"]
 layout_mode = 1
@@ -879,9 +930,6 @@ bbcode_enabled = true
 text = "Confirm"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="Hands" parent="." instance=ExtResource("35_0rl1p")]
-transform = Transform3D(-0.1, 0, -8.742278e-09, 0, 0.1, 0, 8.742278e-09, 0, -0.1, -2.1407049, 1.5288275, 0.57046705)
 
 [connection signal="value_changed" from="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/MasterVolumeCon/MasterVolumeSlider" to="PauseMenu" method="_on_master_volume_slider_value_changed"]
 [connection signal="value_changed" from="PauseMenu/MarginContainer/TotalMenuBox/MenuBox/OptionMenu/MusicVolumeCon/MusicVolumeSlider" to="PauseMenu" method="_on_music_volume_slider_value_changed"]

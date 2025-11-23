@@ -10,7 +10,7 @@ var master_bus_index := AudioServer.get_bus_index("Master")
 var music_bus_index := AudioServer.get_bus_index("BackgroundMusic")
 var sfx_bus_index := AudioServer.get_bus_index("SFX")
 
-@onready var input_manager := %PauseInputManager as InputManager
+@onready var input_manager := %InputManager as InputManager
 
 @onready var resume_label := %ResumeButton as RichTextLabel
 @onready var main_menu_label := %MainMenuButton as RichTextLabel
@@ -27,10 +27,10 @@ var sfx_bus_index := AudioServer.get_bus_index("SFX")
 
 
 func _ready() -> void:
-	input_manager.set_main_text(resume_text)
-	input_manager.register_side_text(main_menu_text)
-	input_manager.register_side_text(options_text)
-	input_manager.register_side_text(quit_text)
+	#input_manager.set_main_text(resume_text)
+	#input_manager.register_side_text(main_menu_text)
+	#input_manager.register_side_text(options_text)
+	#input_manager.register_side_text(quit_text)
 
 	input_manager.connect("key_pressed", render_ui)
 	resume_text.finished.connect(_on_resume)
