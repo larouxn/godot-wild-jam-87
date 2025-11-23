@@ -1,0 +1,67 @@
+[gd_scene load_steps=4 format=3 uid="uid://cs5hnafroh83a"]
+
+[ext_resource type="Script" uid="uid://u3avkdy1i8st" path="res://UI/player_ui.gd" id="1_c8xti"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c8xti"]
+bg_color = Color(0.23392546, 0.23392549, 0.23392531, 1)
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+shadow_size = 6
+shadow_offset = Vector2(5, 5)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2q4oh"]
+bg_color = Color(0.37234777, 0.37234765, 9.62615e-08, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="PlayerUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_c8xti")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15
+anchor_top = 0.08
+anchor_right = 0.85
+anchor_bottom = 0.1
+grow_horizontal = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_c8xti")
+theme_override_styles/fill = SubResource("StyleBoxFlat_2q4oh")
+value = 100.0
+show_percentage = false
+
+[node name="Timer" type="Timer" parent="."]
+process_callback = 0
+autostart = true
+
+[node name="FallingHealth" type="Node2D" parent="."]
+position = Vector2(1638, 95)
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="FallingHealth"]
+amount = 12
+lifetime = 0.5
+lifetime_randomness = 0.35
+emission_shape = 1
+emission_sphere_radius = 14.19
+particle_flag_align_y = true
+direction = Vector2(90, 180)
+radial_accel_min = 80.0
+radial_accel_max = 150.0
+scale_amount_min = 4.0
+scale_amount_max = 12.0
+color = Color(0.37254903, 0.37254903, 0, 1)
+anim_speed_max = 81.82
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
