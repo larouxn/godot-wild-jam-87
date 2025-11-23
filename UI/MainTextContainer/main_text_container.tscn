@@ -1,23 +1,17 @@
-[gd_scene load_steps=11 format=3 uid="uid://dwinauedtnyin"]
+[gd_scene load_steps=10 format=3 uid="uid://dwinauedtnyin"]
 
 [ext_resource type="Script" uid="uid://crbpw7dx4gpks" path="res://UI/MainTextContainer/main_text_container.gd" id="1_15agi"]
 [ext_resource type="Shader" uid="uid://fhtlb2i8vr65" path="res://UI/MainTextContainer/bg_noise.gdshader" id="2_sc8u2"]
 [ext_resource type="Shader" uid="uid://bjm0x5rhqju25" path="res://UI/MainTextContainer/text_fade.gdshader" id="3_my4dj"]
+[ext_resource type="Texture2D" uid="uid://bpotxl8x8bnar" path="res://UI/MainTextContainer/bg_noise_texture.tres" id="3_sc8u2"]
 [ext_resource type="PackedScene" uid="uid://blfginyn8bta8" path="res://UI/CursorText/cursor_text.tscn" id="4_u0pdh"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_0tmwt"]
 viewport_path = NodePath("SubViewport")
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_341wk"]
-frequency = 0.1787
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0tmwt"]
-noise = SubResource("FastNoiseLite_341wk")
-seamless = true
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8dt6d"]
 shader = ExtResource("2_sc8u2")
-shader_parameter/noise = SubResource("NoiseTexture2D_0tmwt")
+shader_parameter/noise = ExtResource("3_sc8u2")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8dt6d"]
 bg_color = Color(0, 0, 0, 1)

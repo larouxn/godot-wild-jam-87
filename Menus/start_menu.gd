@@ -125,7 +125,7 @@ func _start_bg_music() -> void:
 
 func _on_start_game(id: int) -> void:
 	print(id)
-	get_tree().change_scene_to_file("res://main.tscn")
+	get_tree().change_scene_to_file("res://intro.tscn")
 
 
 func _on_options(id: int) -> void:
