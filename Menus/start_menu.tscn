@@ -262,9 +262,16 @@ size_flags_vertical = 3
 bbcode_enabled = true
 text = "[b]Game Jam Team:[/b] rhitakorrr, Nicholas La Roux, Will Boccard
 
-Font: CMU-Typewriter-Text Font (add website)
+Font: CMU-Typewriter-Text Font (https://fontlibrary.org/en/font/cmu-typewriter)
 
-Third Party Sound Effects: TBD"
+Painting: Philippe de Champaigne, Still-Life with a Skull,  c. 1671 vanitas painting oil on panel. Image via Public domain via Wikipedia. (https://darkartandcraft.com/blogs/news/memento-mori-dark-art)
+
+Third Party Sound Effects: TBD
+
+Third Party 3D Models:
+- https://quaternius.itch.io/medieval-village-megakit
+- https://quaternius.itch.io/fantasy-props-megakit
+- https://vertexcat.itch.io/typewriter-set"
 vertical_alignment = 1
 
 [node name="CenterContainer" type="CenterContainer" parent="CreditsMenu"]
