@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dy7lqufy3iwjt"]
+[gd_scene load_steps=17 format=3 uid="uid://dy7lqufy3iwjt"]
 
 [ext_resource type="Script" uid="uid://g54886uediyr" path="res://Menus/start_menu.gd" id="1_ia0g5"]
 [ext_resource type="PackedScene" uid="uid://bpm7kbn4oyb1w" path="res://InputManager/input_manager.tscn" id="2_x7exu"]
@@ -11,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://v7r04ketuo42" path="res://Sound/Music/WriteAtSeaLoud.wav" id="8_y57kn"]
 [ext_resource type="PackedScene" uid="uid://dxscn68lii64q" path="res://Props/typewriter.tscn" id="9_acoh7"]
 [ext_resource type="PackedScene" uid="uid://c7jai0gpn7h48" path="res://Props/book.tscn" id="10_6p4e4"]
+[ext_resource type="PackedScene" uid="uid://blfginyn8bta8" path="res://UI/CursorText/cursor_text.tscn" id="12_lqmqm"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jxkec"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -109,21 +110,21 @@ grow_vertical = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_xsckg")
 
-[node name="OpenMenuText" type="RichTextLabel" parent="."]
-clip_children = 2
-z_index = 1
-offset_left = 760.0
-offset_top = 240.0
-offset_right = 1160.0
-offset_bottom = 690.0
-size_flags_vertical = 3
-theme = ExtResource("3_vpdu5")
-bbcode_enabled = true
+[node name="OpenCursor" parent="." node_paths=PackedStringArray("input_manager") instance=ExtResource("12_lqmqm")]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -33.0
+offset_right = 200.0
+offset_bottom = 33.0
 text = "Type to Begin"
-horizontal_alignment = 1
-vertical_alignment = 1
+input_manager = NodePath("../InputManager")
 
 [node name="MainMenu" type="VBoxContainer" parent="."]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -136,50 +137,24 @@ offset_bottom = 150.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("3_vpdu5")
+theme_override_constants/separation = 52
+alignment = 1
 
-[node name="StartGameText" type="RichTextLabel" parent="MainMenu"]
-visible = false
-z_index = 1
+[node name="StartCursor" parent="MainMenu" node_paths=PackedStringArray("input_manager") instance=ExtResource("12_lqmqm")]
 layout_mode = 2
-size_flags_vertical = 3
-theme = ExtResource("3_vpdu5")
-bbcode_enabled = true
-text = "Sign the Contract"
-horizontal_alignment = 1
-vertical_alignment = 1
+input_manager = NodePath("../../InputManager")
 
-[node name="OptionsText" type="RichTextLabel" parent="MainMenu"]
-visible = false
-z_index = 1
+[node name="OptionsCursor" parent="MainMenu" node_paths=PackedStringArray("input_manager") instance=ExtResource("12_lqmqm")]
 layout_mode = 2
-size_flags_vertical = 3
-theme = ExtResource("3_vpdu5")
-bbcode_enabled = true
-text = "Negotiate Terms"
-horizontal_alignment = 1
-vertical_alignment = 1
+input_manager = NodePath("../../InputManager")
 
-[node name="CreditsText" type="RichTextLabel" parent="MainMenu"]
-visible = false
-z_index = 1
+[node name="CreditsCursor" parent="MainMenu" node_paths=PackedStringArray("input_manager") instance=ExtResource("12_lqmqm")]
 layout_mode = 2
-size_flags_vertical = 3
-theme = ExtResource("3_vpdu5")
-bbcode_enabled = true
-text = "Meet the Authors"
-horizontal_alignment = 1
-vertical_alignment = 1
+input_manager = NodePath("../../InputManager")
 
-[node name="QuitText" type="RichTextLabel" parent="MainMenu"]
-visible = false
-z_index = 1
+[node name="QuitCursor" parent="MainMenu" node_paths=PackedStringArray("input_manager") instance=ExtResource("12_lqmqm")]
 layout_mode = 2
-size_flags_vertical = 3
-theme = ExtResource("3_vpdu5")
-bbcode_enabled = true
-text = "Run Away"
-horizontal_alignment = 1
-vertical_alignment = 1
+input_manager = NodePath("../../InputManager")
 
 [node name="OptionsMenu" type="VBoxContainer" parent="."]
 visible = false
@@ -250,13 +225,12 @@ size_flags_vertical = 4
 max_value = 1.0
 step = 0.001
 
-[node name="OptionsReturnLabel" type="RichTextLabel" parent="OptionsMenu"]
+[node name="CenterContainer" type="CenterContainer" parent="OptionsMenu"]
 layout_mode = 2
-size_flags_vertical = 3
-bbcode_enabled = true
-text = "Confirm"
-horizontal_alignment = 1
-vertical_alignment = 1
+
+[node name="OptionsReturnCursor" parent="OptionsMenu/CenterContainer" node_paths=PackedStringArray("input_manager") instance=ExtResource("12_lqmqm")]
+layout_mode = 2
+input_manager = NodePath("../../../InputManager")
 
 [node name="CreditsMenu" type="VBoxContainer" parent="."]
 visible = false
@@ -293,13 +267,12 @@ Font: CMU-Typewriter-Text Font (add website)
 Third Party Sound Effects: TBD"
 vertical_alignment = 1
 
-[node name="CreditsReturnLabel" type="RichTextLabel" parent="CreditsMenu"]
+[node name="CenterContainer" type="CenterContainer" parent="CreditsMenu"]
 layout_mode = 2
-size_flags_vertical = 3
-bbcode_enabled = true
-text = "Back"
-horizontal_alignment = 1
-vertical_alignment = 1
+
+[node name="CreditsReturnCursor" parent="CreditsMenu/CenterContainer" node_paths=PackedStringArray("input_manager") instance=ExtResource("12_lqmqm")]
+layout_mode = 2
+input_manager = NodePath("../../../InputManager")
 
 [connection signal="value_changed" from="OptionsMenu/MasterVolumeCon/MasterVolumeSlider" to="." method="_on_master_volume_slider_value_changed"]
 [connection signal="value_changed" from="OptionsMenu/MusicVolumeCon/MusicVolumeSlider" to="." method="_on_music_volume_slider_value_changed"]

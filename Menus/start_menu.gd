@@ -2,13 +2,13 @@ class_name StartMenu extends Node3D
 
 static var jump_to_main_menu: bool = false
 
-var open_menu_text := TextState.new("Type to Begin")
-var start_game_text := TextState.new("Sign the Contract")
-var options_text := TextState.new("Negotiate Terms")
-var credits_text := TextState.new("Meet the Authors")
-var quit_text := TextState.new("Run Away")
-var options_return_text := TextState.new("Confirm")
-var credits_return_text := TextState.new("Back")
+var open_menu_text: TextState = TextState.new()
+var start_game_text: TextState
+var options_text: TextState
+var credits_text: TextState
+var quit_text: TextState
+var options_return_text: TextState
+var credits_return_text: TextState
 
 var master_bus_index := AudioServer.get_bus_index("Master")
 var music_bus_index := AudioServer.get_bus_index("BackgroundMusic")
@@ -19,17 +19,25 @@ var sfx_bus_index := AudioServer.get_bus_index("SFX")
 @onready var input_manager := $InputManager as InputManager
 @onready var game_title := $GameTitleLabel as RichTextLabel
 @onready var main_menu := $MainMenu as VBoxContainer
+@onready var options_menu := $OptionsMenu as VBoxContainer
+@onready var credits_menu := $CreditsMenu as VBoxContainer
+@onready var bg_panel := $MenuPanel as Panel
+
 @onready var open_label := $OpenMenuText as RichTextLabel
 @onready var start_label := $MainMenu/StartGameText as RichTextLabel
 @onready var options_label := $MainMenu/OptionsText as RichTextLabel
 @onready var credits_label := $MainMenu/CreditsText as RichTextLabel
 @onready var quit_label := $MainMenu/QuitText as RichTextLabel
-
-@onready var options_menu := $OptionsMenu as VBoxContainer
 @onready var options_return_label := $OptionsMenu/OptionsReturnLabel as RichTextLabel
-@onready var credits_menu := $CreditsMenu as VBoxContainer
 @onready var credits_return_label := $CreditsMenu/CreditsReturnLabel as RichTextLabel
-@onready var bg_panel := $MenuPanel as Panel
+
+@onready var open_cursor := $OpenCursor as CursorText
+@onready var start_cursor := $MainMenu/StartCursor as CursorText
+@onready var options_cursor := $MainMenu/OptionsCursor as CursorText
+@onready var credits_cursor := $MainMenu/CreditsCursor as CursorText
+@onready var quit_cursor := $MainMenu/QuitCursor as CursorText
+@onready var options_return_cursor := $OptionsMenu/CenterContainer/OptionsReturnCursor as CursorText
+@onready var credits_return_cursor := $CreditsMenu/CenterContainer/CreditsReturnCursor as CursorText
 
 @onready var match_sound_player := $MatchSoundPlayer as AudioStreamPlayer
 @onready var bg_music := $BackgroundMusicPlayer as AudioStreamPlayer
@@ -48,14 +56,31 @@ var sfx_bus_index := AudioServer.get_bus_index("SFX")
 func _ready() -> void:
 	# set up inputs
 	input_manager.set_main_text(open_menu_text)
-	input_manager.register_side_text(start_game_text)
-	input_manager.register_side_text(options_text)
-	input_manager.register_side_text(credits_text)
-	input_manager.register_side_text(quit_text)
+	init_nodes.call_deferred()
 
 	# set up signals
-	input_manager.connect("key_pressed", render_ui)
 	input_manager.connect("key_pressed", play_type_sound)
+	match_sound_player.finished.connect(_start_bg_music)
+
+	# set up audio
+	master_slider.value = AudioServer.get_bus_volume_linear(master_bus_index)
+	music_slider.value = AudioServer.get_bus_volume_linear(music_bus_index)
+	sfx_slider.value = AudioServer.get_bus_volume_linear(sfx_bus_index)
+
+	if jump_to_main_menu:
+		_on_open_menu(-1)
+		jump_to_main_menu = false
+
+
+func init_nodes() -> void:
+	open_menu_text = open_cursor.create_and_link_one_line_text_state(open_cursor.text)
+	start_game_text = start_cursor.create_and_link_one_line_text_state("Sign the Contract")
+	options_text = options_cursor.create_and_link_one_line_text_state("Negotiate Terms")
+	credits_text = credits_cursor.create_and_link_one_line_text_state("Meet the Authors")
+	quit_text = quit_cursor.create_and_link_one_line_text_state("Run Away")
+	options_return_text = options_return_cursor.create_and_link_one_line_text_state("Confirm")
+	credits_return_text = credits_return_cursor.create_and_link_one_line_text_state("Back")
+
 	open_menu_text.finished.connect(_on_open_menu)
 	start_game_text.finished.connect(_on_start_game)
 	options_text.finished.connect(_on_options)
@@ -63,27 +88,10 @@ func _ready() -> void:
 	quit_text.finished.connect(_on_quit)
 	options_return_text.finished.connect(_on_options_return)
 	credits_return_text.finished.connect(_on_credits_return)
-	match_sound_player.finished.connect(_start_bg_music)
 
-	# set up audio
-	master_slider.value = AudioServer.get_bus_volume_linear(master_bus_index)
-	music_slider.value = AudioServer.get_bus_volume_linear(music_bus_index)
-	sfx_slider.value = AudioServer.get_bus_volume_linear(sfx_bus_index)
-	render_ui()
-
-	if jump_to_main_menu:
-		_on_open_menu(-1)
-		jump_to_main_menu = false
-
-
-func render_ui() -> void:
-	open_label.text = render_text_state(open_menu_text)
-	start_label.text = render_text_state(start_game_text)
-	options_label.text = render_text_state(options_text)
-	credits_label.text = render_text_state(credits_text)
-	quit_label.text = render_text_state(quit_text)
-	options_return_label.text = render_text_state(options_return_text)
-	credits_return_label.text = render_text_state(credits_return_text)
+	_lock_all_menu_cursors()
+	options_return_text.lock()
+	credits_return_text.lock()
 
 
 func play_type_sound() -> void:
@@ -98,24 +106,30 @@ func play_type_sound() -> void:
 	typewriter_sound_player.play()
 
 
-func render_text_state(ts: TextState) -> String:
-	var split := ts.parts()
-	return (
-		"[color=green]" + split[0] + "[/color][color=red][u]" + split[1] + "[/u][/color]" + split[2]
-	)
+func _lock_all_menu_cursors() -> void:
+	start_game_text.lock()
+	options_text.lock()
+	credits_text.lock()
+	quit_text.lock()
 
 
-func _on_open_menu(id: int) -> void:
-	print(id)
+func _unlock_all_menu_cursors() -> void:
+	start_game_text.unlock()
+	options_text.unlock()
+	credits_text.unlock()
+	quit_text.unlock()
+
+
+func _on_open_menu(_id: int) -> void:
+	input_manager.handle_key("escape")  # clears input
 	bell_player.play()
 	match_sound_player.play()
 	candle.show()
+	open_cursor.hide()
+	open_menu_text.lock()
+	_unlock_all_menu_cursors()
 	game_title.show()
-	open_label.hide()
-	start_label.show()
-	options_label.show()
-	credits_label.show()
-	quit_label.show()
+	main_menu.show()
 
 
 func _start_bg_music() -> void:
@@ -123,48 +137,46 @@ func _start_bg_music() -> void:
 	bg_music.play()
 
 
-func _on_start_game(id: int) -> void:
-	print(id)
+func _on_start_game(_id: int) -> void:
 	get_tree().change_scene_to_file("res://intro.tscn")
 
 
-func _on_options(id: int) -> void:
-	print(id)
-	input_manager.unregister_side_text(id)
-	input_manager.register_side_text(options_return_text)
+func _on_options(_id: int) -> void:
+	input_manager.handle_key("escape")  # clears input
+	_lock_all_menu_cursors()
+	options_return_text.unlock()
 	main_menu.hide()
 	bg_panel.show()
 	options_menu.show()
 	master_slider.grab_focus()
 
 
-func _on_credits(id: int) -> void:
-	print(id)
-	input_manager.unregister_side_text(id)
-	input_manager.register_side_text(credits_return_text)
+func _on_credits(_id: int) -> void:
+	input_manager.handle_key("escape")  # clears input
+	_lock_all_menu_cursors()
+	credits_return_text.unlock()
 	main_menu.hide()
 	bg_panel.show()
 	credits_menu.show()
 
 
-func _on_quit(id: int) -> void:
-	print(id)
+func _on_quit(_id: int) -> void:
 	get_tree().quit()
 
 
-func _on_options_return(id: int) -> void:
-	print(id)
-	input_manager.unregister_side_text(id)
-	input_manager.register_side_text(options_text)
+func _on_options_return(_id: int) -> void:
+	input_manager.handle_key("escape")  # clears input
+	_unlock_all_menu_cursors()
+	options_return_text.lock()
 	bg_panel.hide()
 	options_menu.hide()
 	main_menu.show()
 
 
-func _on_credits_return(id: int) -> void:
-	print(id)
-	input_manager.unregister_side_text(id)
-	input_manager.register_side_text(credits_text)
+func _on_credits_return(_id: int) -> void:
+	input_manager.handle_key("escape")  # clears input
+	_unlock_all_menu_cursors()
+	credits_return_text.lock()
 	bg_panel.hide()
 	credits_menu.hide()
 	main_menu.show()
