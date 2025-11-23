@@ -185,7 +185,7 @@ func cursor_position_from_lines(index: int, lines: PackedStringArray) -> Vector2
 			current_line += 1
 
 	var space_prefix_offset := len(last_line) - len(last_line.strip_edges(true, false))
-	return Vector2i(max(0, index - cumulative_length - space_prefix_offset), 0)
+	return Vector2i(max(0, index - cumulative_length - space_prefix_offset), current_line)
 
 
 ## The same as cursor_position_from_lines, but sets the cursor_position instead of
