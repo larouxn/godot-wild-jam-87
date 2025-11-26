@@ -493,11 +493,11 @@ transform = Transform3D(0.23675331, 0, 0.97157, 0, 1.0000002, 0, -0.97157, 0, 0.
 [node name="CandleShort4" parent="Props/Painting" instance=ExtResource("6_vivmo")]
 transform = Transform3D(0.801515, 0, -0.597975, 0, 1.0000002, 0, 0.597975, 0, 0.801515, -3.9542565, 0.007298231, 5.6617618)
 
-[node name="MirrorFrame" parent="Props/Painting" instance=ExtResource("17_a6jrf")]
-transform = Transform3D(1.4006257, 0, 0, 0, -5.0416034e-08, 1.5422634, 0, -1.1533844, -6.7414476e-08, -2.1505606, 2.20185, 6.699003)
+[node name="PictureFrame" parent="Props/Painting" instance=ExtResource("17_a6jrf")]
+transform = Transform3D(1.8169705, 0, 0, 0, -5.0416034e-08, 1.3504797, 0, -1.1533844, -5.9031347e-08, -2.1505606, 1.9907835, 6.699003)
 
-[node name="Sprite3D" type="Sprite3D" parent="Props/Painting/MirrorFrame"]
-transform = Transform3D(0.17575096, 0, 0, 0, -8.742276e-09, -0.19999997, 0, 0.22986084, -1.0047536e-08, 0, 0.10145521, 0.004371166)
+[node name="Sprite3D" type="Sprite3D" parent="Props/Painting/PictureFrame"]
+transform = Transform3D(-0.17575097, -9.993277e-17, -1.7484554e-08, -1.5364636e-08, -5.8502696e-09, 0.19999999, -5.022643e-16, 0.21393223, 3.0283154e-09, 0, 0.101454735, 0.0043714046)
 texture = ExtResource("20_jq2sk")
 
 [node name="AboveDoor" type="Node3D" parent="Props"]
