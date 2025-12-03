@@ -22,12 +22,12 @@ windows: exports/windows/$(game_file_name).exe
 macOS: exports/macOS/$(game_file_name).zip
 
 .PHONY: web
-web: exports/web/$(game_file_name).html
+web: exports/web/index.html
 
 .PHONY: run-web
 run-web: web
 	$(info )
-	$(info Open http://localhost:8000/$(game_file_name).html in your browser.)
+	$(info Open http://localhost:8000/index.html in your browser.)
 	$(info )
 	python -m http.server -d exports/web
 
@@ -50,7 +50,7 @@ exports/macOS/$(game_file_name).zip: $(game_files)
 	mkdir -p exports/macOS
 	godot --export-release "macOS" exports/macOS/$(game_file_name).zip --headless project.godot
 
-exports/web/$(game_file_name).html: $(game_files)
+exports/web/index.html: $(game_files)
 	rm -rf exports/web &>/dev/null || true
 	mkdir -p exports/web
-	godot --export-release "Web" exports/web/$(game_file_name).html --headless project.godot
+	godot --export-release "Web" exports/web/index.html --headless project.godot
