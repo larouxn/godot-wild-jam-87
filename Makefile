@@ -1,4 +1,4 @@
-game_file_name = game
+game_file_name = Cursed
 
 game_files := $(shell \
 	find . -path ./exports -prune \
