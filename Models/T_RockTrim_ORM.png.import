@@ -3,21 +3,19 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cpk0pp8g8k4t8"
-path.s3tc="res://.godot/imported/T_RockTrim_ORM.png-fac5b00972fe66c77f77afd54b5500a3.s3tc.ctex"
-path.etc2="res://.godot/imported/T_RockTrim_ORM.png-fac5b00972fe66c77f77afd54b5500a3.etc2.ctex"
+path="res://.godot/imported/T_RockTrim_ORM.png-fac5b00972fe66c77f77afd54b5500a3.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://Models/T_RockTrim_ORM.png"
-dest_files=["res://.godot/imported/T_RockTrim_ORM.png-fac5b00972fe66c77f77afd54b5500a3.s3tc.ctex", "res://.godot/imported/T_RockTrim_ORM.png-fac5b00972fe66c77f77afd54b5500a3.etc2.ctex"]
+dest_files=["res://.godot/imported/T_RockTrim_ORM.png-fac5b00972fe66c77f77afd54b5500a3.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

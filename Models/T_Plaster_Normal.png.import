@@ -3,21 +3,19 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://duwyuxd4eyrnk"
-path.s3tc="res://.godot/imported/T_Plaster_Normal.png-a3a1cf19977a8d80232d3ae94ba64f6c.s3tc.ctex"
-path.etc2="res://.godot/imported/T_Plaster_Normal.png-a3a1cf19977a8d80232d3ae94ba64f6c.etc2.ctex"
+path="res://.godot/imported/T_Plaster_Normal.png-a3a1cf19977a8d80232d3ae94ba64f6c.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc", "etc2_astc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://Models/T_Plaster_Normal.png"
-dest_files=["res://.godot/imported/T_Plaster_Normal.png-a3a1cf19977a8d80232d3ae94ba64f6c.s3tc.ctex", "res://.godot/imported/T_Plaster_Normal.png-a3a1cf19977a8d80232d3ae94ba64f6c.etc2.ctex"]
+dest_files=["res://.godot/imported/T_Plaster_Normal.png-a3a1cf19977a8d80232d3ae94ba64f6c.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

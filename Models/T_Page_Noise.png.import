@@ -15,7 +15,7 @@ dest_files=["res://.godot/imported/T_Page_Noise.png-6966a32b888e1b598bdc420ff13f
 
 [params]
 
-compress/mode=0
+compress/mode=1
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
