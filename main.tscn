@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://7n0c1ali4re7" path="res://main.gd" id="1_ok6jj"]
 [ext_resource type="PackedScene" uid="uid://b2vypfu6gurry" path="res://Set/floor_tile.tscn" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://cs5hnafroh83a" path="res://UI/player_ui.tscn" id="2_b1qrp"]
-[ext_resource type="AudioStream" uid="uid://csdauqiue5wef" path="res://Sound/Music/its_coming_final.wav" id="2_come4"]
+[ext_resource type="AudioStream" uid="uid://5hej56msv4wh" path="res://Sound/Music/its_coming_final.mp3" id="2_h8e4i"]
 [ext_resource type="PackedScene" uid="uid://bwtnomfwynpi5" path="res://Props/table.tscn" id="2_ycdy4"]
 [ext_resource type="AudioStream" uid="uid://c2xelgg8o7qun" path="res://Sound/Effects/TypeCarriageReturnSound.mp3" id="3_4lmeg"]
 [ext_resource type="PackedScene" uid="uid://cknfue1vkxsw4" path="res://Set/wall_tile.tscn" id="3_h2yge"]
@@ -364,9 +364,10 @@ transform = Transform3D(0.9999999, 0, 0, 0, 0.9999998, 0, 0, 0, 0.9999999, 0, 0,
 
 [node name="BackgroundMusicPlayer" type="AudioStreamPlayer" parent="Head/Camera3D"]
 process_mode = 3
-stream = ExtResource("2_come4")
+stream = ExtResource("2_h8e4i")
 volume_db = -10.0
 autoplay = true
+parameters/looping = true
 
 [node name="TypewriterSoundPlayer" type="AudioStreamPlayer" parent="Head/Camera3D"]
 

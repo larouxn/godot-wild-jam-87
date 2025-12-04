@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bpm7kbn4oyb1w" path="res://InputManager/input_manager.tscn" id="1_s2ta7"]
 [ext_resource type="Script" uid="uid://cj0etl7ofs3ys" path="res://intro.gd" id="1_y72e6"]
 [ext_resource type="Shader" uid="uid://fhtlb2i8vr65" path="res://UI/MainTextContainer/bg_noise.gdshader" id="2_7a8ye"]
-[ext_resource type="AudioStream" uid="uid://csdauqiue5wef" path="res://Sound/Music/its_coming_final.wav" id="3_dpxxx"]
+[ext_resource type="AudioStream" uid="uid://5hej56msv4wh" path="res://Sound/Music/its_coming_final.mp3" id="3_dpxxx"]
 [ext_resource type="Texture2D" uid="uid://bpotxl8x8bnar" path="res://UI/MainTextContainer/bg_noise_texture.tres" id="3_y72e6"]
 [ext_resource type="AudioStream" uid="uid://dir7ol8dcnbk" path="res://Sound/Effects/EndOfLineBellSound.mp3" id="4_dk2oa"]
 [ext_resource type="AudioStream" uid="uid://c2xelgg8o7qun" path="res://Sound/Effects/TypeCarriageReturnSound.mp3" id="5_7ufi4"]
@@ -35,6 +35,7 @@ script = ExtResource("1_y72e6")
 stream = ExtResource("3_dpxxx")
 volume_db = -10.0
 autoplay = true
+parameters/looping = true
 
 [node name="TypewriterSoundPlayer" type="AudioStreamPlayer" parent="Audio"]
 volume_db = -8.0

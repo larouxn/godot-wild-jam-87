@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://c6ift4t1xw2e4"]
 
 [ext_resource type="Script" uid="uid://ebq5avwlhecb" path="res://Menus/end_menu.gd" id="1_aofu2"]
-[ext_resource type="AudioStream" uid="uid://v7r04ketuo42" path="res://Sound/Music/WriteAtSeaLoud.wav" id="3_aofu2"]
+[ext_resource type="AudioStream" uid="uid://dxaa2k3jgjxlv" path="res://Sound/Music/WriteAtSeaLoud.mp3" id="3_jq5bj"]
 [ext_resource type="AudioStream" uid="uid://ropmxhi7vkac" path="res://Sound/Effects/baby_crying.mp3" id="5_aofu2"]
 [ext_resource type="PackedScene" uid="uid://bpm7kbn4oyb1w" path="res://InputManager/input_manager.tscn" id="7_lbn72"]
 [ext_resource type="AudioStream" uid="uid://dir7ol8dcnbk" path="res://Sound/Effects/EndOfLineBellSound.mp3" id="9_s4bew"]
@@ -45,10 +45,11 @@ transform = Transform3D(-0.9976282, 1.8582273e-09, -0.068833634, -0.026669677, 0
 visible = false
 
 [node name="BackgroundMusicPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_aofu2")
+stream = ExtResource("3_jq5bj")
 volume_db = 2.0
 autoplay = true
 bus = &"TypewriterSounds"
+parameters/looping = true
 
 [node name="TypewriterSoundPlayer" type="AudioStreamPlayer" parent="."]
 bus = &"TypewriterSounds"

@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://bwtnomfwynpi5" path="res://Props/table.tscn" id="6_xsckg"]
 [ext_resource type="PackedScene" uid="uid://ol1wfjtta0rd" path="res://Props/table_drawers.tscn" id="7_gfl6h"]
 [ext_resource type="PackedScene" uid="uid://qliltvxtxt56" path="res://Props/candle_tall.tscn" id="8_kefd2"]
-[ext_resource type="AudioStream" uid="uid://v7r04ketuo42" path="res://Sound/Music/WriteAtSeaLoud.wav" id="8_y57kn"]
+[ext_resource type="AudioStream" uid="uid://dxaa2k3jgjxlv" path="res://Sound/Music/WriteAtSeaLoud.mp3" id="8_y57kn"]
 [ext_resource type="PackedScene" uid="uid://dxscn68lii64q" path="res://Props/typewriter.tscn" id="9_acoh7"]
 [ext_resource type="PackedScene" uid="uid://c7jai0gpn7h48" path="res://Props/book.tscn" id="10_6p4e4"]
 [ext_resource type="PackedScene" uid="uid://blfginyn8bta8" path="res://UI/CursorText/cursor_text.tscn" id="12_lqmqm"]
@@ -68,6 +68,7 @@ visible = false
 stream = ExtResource("8_y57kn")
 volume_db = 2.0
 bus = &"TypewriterSounds"
+parameters/looping = true
 
 [node name="TypewriterSoundPlayer" type="AudioStreamPlayer" parent="."]
 bus = &"TypewriterSounds"

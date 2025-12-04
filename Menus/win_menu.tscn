@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dxscn68lii64q" path="res://Props/typewriter.tscn" id="5_h4anv"]
 [ext_resource type="PackedScene" uid="uid://c7jai0gpn7h48" path="res://Props/book.tscn" id="6_78nj3"]
 [ext_resource type="PackedScene" uid="uid://bpm7kbn4oyb1w" path="res://InputManager/input_manager.tscn" id="7_7wkjn"]
-[ext_resource type="AudioStream" uid="uid://jvshwcvty6at" path="res://Sound/Music/industrial_and_dreary_110bpm.wav" id="8_mpuyw"]
+[ext_resource type="AudioStream" uid="uid://df3wct1g6tdif" path="res://Sound/Music/industrial_and_dreary_110bpm.mp3" id="8_vw48t"]
 [ext_resource type="AudioStream" uid="uid://dir7ol8dcnbk" path="res://Sound/Effects/EndOfLineBellSound.mp3" id="9_iibma"]
 [ext_resource type="Theme" uid="uid://bv7g70yg6r2oc" path="res://Menus/start_menu.tres" id="11_8leds"]
 
@@ -63,10 +63,11 @@ transform = Transform3D(0.8324187, 0, -0.55414724, 0, 1, 0, 0.55414724, 0, 0.832
 visible = false
 
 [node name="BackgroundMusicPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("8_mpuyw")
+stream = ExtResource("8_vw48t")
 volume_db = 5.0
 autoplay = true
 bus = &"TypewriterSounds"
+parameters/looping = true
 
 [node name="TypewriterSoundPlayer" type="AudioStreamPlayer" parent="."]
 bus = &"TypewriterSounds"
