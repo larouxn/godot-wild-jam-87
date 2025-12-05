@@ -38,6 +38,8 @@ var skip_text := $CanvasLayer/PanelContainer/PanelContainer/MarginContainer/Curs
 
 
 func _ready() -> void:
+	ResourceLoader.load_threaded_request("res://main.tscn")
+
 	main_text_state.newline.connect(play_newline_sound)
 	input_manager.set_main_text(main_text_state)
 
@@ -81,4 +83,4 @@ func go_to_main_game(id: int) -> void:
 	newline_sfx.play()
 	await newline_sfx.finished
 
-	get_tree().change_scene_to_file("res://main.tscn")
+	get_tree().change_scene_to_packed(ResourceLoader.load_threaded_get("res://main.tscn"))

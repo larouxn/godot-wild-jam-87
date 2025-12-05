@@ -53,6 +53,9 @@ var credits_return_label := $CreditsMenu/CenterContainer/CreditsReturnCursor as 
 
 
 func _ready() -> void:
+	ResourceLoader.load_threaded_request("res://main.tscn")
+	ResourceLoader.load_threaded_request("res://intro.tscn")
+
 	# set up inputs
 	input_manager.set_main_text(open_menu_text)
 	init_nodes.call_deferred()
@@ -132,7 +135,7 @@ func _start_bg_music() -> void:
 
 
 func _on_start_game(_id: int) -> void:
-	get_tree().change_scene_to_file("res://intro.tscn")
+	get_tree().change_scene_to_packed(ResourceLoader.load_threaded_get("res://intro.tscn"))
 
 
 func _on_options(_id: int) -> void:
